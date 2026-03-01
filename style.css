@@ -2083,3 +2083,171 @@ footer.footer-visible .footer-grid > *:nth-child(4) { opacity: 1; transform: non
     }
     .footer-bottom-links { justify-content: center; }
 }
+
+/* ===================== ARABIC / RTL SUPPORT ===================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+
+body[dir="rtl"] {
+    font-family: 'Cairo', sans-serif;
+}
+
+body[dir="rtl"] * {
+    font-family: 'Cairo', sans-serif;
+}
+
+body[dir="rtl"] header {
+    direction: rtl;
+}
+
+body[dir="rtl"] nav {
+    flex-direction: row-reverse;
+}
+
+body[dir="rtl"] .nav-icons {
+    flex-direction: row-reverse;
+}
+
+body[dir="rtl"] .footer-grid {
+    direction: rtl;
+    text-align: right;
+}
+
+body[dir="rtl"] .footer-col h4::after {
+    left: auto;
+    right: 0;
+}
+
+body[dir="rtl"] .footer-col ul li a:hover {
+    padding-left: 0;
+    padding-right: 8px;
+}
+
+body[dir="rtl"] .footer-contact-item {
+    direction: rtl;
+}
+
+body[dir="rtl"] .footer-bottom {
+    direction: rtl;
+}
+
+body[dir="rtl"] .hero-content {
+    direction: rtl;
+    text-align: right;
+}
+
+body[dir="rtl"] .buttons {
+    justify-content: flex-start;
+}
+
+body[dir="rtl"] .about-section,
+body[dir="rtl"] .services-section,
+body[dir="rtl"] .portfolio-section,
+body[dir="rtl"] .reviews-section,
+body[dir="rtl"] .contact-section,
+body[dir="rtl"] .registration-section {
+    direction: rtl;
+}
+
+body[dir="rtl"] .about-card,
+body[dir="rtl"] .service-card,
+body[dir="rtl"] .review-card,
+body[dir="rtl"] .portfolio-card,
+body[dir="rtl"] .contact-info-card,
+body[dir="rtl"] .contact-form-card,
+body[dir="rtl"] .form-card,
+body[dir="rtl"] .brief-card {
+    text-align: right;
+}
+
+body[dir="rtl"] .about-card ul {
+    padding-right: 0;
+    list-style-position: inside;
+}
+
+body[dir="rtl"] .stat-box { direction: rtl; }
+
+body[dir="rtl"] .contact-wrapper {
+    direction: rtl;
+}
+
+body[dir="rtl"] .form-group label {
+    text-align: right;
+}
+
+body[dir="rtl"] .contact-info-card {
+    flex-direction: row-reverse;
+}
+
+body[dir="rtl"] .contact-info-text {
+    text-align: right;
+}
+
+body[dir="rtl"] .services-grid .services-column label {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+body[dir="rtl"] .registration-container {
+    direction: rtl;
+    text-align: right;
+}
+
+body[dir="rtl"] .form-card h2,
+body[dir="rtl"] .brief-request-section h2 {
+    text-align: right;
+}
+
+body[dir="rtl"] .package-section {
+    text-align: right;
+}
+
+@media(max-width: 768px) {
+    body[dir="rtl"] nav {
+        left: -110%;
+        right: auto;
+        border-left: none;
+        border-right: 1px solid var(--border);
+        border-radius: 0 0 20px 0;
+    }
+    body[dir="rtl"] nav.active {
+        left: 0;
+        right: auto;
+    }
+}
+
+/* ===================== LANG TOGGLE BUTTON ===================== */
+
+#langToggle {
+    background: none;
+    border: 1.5px solid rgba(79,209,197,0.4);
+    color: var(--teal);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 20px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 38px;
+    text-align: center;
+}
+
+#langToggle:hover {
+    background: rgba(79,209,197,0.12);
+    border-color: var(--teal);
+    box-shadow: 0 0 14px var(--teal-glow);
+    transform: scale(1.05);
+}
+
+/* ===================== LOGO AS LINK ===================== */
+
+a.logo {
+    text-decoration: none;
+    display: inline-block;
+}
+
+a.logo:hover {
+    transform: scale(1.08);
+    filter: brightness(1.2);
+}

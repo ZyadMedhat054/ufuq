@@ -373,3 +373,348 @@ window.addEventListener('load', () => {
     }, { threshold: 0.1 });
     obs.observe(footer);
 })();
+
+/* ===================== LANGUAGE TOGGLE (AR/EN) ===================== */
+(function () {
+
+    const translations = {
+        en: {
+            /* NAV */
+            'nav-home':        'Home',
+            'nav-about':       'About',
+            'nav-services':    'Services',
+            'nav-portfolio':   'Portfolio',
+            'nav-reviews':     'Reviews',
+            'nav-contact':     'Contact',
+
+            /* INDEX */
+            'hero-title':      'Empowering Brands Through<br>Smart Digital Marketing',
+            'hero-subtitle':   'Your partner in growth, creativity, and digital visibility.',
+            'hero-btn':        'Start Your Journey Today →',
+
+            /* ABOUT */
+            'about-page-title':   'About UFUQ',
+            'about-card1-title':  'Who We Are',
+            'about-card1-text':   'UFUQ is more than just a digital marketing service — it\'s a vision. Founded by a medical student who believes in the science of strategy and the art of storytelling.',
+            'about-card2-title':  'What We Do',
+            'about-card2-text':   'We craft bold, effective digital marketing campaigns for businesses ready to grow — not just in numbers, but in real connection.',
+            'about-card3-title':  'Why We Exist',
+            'about-card3-text':   'In a noisy world, attention is currency. We help turn attention into meaningful action and long-term presence.',
+            'about-card4-title':  'Our Values',
+            'about-val1':         'Transparency: You see what we see.',
+            'about-val2':         'Creativity: We invent.',
+            'about-val3':         'Precision: Every detail counts.',
+            'about-val4':         'Partnership: You\'re a collaborator.',
+
+            /* SERVICES */
+            'services-title':  'Our Services',
+            'svc1-title':      'Social Media Marketing',
+            'svc1-text':       'Strategic social media campaigns that drive engagement and real business growth.',
+            'svc2-title':      'Ad Campaign Creation',
+            'svc2-text':       'High-converting Facebook, Instagram & TikTok ads built to maximize ROI.',
+            'svc3-title':      'Content Creation',
+            'svc3-text':       'Creative visuals and persuasive copy that strengthen your brand presence.',
+            'svc4-title':      'Brand Identity Design',
+            'svc4-text':       'Complete brand identity solutions from logo design to brand guidelines.',
+            'svc5-title':      'Strategic Planning & Analytics',
+            'svc5-text':       'Data-driven strategies and detailed performance analytics for smarter decisions.',
+            'svc6-title':      'Personal Branding',
+            'svc6-text':       'Professional personal branding solutions for entrepreneurs and leaders.',
+
+            /* PORTFOLIO */
+            'portfolio-title': 'Our Portfolio',
+            'port1-title':     'Social Media Campaign',
+            'port1-text':      'Complete social media strategy that increased engagement by 120%.',
+            'port2-title':     'Brand Identity Design',
+            'port2-text':      'Full brand identity including logo, colors, and marketing assets.',
+            'port3-title':     'Ad Campaign Strategy',
+            'port3-text':      'High-converting paid ads campaign with strong ROI results.',
+
+            /* REVIEWS */
+            'reviews-title':   'What Our Clients Say',
+            'stat1-num':       '50+',
+            'stat1-label':     'Happy Clients',
+            'stat2-num':       '4.9',
+            'stat2-label':     'Average Rating',
+            'stat3-num':       '100+',
+            'stat3-label':     'Completed Projects',
+            'rev1-text':       '"UFUQ transformed our social media presence completely. Our engagement increased by 300% in just 3 months!"',
+            'rev1-name':       'Ahmed Hassan',
+            'rev1-role':       'Tech Startup',
+            'rev2-text':       '"Professional service, creative content, and amazing results. Highly recommend for any business looking to grow online."',
+            'rev2-name':       'Sarah Mohamed',
+            'rev2-role':       'Fashion Brand',
+            'rev3-text':       '"The ad campaigns created by UFUQ brought us 50+ new customers every week. ROI was incredible!"',
+            'rev3-name':       'Omar Ali',
+            'rev3-role':       'Restaurant Chain',
+
+            /* CONTACT */
+            'contact-title':        'Get In Touch',
+            'contact-subtitle':     'Have a project in mind? We\'d love to hear from you. Send us a message and we\'ll respond within 24 hours.',
+            'contact-wa-title':     'WhatsApp',
+            'contact-email-title':  'Email',
+            'contact-resp-title':   'Response Time',
+            'contact-resp-val':     'Within 24 hours',
+            'contact-social-title': 'Follow Us',
+            'form-card-title':      'Send a Message',
+            'form-card-desc':       'Fill out the form below and we\'ll get back to you as soon as possible.',
+            'form-name-label':      'Full Name',
+            'form-name-ph':         'Your full name',
+            'form-email-label':     'Email',
+            'form-email-ph':        'your@email.com',
+            'form-subject-label':   'Subject',
+            'form-subject-default': 'Select a subject',
+            'form-message-label':   'Message',
+            'form-message-ph':      'Tell us about your project, goals, or any questions you have...',
+            'contact-submit-btn':   'Send via WhatsApp',
+
+            /* START YOUR JOURNEY */
+            'reg-title':        'Client Registration',
+            'personal-info':    'Personal Information',
+            'business-info':    'Business Information',
+            'service-sel':      'Service Selection',
+            'services-subtitle':'Services Needed',
+            'package-sel':      'Package Selection',
+            'other-req':        'Other Requirements',
+            'brief-section-title': 'Select Your Brief',
+            'brief-subtitle':   'Choose the type of brief you need',
+            'brief1-title':     'Branding Design Brief',
+            'brief1-text':      'Complete brand identity and design requirements',
+            'brief2-title':     'Social Media Management Brief',
+            'brief2-text':      'Social media strategy and content planning',
+            'brief3-title':     'Paid Advertising Brief',
+            'brief3-text':      'Advertising campaigns and targeting requirements',
+            'select-brief-btn': 'Select Brief',
+            'submit-reg-btn':   'Submit Registration',
+            'fn-ph':            'Full Name',
+            'cn-ph':            'Contact Number',
+            'wn-ph':            'WhatsApp Number',
+            'bn-ph':            'Brand/Business Name',
+            'it-ph':            'Industry Type',
+            'sl-ph':            'Social Media Page Link',
+            'od-ph':            'Additional details...',
+            'svc-chk1':         'Social Media Marketing',
+            'svc-chk2':         'Content Creation',
+            'svc-chk3':         'Strategic Planning & Analytics',
+            'svc-chk4':         'Ad Campaign Creation',
+            'svc-chk5':         'Brand Identity Design',
+            'svc-chk6':         'Personal Branding',
+
+            /* FOOTER */
+            'footer-brand-text':  'More than a digital marketing service — it\'s a vision. We craft bold, effective campaigns that turn attention into meaningful growth.',
+            'footer-links-title': 'Quick Links',
+            'footer-svc-title':   'Services',
+            'footer-ct-title':    'Contact',
+            'footer-response':    'Response within 24 hours',
+            'footer-worldwide':   'Available Worldwide',
+            'footer-copyright':   '© 2025 UFUQ. All rights reserved. Built with ❤️ and strategy.',
+            'footer-privacy':     'Privacy Policy',
+            'footer-terms':       'Terms of Service',
+            'footer-touch':       'Get In Touch',
+            'footer-svc-smm':     'Social Media Marketing',
+            'footer-svc-acc':     'Ad Campaign Creation',
+            'footer-svc-cc':      'Content Creation',
+            'footer-svc-bid':     'Brand Identity Design',
+            'footer-svc-sp':      'Strategic Planning',
+            'footer-svc-pb':      'Personal Branding',
+        },
+
+        ar: {
+            /* NAV */
+            'nav-home':        'الرئيسية',
+            'nav-about':       'من نحن',
+            'nav-services':    'الخدمات',
+            'nav-portfolio':   'أعمالنا',
+            'nav-reviews':     'التقييمات',
+            'nav-contact':     'تواصل معنا',
+
+            /* INDEX */
+            'hero-title':      'تمكين العلامات التجارية من خلال<br>التسويق الرقمي الذكي',
+            'hero-subtitle':   'شريكك في النمو والإبداع والحضور الرقمي.',
+            'hero-btn':        'ابدأ رحلتك اليوم ←',
+
+            /* ABOUT */
+            'about-page-title':   'عن أُفق',
+            'about-card1-title':  'من نحن',
+            'about-card1-text':   'أُفق أكثر من مجرد خدمة تسويق رقمي — إنها رؤية. أسسها طالب طب يؤمن بعلم الاستراتيجية وفن السرد.',
+            'about-card2-title':  'ماذا نفعل',
+            'about-card2-text':   'نصنع حملات تسويق رقمي جريئة وفعّالة للشركات المستعدة للنمو — ليس في الأرقام فحسب، بل في التواصل الحقيقي.',
+            'about-card3-title':  'لماذا نحن هنا',
+            'about-card3-text':   'في عالم مزدحم، الانتباه هو العملة. نساعدك على تحويل الانتباه إلى تأثير حقيقي وحضور طويل الأمد.',
+            'about-card4-title':  'قيمنا',
+            'about-val1':         'الشفافية: ترى ما نراه.',
+            'about-val2':         'الإبداع: نبتكر.',
+            'about-val3':         'الدقة: كل التفاصيل مهمة.',
+            'about-val4':         'الشراكة: أنت شريك في العمل.',
+
+            /* SERVICES */
+            'services-title':  'خدماتنا',
+            'svc1-title':      'التسويق عبر وسائل التواصل الاجتماعي',
+            'svc1-text':       'حملات استراتيجية تزيد التفاعل وتحقق نمواً حقيقياً للأعمال.',
+            'svc2-title':      'إنشاء الحملات الإعلانية',
+            'svc2-text':       'إعلانات عالية التحويل على فيسبوك وإنستغرام وتيك توك لتحقيق أقصى عائد على الاستثمار.',
+            'svc3-title':      'إنشاء المحتوى',
+            'svc3-text':       'محتوى مرئي إبداعي ونصوص مقنعة تعزز حضور علامتك التجارية.',
+            'svc4-title':      'تصميم الهوية التجارية',
+            'svc4-text':       'حلول متكاملة للهوية التجارية من تصميم الشعار إلى دليل العلامة.',
+            'svc5-title':      'التخطيط الاستراتيجي والتحليلات',
+            'svc5-text':       'استراتيجيات مبنية على البيانات وتحليلات أداء تفصيلية لاتخاذ قرارات أذكى.',
+            'svc6-title':      'العلامة الشخصية',
+            'svc6-text':       'حلول احترافية للعلامة الشخصية لرواد الأعمال والقادة.',
+
+            /* PORTFOLIO */
+            'portfolio-title': 'أعمالنا',
+            'port1-title':     'حملة تواصل اجتماعي',
+            'port1-text':      'استراتيجية متكاملة أدت إلى زيادة التفاعل بنسبة 120%.',
+            'port2-title':     'تصميم هوية تجارية',
+            'port2-text':      'هوية تجارية كاملة تشمل الشعار والألوان والمواد التسويقية.',
+            'port3-title':     'استراتيجية حملة إعلانية',
+            'port3-text':      'حملة إعلانات مدفوعة عالية التحويل بنتائج عائد استثمار ممتازة.',
+
+            /* REVIEWS */
+            'reviews-title':   'ماذا يقول عملاؤنا',
+            'stat1-num':       '+50',
+            'stat1-label':     'عميل سعيد',
+            'stat2-num':       '4.9',
+            'stat2-label':     'متوسط التقييم',
+            'stat3-num':       '+100',
+            'stat3-label':     'مشروع مكتمل',
+            'rev1-text':       '"أُفق غيّرت وجودنا على وسائل التواصل كلياً. زاد تفاعلنا بنسبة 300% في 3 أشهر فقط!"',
+            'rev1-name':       'أحمد حسان',
+            'rev1-role':       'شركة ناشئة تقنية',
+            'rev2-text':       '"خدمة احترافية ومحتوى إبداعي ونتائج مذهلة. أنصح به بشدة لأي شركة تسعى للنمو."',
+            'rev2-name':       'سارة محمد',
+            'rev2-role':       'علامة أزياء',
+            'rev3-text':       '"الحملات الإعلانية التي أنشأتها أُفق أحضرت لنا أكثر من 50 عميلاً جديداً أسبوعياً!"',
+            'rev3-name':       'عمر علي',
+            'rev3-role':       'سلسلة مطاعم',
+
+            /* CONTACT */
+            'contact-title':        'تواصل معنا',
+            'contact-subtitle':     'هل لديك مشروع في ذهنك؟ نحب أن نسمع منك. أرسل لنا رسالة وسنرد خلال 24 ساعة.',
+            'contact-wa-title':     'واتساب',
+            'contact-email-title':  'البريد الإلكتروني',
+            'contact-resp-title':   'وقت الاستجابة',
+            'contact-resp-val':     'خلال 24 ساعة',
+            'contact-social-title': 'تابعنا',
+            'form-card-title':      'أرسل رسالة',
+            'form-card-desc':       'أكمل النموذج أدناه وسنتواصل معك في أقرب وقت ممكن.',
+            'form-name-label':      'الاسم الكامل',
+            'form-name-ph':         'اسمك الكامل',
+            'form-email-label':     'البريد الإلكتروني',
+            'form-email-ph':        'بريدك@الإلكتروني',
+            'form-subject-label':   'الموضوع',
+            'form-subject-default': 'اختر موضوعاً',
+            'form-message-label':   'الرسالة',
+            'form-message-ph':      'أخبرنا عن مشروعك وأهدافك أو أي أسئلة لديك...',
+            'contact-submit-btn':   'أرسل عبر واتساب',
+
+            /* START YOUR JOURNEY */
+            'reg-title':        'تسجيل العميل',
+            'personal-info':    'المعلومات الشخصية',
+            'business-info':    'معلومات الأعمال',
+            'service-sel':      'اختيار الخدمة',
+            'services-subtitle':'الخدمات المطلوبة',
+            'package-sel':      'اختيار الباقة',
+            'other-req':        'متطلبات أخرى',
+            'brief-section-title': 'اختر موجزك',
+            'brief-subtitle':   'اختر نوع الموجز الذي تحتاجه',
+            'brief1-title':     'موجز تصميم العلامة التجارية',
+            'brief1-text':      'متطلبات الهوية التجارية والتصميم الكامل',
+            'brief2-title':     'موجز إدارة التواصل الاجتماعي',
+            'brief2-text':      'استراتيجية التواصل الاجتماعي وتخطيط المحتوى',
+            'brief3-title':     'موجز الإعلانات المدفوعة',
+            'brief3-text':      'حملات الإعلانات ومتطلبات الاستهداف',
+            'select-brief-btn': 'اختر الموجز',
+            'submit-reg-btn':   'إرسال التسجيل',
+            'fn-ph':            'الاسم الكامل',
+            'cn-ph':            'رقم الاتصال',
+            'wn-ph':            'رقم واتساب',
+            'bn-ph':            'اسم العلامة / الأعمال',
+            'it-ph':            'نوع الصناعة',
+            'sl-ph':            'رابط صفحة التواصل الاجتماعي',
+            'od-ph':            'تفاصيل إضافية...',
+            'svc-chk1':         'التسويق عبر التواصل الاجتماعي',
+            'svc-chk2':         'إنشاء المحتوى',
+            'svc-chk3':         'التخطيط الاستراتيجي والتحليلات',
+            'svc-chk4':         'إنشاء الحملات الإعلانية',
+            'svc-chk5':         'تصميم الهوية التجارية',
+            'svc-chk6':         'العلامة الشخصية',
+
+            /* FOOTER */
+            'footer-brand-text':  'أكثر من مجرد خدمة تسويق رقمي — إنها رؤية. نصنع حملات جريئة وفعّالة تحوّل الانتباه إلى نمو حقيقي.',
+            'footer-links-title': 'روابط سريعة',
+            'footer-svc-title':   'الخدمات',
+            'footer-ct-title':    'اتصل بنا',
+            'footer-response':    'الرد خلال 24 ساعة',
+            'footer-worldwide':   'متاح في جميع أنحاء العالم',
+            'footer-copyright':   '© 2025 أُفق. جميع الحقوق محفوظة. صُنع بـ ❤️ واستراتيجية.',
+            'footer-privacy':     'سياسة الخصوصية',
+            'footer-terms':       'شروط الخدمة',
+            'footer-touch':       'تواصل معنا',
+            'footer-svc-smm':     'التسويق عبر التواصل الاجتماعي',
+            'footer-svc-acc':     'إنشاء الحملات الإعلانية',
+            'footer-svc-cc':      'إنشاء المحتوى',
+            'footer-svc-bid':     'تصميم الهوية التجارية',
+            'footer-svc-sp':      'التخطيط الاستراتيجي',
+            'footer-svc-pb':      'العلامة الشخصية',
+        }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    function applyLanguage(lang) {
+        const dict = translations[lang];
+        document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+        document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+        // text content
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[key] !== undefined) el.textContent = dict[key];
+        });
+
+        // innerHTML (for elements with <br> or <span>)
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+            const key = el.getAttribute('data-i18n-html');
+            if (dict[key] !== undefined) el.innerHTML = dict[key];
+        });
+
+        // placeholders
+        document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+            const key = el.getAttribute('data-i18n-ph');
+            if (dict[key] !== undefined) el.placeholder = dict[key];
+        });
+
+        // select first option text
+        document.querySelectorAll('[data-i18n-opt]').forEach(el => {
+            const key = el.getAttribute('data-i18n-opt');
+            if (dict[key] !== undefined) el.options[0].text = dict[key];
+        });
+
+        const btn = document.getElementById('langToggle');
+        if (btn) btn.textContent = lang === 'ar' ? 'EN' : 'ع';
+
+        currentLang = lang;
+        localStorage.setItem('lang', lang);
+    }
+
+    // Inject button into nav-icons
+    window.addEventListener('DOMContentLoaded', () => {
+        const navIcons = document.querySelector('.nav-icons');
+        if (navIcons) {
+            const langBtn = document.createElement('button');
+            langBtn.id = 'langToggle';
+            langBtn.textContent = currentLang === 'ar' ? 'EN' : 'ع';
+            langBtn.setAttribute('title', 'Toggle Language');
+            // Insert before themeToggle
+            navIcons.insertBefore(langBtn, navIcons.firstChild);
+            langBtn.addEventListener('click', () => {
+                applyLanguage(currentLang === 'ar' ? 'en' : 'ar');
+            });
+        }
+
+        // Apply saved language on load
+        applyLanguage(currentLang);
+    });
+})();

@@ -8,16 +8,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <header>
-    <div class="logo">UFUQ</div>
+    <a href="index.html" class="logo">UFUQ</a>
     <nav id="nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="reviews.html" class="active-link">Reviews</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" data-i18n="nav-home">Home</a>
+        <a href="about.html" data-i18n="nav-about">About</a>
+        <a href="services.html" data-i18n="nav-services">Services</a>
+        <a href="portfolio.html" data-i18n="nav-portfolio">Portfolio</a>
+        <a href="reviews.html" class="active-link" data-i18n="nav-reviews">Reviews</a>
+        <a href="contact.html" data-i18n="nav-contact">Contact</a>
     </nav>
     <div class="nav-icons">
         <button id="themeToggle">🌙</button>
@@ -26,74 +25,53 @@
 </header>
 
 <section class="reviews-section">
+    <h1 class="reviews-title" data-i18n="reviews-title">What Our Clients Say</h1>
 
-    <h1 class="reviews-title">What Our Clients Say</h1>
-
-    <!-- ===== Stats ===== -->
     <div class="reviews-stats">
-
         <div class="stat-box">
-            <h2>50+</h2>
-            <p>Happy Clients</p>
+            <h2 data-i18n="stat1-num">50+</h2>
+            <p data-i18n="stat1-label">Happy Clients</p>
             <div class="stars">★★★★★</div>
         </div>
-
         <div class="stat-box">
-            <h2>4.9</h2>
-            <p>Average Rating</p>
+            <h2 data-i18n="stat2-num">4.9</h2>
+            <p data-i18n="stat2-label">Average Rating</p>
             <div class="stars">★★★★★</div>
         </div>
-
         <div class="stat-box">
-            <h2>100+</h2>
-            <p>Completed Projects</p>
+            <h2 data-i18n="stat3-num">100+</h2>
+            <p data-i18n="stat3-label">Completed Projects</p>
             <div class="stars">★★★★★</div>
         </div>
-
     </div>
 
-    <!-- ===== Review Cards ===== -->
     <div class="reviews-grid">
-
         <div class="review-card">
             <div class="stars">★★★★★</div>
-            <p>
-                "UFUQ transformed our social media presence completely.
-                Our engagement increased by 300% in just 3 months!"
-            </p>
-            <h3>Ahmed Hassan</h3>
-            <span>Tech Startup</span>
+            <p data-i18n="rev1-text">"UFUQ transformed our social media presence completely. Our engagement increased by 300% in just 3 months!"</p>
+            <h3 data-i18n="rev1-name">Ahmed Hassan</h3>
+            <span data-i18n="rev1-role">Tech Startup</span>
         </div>
-
         <div class="review-card">
             <div class="stars">★★★★★</div>
-            <p>
-                "Professional service, creative content, and amazing results.
-                Highly recommend for any business looking to grow online."
-            </p>
-            <h3>Sarah Mohamed</h3>
-            <span>Fashion Brand</span>
+            <p data-i18n="rev2-text">"Professional service, creative content, and amazing results. Highly recommend for any business looking to grow online."</p>
+            <h3 data-i18n="rev2-name">Sarah Mohamed</h3>
+            <span data-i18n="rev2-role">Fashion Brand</span>
         </div>
-
         <div class="review-card">
             <div class="stars">★★★★★</div>
-            <p>
-                "The ad campaigns created by UFUQ brought us 50+ new customers every week.
-                ROI was incredible!"
-            </p>
-            <h3>Omar Ali</h3>
-            <span>Restaurant Chain</span>
+            <p data-i18n="rev3-text">"The ad campaigns created by UFUQ brought us 50+ new customers every week. ROI was incredible!"</p>
+            <h3 data-i18n="rev3-name">Omar Ali</h3>
+            <span data-i18n="rev3-role">Restaurant Chain</span>
         </div>
-
     </div>
-
 </section>
 
 <footer>
     <div class="footer-grid">
         <div class="footer-brand">
             <span class="footer-logo">UFUQ</span>
-            <p>More than a digital marketing service — it's a vision. We craft bold, effective campaigns that turn attention into meaningful growth.</p>
+            <p data-i18n="footer-brand-text">More than a digital marketing service — it's a vision. We craft bold, effective campaigns that turn attention into meaningful growth.</p>
             <div class="footer-social">
                 <a href="#" title="Instagram">📸</a>
                 <a href="#" title="LinkedIn">👔</a>
@@ -102,45 +80,44 @@
             </div>
         </div>
         <div class="footer-col">
-            <h4>Quick Links</h4>
+            <h4 data-i18n="footer-links-title">Quick Links</h4>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="reviews.html">Reviews</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+                <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                <li><a href="services.html" data-i18n="nav-services">Services</a></li>
+                <li><a href="portfolio.html" data-i18n="nav-portfolio">Portfolio</a></li>
+                <li><a href="reviews.html" data-i18n="nav-reviews">Reviews</a></li>
+                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
             </ul>
         </div>
         <div class="footer-col">
-            <h4>Services</h4>
+            <h4 data-i18n="footer-svc-title">Services</h4>
             <ul>
-                <li><a href="services.html">Social Media Marketing</a></li>
-                <li><a href="services.html">Ad Campaign Creation</a></li>
-                <li><a href="services.html">Content Creation</a></li>
-                <li><a href="services.html">Brand Identity Design</a></li>
-                <li><a href="services.html">Strategic Planning</a></li>
-                <li><a href="services.html">Personal Branding</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-smm">Social Media Marketing</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-acc">Ad Campaign Creation</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-cc">Content Creation</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-bid">Brand Identity Design</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-sp">Strategic Planning</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-pb">Personal Branding</a></li>
             </ul>
         </div>
         <div class="footer-col">
-            <h4>Contact</h4>
+            <h4 data-i18n="footer-ct-title">Contact</h4>
             <div class="footer-contact-item"><span>📱</span><a href="https://wa.me/201016273403">+20 101 627 3403</a></div>
             <div class="footer-contact-item"><span>📧</span><a href="mailto:hello@ufuq.co">hello@ufuq.co</a></div>
-            <div class="footer-contact-item"><span>🕒</span><span>Response within 24 hours</span></div>
-            <div class="footer-contact-item"><span>🌍</span><span>Available Worldwide</span></div>
+            <div class="footer-contact-item"><span>🕒</span><span data-i18n="footer-response">Response within 24 hours</span></div>
+            <div class="footer-contact-item"><span>🌍</span><span data-i18n="footer-worldwide">Available Worldwide</span></div>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2025 <span>UFUQ</span>. All rights reserved. Built with ❤️ and strategy.</p>
+        <p><span data-i18n="footer-copyright">© 2025 UFUQ. All rights reserved. Built with ❤️ and strategy.</span></p>
         <div class="footer-bottom-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="contact.html">Get In Touch</a>
+            <a href="#" data-i18n="footer-privacy">Privacy Policy</a>
+            <a href="#" data-i18n="footer-terms">Terms of Service</a>
+            <a href="contact.html" data-i18n="footer-touch">Get In Touch</a>
         </div>
     </div>
 </footer>
-
 <script src="script.js"></script>
 </body>
 </html>

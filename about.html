@@ -5,24 +5,19 @@
     <title>about - UFUQ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <header>
-      <div class="logo">UFUQ</div>
-
+      <a href="index.html" class="logo">UFUQ</a>
       <nav id="nav">
-        <a href="index.html">Home</a>
-        <a href="about.html" class="active-link">About</a>
-        <a href="services.html">Services</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="reviews.html">Reviews</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" data-i18n="nav-home">Home</a>
+        <a href="about.html" class="active-link" data-i18n="nav-about">About</a>
+        <a href="services.html" data-i18n="nav-services">Services</a>
+        <a href="portfolio.html" data-i18n="nav-portfolio">Portfolio</a>
+        <a href="reviews.html" data-i18n="nav-reviews">Reviews</a>
+        <a href="contact.html" data-i18n="nav-contact">Contact</a>
       </nav>
-
       <div class="nav-icons">
         <button id="themeToggle">🌙</button>
         <button id="menuBtn">☰</button>
@@ -31,97 +26,86 @@
 
     <section class="about-section">
       <div class="about-container">
-        <h1 class="about-title">About UFUQ</h1>
+        <h1 class="about-title" data-i18n="about-page-title">About UFUQ</h1>
 
         <div class="about-card">
-          <h2>Who We Are</h2>
-          <p>
-            UFUQ is more than just a digital marketing service — it's a vision.
-            Founded by a medical student who believes in the science of strategy
-            and the art of storytelling.
-          </p>
+          <h2 data-i18n="about-card1-title">Who We Are</h2>
+          <p data-i18n="about-card1-text">UFUQ is more than just a digital marketing service — it's a vision. Founded by a medical student who believes in the science of strategy and the art of storytelling.</p>
         </div>
 
         <div class="about-card">
-          <h2>What We Do</h2>
-          <p>
-            We craft bold, effective digital marketing campaigns for businesses
-            ready to grow — not just in numbers, but in real connection.
-          </p>
+          <h2 data-i18n="about-card2-title">What We Do</h2>
+          <p data-i18n="about-card2-text">We craft bold, effective digital marketing campaigns for businesses ready to grow — not just in numbers, but in real connection.</p>
         </div>
 
         <div class="about-card">
-          <h2>Why We Exist</h2>
-          <p>
-            In a noisy world, attention is currency. We help turn attention into
-            meaningful action and long-term presence.
-          </p>
+          <h2 data-i18n="about-card3-title">Why We Exist</h2>
+          <p data-i18n="about-card3-text">In a noisy world, attention is currency. We help turn attention into meaningful action and long-term presence.</p>
         </div>
 
         <div class="about-card">
-          <h2>Our Values</h2>
+          <h2 data-i18n="about-card4-title">Our Values</h2>
           <ul>
-            <li><strong>Transparency:</strong> You see what we see.</li>
-            <li><strong>Creativity:</strong> We invent.</li>
-            <li><strong>Precision:</strong> Every detail counts.</li>
-            <li><strong>Partnership:</strong> You're a collaborator.</li>
+            <li><strong>—</strong> <span data-i18n="about-val1">Transparency: You see what we see.</span></li>
+            <li><strong>—</strong> <span data-i18n="about-val2">Creativity: We invent.</span></li>
+            <li><strong>—</strong> <span data-i18n="about-val3">Precision: Every detail counts.</span></li>
+            <li><strong>—</strong> <span data-i18n="about-val4">Partnership: You're a collaborator.</span></li>
           </ul>
         </div>
       </div>
     </section>
 
     <footer>
-    <div class="footer-grid">
+      <div class="footer-grid">
         <div class="footer-brand">
-            <span class="footer-logo">UFUQ</span>
-            <p>More than a digital marketing service — it's a vision. We craft bold, effective campaigns that turn attention into meaningful growth.</p>
-            <div class="footer-social">
-                <a href="#" title="Instagram">📸</a>
-                <a href="#" title="LinkedIn">👔</a>
-                <a href="#" title="TikTok">🎵</a>
-                <a href="#" title="Facebook">📘</a>
-            </div>
+          <span class="footer-logo">UFUQ</span>
+          <p data-i18n="footer-brand-text">More than a digital marketing service — it's a vision. We craft bold, effective campaigns that turn attention into meaningful growth.</p>
+          <div class="footer-social">
+            <a href="#" title="Instagram">📸</a>
+            <a href="#" title="LinkedIn">👔</a>
+            <a href="#" title="TikTok">🎵</a>
+            <a href="#" title="Facebook">📘</a>
+          </div>
         </div>
         <div class="footer-col">
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="reviews.html">Reviews</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
+          <h4 data-i18n="footer-links-title">Quick Links</h4>
+          <ul>
+            <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+            <li><a href="about.html" data-i18n="nav-about">About</a></li>
+            <li><a href="services.html" data-i18n="nav-services">Services</a></li>
+            <li><a href="portfolio.html" data-i18n="nav-portfolio">Portfolio</a></li>
+            <li><a href="reviews.html" data-i18n="nav-reviews">Reviews</a></li>
+            <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+          </ul>
         </div>
         <div class="footer-col">
-            <h4>Services</h4>
-            <ul>
-                <li><a href="services.html">Social Media Marketing</a></li>
-                <li><a href="services.html">Ad Campaign Creation</a></li>
-                <li><a href="services.html">Content Creation</a></li>
-                <li><a href="services.html">Brand Identity Design</a></li>
-                <li><a href="services.html">Strategic Planning</a></li>
-                <li><a href="services.html">Personal Branding</a></li>
-            </ul>
+          <h4 data-i18n="footer-svc-title">Services</h4>
+          <ul>
+            <li><a href="services.html" data-i18n="footer-svc-smm">Social Media Marketing</a></li>
+            <li><a href="services.html" data-i18n="footer-svc-acc">Ad Campaign Creation</a></li>
+            <li><a href="services.html" data-i18n="footer-svc-cc">Content Creation</a></li>
+            <li><a href="services.html" data-i18n="footer-svc-bid">Brand Identity Design</a></li>
+            <li><a href="services.html" data-i18n="footer-svc-sp">Strategic Planning</a></li>
+            <li><a href="services.html" data-i18n="footer-svc-pb">Personal Branding</a></li>
+          </ul>
         </div>
         <div class="footer-col">
-            <h4>Contact</h4>
-            <div class="footer-contact-item"><span>📱</span><a href="https://wa.me/201016273403">+20 101 627 3403</a></div>
-            <div class="footer-contact-item"><span>📧</span><a href="mailto:hello@ufuq.co">hello@ufuq.co</a></div>
-            <div class="footer-contact-item"><span>🕒</span><span>Response within 24 hours</span></div>
-            <div class="footer-contact-item"><span>🌍</span><span>Available Worldwide</span></div>
+          <h4 data-i18n="footer-ct-title">Contact</h4>
+          <div class="footer-contact-item"><span>📱</span><a href="https://wa.me/201016273403">+20 101 627 3403</a></div>
+          <div class="footer-contact-item"><span>📧</span><a href="mailto:hello@ufuq.co">hello@ufuq.co</a></div>
+          <div class="footer-contact-item"><span>🕒</span><span data-i18n="footer-response">Response within 24 hours</span></div>
+          <div class="footer-contact-item"><span>🌍</span><span data-i18n="footer-worldwide">Available Worldwide</span></div>
         </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2025 <span>UFUQ</span>. All rights reserved. Built with ❤️ and strategy.</p>
+      </div>
+      <div class="footer-bottom">
+        <p><span data-i18n="footer-copyright">© 2025 UFUQ. All rights reserved. Built with ❤️ and strategy.</span></p>
         <div class="footer-bottom-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="contact.html">Get In Touch</a>
+          <a href="#" data-i18n="footer-privacy">Privacy Policy</a>
+          <a href="#" data-i18n="footer-terms">Terms of Service</a>
+          <a href="contact.html" data-i18n="footer-touch">Get In Touch</a>
         </div>
-    </div>
-</footer>
-
-<script src="script.js"></script>
+      </div>
+    </footer>
+    <script src="script.js"></script>
   </body>
 </html>

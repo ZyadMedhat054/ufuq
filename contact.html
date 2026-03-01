@@ -8,16 +8,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <header>
-    <div class="logo">UFUQ</div>
+    <a href="index.html" class="logo">UFUQ</a>
     <nav id="nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="reviews.html">Reviews</a>
-        <a href="contact.html" class="active-link">Contact</a>
+        <a href="index.html" data-i18n="nav-home">Home</a>
+        <a href="about.html" data-i18n="nav-about">About</a>
+        <a href="services.html" data-i18n="nav-services">Services</a>
+        <a href="portfolio.html" data-i18n="nav-portfolio">Portfolio</a>
+        <a href="reviews.html" data-i18n="nav-reviews">Reviews</a>
+        <a href="contact.html" class="active-link" data-i18n="nav-contact">Contact</a>
     </nav>
     <div class="nav-icons">
         <button id="themeToggle">🌙</button>
@@ -26,35 +25,34 @@
 </header>
 
 <section class="contact-section">
-    <h1 class="contact-title">Get In Touch</h1>
-    <p class="contact-subtitle">Have a project in mind? We'd love to hear from you. Send us a message and we'll respond within 24 hours.</p>
+    <h1 class="contact-title" data-i18n="contact-title">Get In Touch</h1>
+    <p class="contact-subtitle" data-i18n="contact-subtitle">Have a project in mind? We'd love to hear from you. Send us a message and we'll respond within 24 hours.</p>
 
     <div class="contact-wrapper">
-
         <div class="contact-info">
             <div class="contact-info-card">
                 <div class="contact-info-icon">📱</div>
                 <div class="contact-info-text">
-                    <h3>WhatsApp</h3>
+                    <h3 data-i18n="contact-wa-title">WhatsApp</h3>
                     <p><a href="https://wa.me/201016273403" target="_blank">+20 101 627 3403</a></p>
                 </div>
             </div>
             <div class="contact-info-card">
                 <div class="contact-info-icon">📧</div>
                 <div class="contact-info-text">
-                    <h3>Email</h3>
+                    <h3 data-i18n="contact-email-title">Email</h3>
                     <p><a href="mailto:hello@ufuq.co">hello@ufuq.co</a></p>
                 </div>
             </div>
             <div class="contact-info-card">
                 <div class="contact-info-icon">🕒</div>
                 <div class="contact-info-text">
-                    <h3>Response Time</h3>
-                    <p>Within 24 hours</p>
+                    <h3 data-i18n="contact-resp-title">Response Time</h3>
+                    <p data-i18n="contact-resp-val">Within 24 hours</p>
                 </div>
             </div>
             <div class="social-card">
-                <h3>Follow Us</h3>
+                <h3 data-i18n="contact-social-title">Follow Us</h3>
                 <div class="social-links">
                     <a href="#" class="social-btn">📸 Instagram</a>
                     <a href="#" class="social-btn">👔 LinkedIn</a>
@@ -65,22 +63,22 @@
         </div>
 
         <div class="contact-form-card">
-            <h2>Send a Message</h2>
-            <p class="form-desc">Fill out the form below and we'll get back to you as soon as possible.</p>
+            <h2 data-i18n="form-card-title">Send a Message</h2>
+            <p class="form-desc" data-i18n="form-card-desc">Fill out the form below and we'll get back to you as soon as possible.</p>
             <div class="contact-form">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="contactName">Full Name</label>
-                        <input type="text" id="contactName" placeholder="Your full name" autocomplete="name">
+                        <label for="contactName" data-i18n="form-name-label">Full Name</label>
+                        <input type="text" id="contactName" data-i18n-ph="form-name-ph" placeholder="Your full name" autocomplete="name">
                     </div>
                     <div class="form-group">
-                        <label for="contactEmail">Email</label>
-                        <input type="email" id="contactEmail" placeholder="your@email.com" autocomplete="email">
+                        <label for="contactEmail" data-i18n="form-email-label">Email</label>
+                        <input type="email" id="contactEmail" data-i18n-ph="form-email-ph" placeholder="your@email.com" autocomplete="email">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="contactSubject">Subject</label>
-                    <select id="contactSubject">
+                    <label for="contactSubject" data-i18n="form-subject-label">Subject</label>
+                    <select id="contactSubject" data-i18n-opt="form-subject-default">
                         <option value="">Select a subject</option>
                         <option>Social Media Marketing</option>
                         <option>Ad Campaign Creation</option>
@@ -92,14 +90,13 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="contactMessage">Message</label>
-                    <textarea id="contactMessage" placeholder="Tell us about your project, goals, or any questions you have..."></textarea>
+                    <label for="contactMessage" data-i18n="form-message-label">Message</label>
+                    <textarea id="contactMessage" data-i18n-ph="form-message-ph" placeholder="Tell us about your project, goals, or any questions you have..."></textarea>
                 </div>
-                <button class="submit-btn" onclick="sendContactToWhatsApp()">Send via WhatsApp</button>
+                <button class="submit-btn" onclick="sendContactToWhatsApp()" data-i18n="contact-submit-btn">Send via WhatsApp</button>
                 <div class="success-msg" id="successMsg">Opening WhatsApp with your message...</div>
             </div>
         </div>
-
     </div>
 </section>
 
@@ -107,7 +104,7 @@
     <div class="footer-grid">
         <div class="footer-brand">
             <span class="footer-logo">UFUQ</span>
-            <p>More than a digital marketing service. We craft bold, effective campaigns that turn attention into meaningful growth.</p>
+            <p data-i18n="footer-brand-text">More than a digital marketing service — it's a vision. We craft bold, effective campaigns that turn attention into meaningful growth.</p>
             <div class="footer-social">
                 <a href="#" title="Instagram">📸</a>
                 <a href="#" title="LinkedIn">👔</a>
@@ -116,45 +113,44 @@
             </div>
         </div>
         <div class="footer-col">
-            <h4>Quick Links</h4>
+            <h4 data-i18n="footer-links-title">Quick Links</h4>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="reviews.html">Reviews</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+                <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                <li><a href="services.html" data-i18n="nav-services">Services</a></li>
+                <li><a href="portfolio.html" data-i18n="nav-portfolio">Portfolio</a></li>
+                <li><a href="reviews.html" data-i18n="nav-reviews">Reviews</a></li>
+                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
             </ul>
         </div>
         <div class="footer-col">
-            <h4>Services</h4>
+            <h4 data-i18n="footer-svc-title">Services</h4>
             <ul>
-                <li><a href="services.html">Social Media Marketing</a></li>
-                <li><a href="services.html">Ad Campaign Creation</a></li>
-                <li><a href="services.html">Content Creation</a></li>
-                <li><a href="services.html">Brand Identity Design</a></li>
-                <li><a href="services.html">Strategic Planning</a></li>
-                <li><a href="services.html">Personal Branding</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-smm">Social Media Marketing</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-acc">Ad Campaign Creation</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-cc">Content Creation</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-bid">Brand Identity Design</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-sp">Strategic Planning</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-pb">Personal Branding</a></li>
             </ul>
         </div>
         <div class="footer-col">
-            <h4>Contact</h4>
+            <h4 data-i18n="footer-ct-title">Contact</h4>
             <div class="footer-contact-item"><span>📱</span><a href="https://wa.me/201016273403">+20 101 627 3403</a></div>
             <div class="footer-contact-item"><span>📧</span><a href="mailto:hello@ufuq.co">hello@ufuq.co</a></div>
-            <div class="footer-contact-item"><span>🕒</span><span>Response within 24 hours</span></div>
-            <div class="footer-contact-item"><span>🌍</span><span>Available Worldwide</span></div>
+            <div class="footer-contact-item"><span>🕒</span><span data-i18n="footer-response">Response within 24 hours</span></div>
+            <div class="footer-contact-item"><span>🌍</span><span data-i18n="footer-worldwide">Available Worldwide</span></div>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>2025 <span>UFUQ</span>. All rights reserved. Built with strategy and vision.</p>
+        <p><span data-i18n="footer-copyright">© 2025 UFUQ. All rights reserved. Built with ❤️ and strategy.</span></p>
         <div class="footer-bottom-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="contact.html">Get In Touch</a>
+            <a href="#" data-i18n="footer-privacy">Privacy Policy</a>
+            <a href="#" data-i18n="footer-terms">Terms of Service</a>
+            <a href="contact.html" data-i18n="footer-touch">Get In Touch</a>
         </div>
     </div>
 </footer>
-
 <script src="script.js"></script>
 </body>
 </html>

@@ -4,28 +4,20 @@
     <meta charset="UTF-8">
     <title>Start Your Journey</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- CSS FILE -->
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
 <header>
-    <div class="logo">UFUQ</div>
-
-   <nav id="nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="reviews.html">Reviews</a>
-        <a href="contact.html">Contact</a>
+    <a href="index.html" class="logo">UFUQ</a>
+    <nav id="nav">
+        <a href="index.html" data-i18n="nav-home">Home</a>
+        <a href="about.html" data-i18n="nav-about">About</a>
+        <a href="services.html" data-i18n="nav-services">Services</a>
+        <a href="portfolio.html" data-i18n="nav-portfolio">Portfolio</a>
+        <a href="reviews.html" data-i18n="nav-reviews">Reviews</a>
+        <a href="contact.html" data-i18n="nav-contact">Contact</a>
     </nav>
-
     <div class="nav-icons">
         <button id="themeToggle">☀️</button>
         <button id="menuBtn">☰</button>
@@ -34,23 +26,23 @@
 
 <section class="registration-section">
 <div class="registration-container">
-<h1 class="registration-title">Client Registration</h1>
+<h1 class="registration-title" data-i18n="reg-title">Client Registration</h1>
 
 <div class="form-card">
-<h2>Personal Information</h2>
+<h2 data-i18n="personal-info">Personal Information</h2>
 <div class="form-grid">
-<input type="text" id="fullName" placeholder="Full Name">
-<input type="text" id="contactNumber" placeholder="Contact Number">
-<input type="text" id="whatsappNumber" placeholder="WhatsApp Number">
+<input type="text" id="fullName" data-i18n-ph="fn-ph" placeholder="Full Name">
+<input type="text" id="contactNumber" data-i18n-ph="cn-ph" placeholder="Contact Number">
+<input type="text" id="whatsappNumber" data-i18n-ph="wn-ph" placeholder="WhatsApp Number">
 </div>
 </div>
 
 <div class="form-card">
-<h2>Business Information</h2>
+<h2 data-i18n="business-info">Business Information</h2>
 <div class="form-grid">
-<input type="text" id="businessName" placeholder="Brand/Business Name">
-<input type="text" id="industryType" placeholder="Industry Type">
-<input type="text" id="socialLink" placeholder="Social Media Page Link">
+<input type="text" id="businessName" data-i18n-ph="bn-ph" placeholder="Brand/Business Name">
+<input type="text" id="industryType" data-i18n-ph="it-ph" placeholder="Industry Type">
+<input type="text" id="socialLink" data-i18n-ph="sl-ph" placeholder="Social Media Page Link">
 <select id="platform">
 <option>Select Platform</option>
 <option>Instagram</option>
@@ -62,29 +54,22 @@
 </div>
 
 <div class="form-card">
-    <h2>Service Selection</h2>
-
-    <p class="services-subtitle">Services Needed</p>
-
+    <h2 data-i18n="service-sel">Service Selection</h2>
+    <p class="services-subtitle" data-i18n="services-subtitle">Services Needed</p>
     <div class="services-grid">
-
         <div class="services-column">
-            <label><input type="checkbox"> Social Media Marketing</label>
-            <label><input type="checkbox"> Content Creation</label>
-            <label><input type="checkbox"> Strategic Planning & Analytics</label>
+            <label><input type="checkbox"> <span data-i18n="svc-chk1">Social Media Marketing</span></label>
+            <label><input type="checkbox"> <span data-i18n="svc-chk2">Content Creation</span></label>
+            <label><input type="checkbox"> <span data-i18n="svc-chk3">Strategic Planning & Analytics</span></label>
         </div>
-
         <div class="services-column">
-            <label><input type="checkbox"> Ad Campaign Creation</label>
-            <label><input type="checkbox"> Brand Identity Design</label>
-            <label><input type="checkbox"> Personal Branding</label>
+            <label><input type="checkbox"> <span data-i18n="svc-chk4">Ad Campaign Creation</span></label>
+            <label><input type="checkbox"> <span data-i18n="svc-chk5">Brand Identity Design</span></label>
+            <label><input type="checkbox"> <span data-i18n="svc-chk6">Personal Branding</span></label>
         </div>
-
     </div>
-
     <div class="package-section">
-        <p class="services-subtitle">Package Selection</p>
-
+        <p class="services-subtitle" data-i18n="package-sel">Package Selection</p>
         <select id="packageSelect" class="package-select">
             <option>Select Package</option>
             <option>Basic</option>
@@ -94,53 +79,48 @@
     </div>
 </div>
 
-
 <div class="form-card">
-<h2>Other Requirements</h2>
-<textarea id="otherDetails" placeholder="Additional details..." rows="4"></textarea>
+<h2 data-i18n="other-req">Other Requirements</h2>
+<textarea id="otherDetails" data-i18n-ph="od-ph" placeholder="Additional details..." rows="4"></textarea>
 </div>
 
 <div class="brief-request-section">
-    <h2>Select Your Brief</h2>
-    <p class="brief-subtitle">Choose the type of brief you need</p>
-
+    <h2 data-i18n="brief-section-title">Select Your Brief</h2>
+    <p class="brief-subtitle" data-i18n="brief-subtitle">Choose the type of brief you need</p>
     <div class="brief-grid">
         <div class="brief-card" data-brief="Branding Design Brief:">
             <div class="brief-icon">🎨</div>
-            <h3>Branding Design Brief</h3>
-            <p>Complete brand identity and design requirements</p>
-            <button type="button" class="select-brief-btn">Select Brief</button>
+            <h3 data-i18n="brief1-title">Branding Design Brief</h3>
+            <p data-i18n="brief1-text">Complete brand identity and design requirements</p>
+            <button type="button" class="select-brief-btn" data-i18n="select-brief-btn">Select Brief</button>
         </div>
-
         <div class="brief-card" data-brief="Social Media Management Brief">
             <div class="brief-icon">🔗</div>
-            <h3>Social Media Management Brief</h3>
-            <p>Social media strategy and content planning</p>
-            <button type="button" class="select-brief-btn">Select Brief</button>
+            <h3 data-i18n="brief2-title">Social Media Management Brief</h3>
+            <p data-i18n="brief2-text">Social media strategy and content planning</p>
+            <button type="button" class="select-brief-btn" data-i18n="select-brief-btn">Select Brief</button>
         </div>
-
         <div class="brief-card" data-brief="Paid Advertising Brief:">
             <div class="brief-icon">🎯</div>
-            <h3>Paid Advertising Brief</h3>
-            <p>Advertising campaigns and targeting requirements</p>
-            <button type="button" class="select-brief-btn">Select Brief</button>
+            <h3 data-i18n="brief3-title">Paid Advertising Brief</h3>
+            <p data-i18n="brief3-text">Advertising campaigns and targeting requirements</p>
+            <button type="button" class="select-brief-btn" data-i18n="select-brief-btn">Select Brief</button>
         </div>
     </div>
 </div>
 
 <div class="submit-area">
-<button onclick="sendToWhatsApp()" class="btn">Submit Registration</button>
+<button onclick="sendToWhatsApp()" class="btn" data-i18n="submit-reg-btn">Submit Registration</button>
 </div>
 
 </div>
 </section>
 
-<!-- JS FILE -->
 <footer>
     <div class="footer-grid">
         <div class="footer-brand">
             <span class="footer-logo">UFUQ</span>
-            <p>More than a digital marketing service — it's a vision. We craft bold, effective campaigns that turn attention into meaningful growth.</p>
+            <p data-i18n="footer-brand-text">More than a digital marketing service — it's a vision. We craft bold, effective campaigns that turn attention into meaningful growth.</p>
             <div class="footer-social">
                 <a href="#" title="Instagram">📸</a>
                 <a href="#" title="LinkedIn">👔</a>
@@ -149,46 +129,44 @@
             </div>
         </div>
         <div class="footer-col">
-            <h4>Quick Links</h4>
+            <h4 data-i18n="footer-links-title">Quick Links</h4>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="reviews.html">Reviews</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+                <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                <li><a href="services.html" data-i18n="nav-services">Services</a></li>
+                <li><a href="portfolio.html" data-i18n="nav-portfolio">Portfolio</a></li>
+                <li><a href="reviews.html" data-i18n="nav-reviews">Reviews</a></li>
+                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
             </ul>
         </div>
         <div class="footer-col">
-            <h4>Services</h4>
+            <h4 data-i18n="footer-svc-title">Services</h4>
             <ul>
-                <li><a href="services.html">Social Media Marketing</a></li>
-                <li><a href="services.html">Ad Campaign Creation</a></li>
-                <li><a href="services.html">Content Creation</a></li>
-                <li><a href="services.html">Brand Identity Design</a></li>
-                <li><a href="services.html">Strategic Planning</a></li>
-                <li><a href="services.html">Personal Branding</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-smm">Social Media Marketing</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-acc">Ad Campaign Creation</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-cc">Content Creation</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-bid">Brand Identity Design</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-sp">Strategic Planning</a></li>
+                <li><a href="services.html" data-i18n="footer-svc-pb">Personal Branding</a></li>
             </ul>
         </div>
         <div class="footer-col">
-            <h4>Contact</h4>
+            <h4 data-i18n="footer-ct-title">Contact</h4>
             <div class="footer-contact-item"><span>📱</span><a href="https://wa.me/201016273403">+20 101 627 3403</a></div>
             <div class="footer-contact-item"><span>📧</span><a href="mailto:hello@ufuq.co">hello@ufuq.co</a></div>
-            <div class="footer-contact-item"><span>🕒</span><span>Response within 24 hours</span></div>
-            <div class="footer-contact-item"><span>🌍</span><span>Available Worldwide</span></div>
+            <div class="footer-contact-item"><span>🕒</span><span data-i18n="footer-response">Response within 24 hours</span></div>
+            <div class="footer-contact-item"><span>🌍</span><span data-i18n="footer-worldwide">Available Worldwide</span></div>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2025 <span>UFUQ</span>. All rights reserved. Built with ❤️ and strategy.</p>
+        <p><span data-i18n="footer-copyright">© 2025 UFUQ. All rights reserved. Built with ❤️ and strategy.</span></p>
         <div class="footer-bottom-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="contact.html">Get In Touch</a>
+            <a href="#" data-i18n="footer-privacy">Privacy Policy</a>
+            <a href="#" data-i18n="footer-terms">Terms of Service</a>
+            <a href="contact.html" data-i18n="footer-touch">Get In Touch</a>
         </div>
     </div>
 </footer>
-
 <script src="script.js"></script>
-
 </body>
 </html>
