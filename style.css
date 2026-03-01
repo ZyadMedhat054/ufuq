@@ -1813,9 +1813,20 @@ body.light-mode .social-btn:hover {
 
     .form-grid { grid-template-columns: 1fr; }
 
-    .contact-wrapper { grid-template-columns: 1fr; }
-    .contact-form-card { padding: 30px 22px; }
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .contact-form-card { padding: 28px 20px; }
     .form-row { grid-template-columns: 1fr; }
+    .contact-section { padding: 110px 5% 70px 5%; }
+    .contact-title { font-size: 34px; }
+    .contact-subtitle { font-size: 14px; margin-bottom: 40px; }
+    .contact-info-card { padding: 20px; gap: 14px; }
+    .contact-info-icon { width: 46px; height: 46px; font-size: 22px; }
+    .social-links { gap: 8px; }
+    .social-btn { padding: 8px 14px; font-size: 13px; }
+    .submit-btn { padding: 14px 24px; font-size: 15px; }
 
     .stat-box h2 { font-size: 48px; }
 }
@@ -1824,6 +1835,18 @@ body.light-mode .social-btn:hover {
     header { padding: 16px 5%; }
     .hero h1 { font-size: 26px; }
     .btn { padding: 12px 24px; font-size: 14px; }
+    .contact-section { padding: 100px 4% 60px 4%; }
+    .contact-title { font-size: 28px; }
+    .contact-form-card { padding: 22px 16px; }
+    .contact-form-card h2 { font-size: 20px; }
+    /* font-size 16px prevents iOS auto-zoom on focus */
+    .form-group input,
+    .form-group select,
+    .form-group textarea { font-size: 16px; }
+    .social-links { flex-wrap: wrap; }
+    .social-btn { flex: 1 1 calc(50% - 8px); justify-content: center; }
+    .contact-info-card { padding: 18px 16px; }
+    .contact-info-icon { width: 42px; height: 42px; font-size: 20px; border-radius: 10px; }
 }
 
 /* ===================== FOOTER ===================== */
