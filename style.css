@@ -1063,28 +1063,31 @@ body.light-mode .contact-title, body.light-mode .registration-title {
 /* ===================== CONTACT PAGE ===================== */
 
 .contact-section {
-    padding: 150px 8% 100px 8%;
+    padding: clamp(100px, 14vw, 160px) clamp(16px, 6vw, 8%) clamp(60px, 8vw, 100px);
     min-height: 100vh;
 }
 
 .contact-title {
     text-align: center;
-    font-size: 52px;
+    font-size: clamp(28px, 5vw, 52px);
     font-weight: 800;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
+    line-height: 1.15;
 }
 
 .contact-subtitle {
     text-align: center;
     color: var(--muted);
-    font-size: 16px;
-    margin-bottom: 80px;
+    font-size: clamp(14px, 2vw, 16px);
+    margin-bottom: clamp(36px, 6vw, 80px);
+    padding: 0 clamp(0px, 4vw, 60px);
+    line-height: 1.7;
 }
 
 .contact-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1.6fr;
-    gap: 50px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: clamp(20px, 4vw, 50px);
     max-width: 1100px;
     margin: auto;
     align-items: start;
@@ -1093,17 +1096,17 @@ body.light-mode .contact-title, body.light-mode .registration-title {
 .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: clamp(12px, 2vw, 20px);
 }
 
 .contact-info-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 28px 30px;
+    padding: clamp(16px, 3vw, 28px) clamp(18px, 3.5vw, 30px);
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: clamp(12px, 2vw, 20px);
     transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
                 border-color 0.3s ease,
                 box-shadow 0.3s ease;
@@ -1127,14 +1130,14 @@ body.light-mode .contact-title, body.light-mode .registration-title {
 
 .contact-info-card:hover {
     border-color: var(--teal);
-    transform: translateX(10px);
+    transform: translateX(8px);
     box-shadow: 0 8px 30px rgba(79,209,197,0.2);
 }
 
 .contact-info-icon {
-    font-size: 28px;
-    width: 56px;
-    height: 56px;
+    font-size: clamp(20px, 2.5vw, 28px);
+    width: clamp(44px, 5vw, 56px);
+    height: clamp(44px, 5vw, 56px);
     background: var(--teal-soft);
     border-radius: 14px;
     display: flex;
@@ -1149,8 +1152,9 @@ body.light-mode .contact-title, body.light-mode .registration-title {
     background: rgba(79,209,197,0.25);
 }
 
-.contact-info-text h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-.contact-info-text p  { font-size: 14px; color: var(--muted); }
+.contact-info-text { min-width: 0; }
+.contact-info-text h3 { font-size: clamp(13px, 1.5vw, 15px); font-weight: 600; margin-bottom: 4px; }
+.contact-info-text p  { font-size: clamp(12px, 1.4vw, 14px); color: var(--muted); word-break: break-word; }
 .contact-info-text a  { color: var(--teal); text-decoration: none; transition: color 0.2s; }
 .contact-info-text a:hover { text-decoration: underline; }
 
@@ -1158,28 +1162,30 @@ body.light-mode .contact-title, body.light-mode .registration-title {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 28px 30px;
+    padding: clamp(18px, 3vw, 28px) clamp(18px, 3.5vw, 30px);
     transition: border-color 0.3s ease;
 }
 .social-card:hover { border-color: rgba(79,209,197,0.4); }
-.social-card h3  { font-size: 16px; font-weight: 600; margin-bottom: 18px; }
-.social-links    { display: flex; gap: 12px; flex-wrap: wrap; }
+.social-card h3 { font-size: clamp(14px, 1.6vw, 16px); font-weight: 600; margin-bottom: 14px; }
+.social-links   { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
 .social-btn {
-    padding: 10px 20px;
+    padding: clamp(8px, 1.2vw, 10px) clamp(12px, 1.8vw, 20px);
     border-radius: 50px;
     border: 1px solid var(--border);
     background: var(--bg);
     color: var(--text);
     text-decoration: none;
-    font-size: 14px;
+    font-size: clamp(12px, 1.3vw, 14px);
     font-weight: 500;
     transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 7px;
     position: relative;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .social-btn::before {
@@ -1205,7 +1211,7 @@ body.light-mode .contact-title, body.light-mode .registration-title {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
-    padding: 50px 45px;
+    padding: clamp(24px, 4vw, 50px) clamp(20px, 4vw, 45px);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .contact-form-card:hover {
@@ -1213,14 +1219,14 @@ body.light-mode .contact-title, body.light-mode .registration-title {
     box-shadow: 0 20px 60px rgba(0,0,0,0.15);
 }
 
-.contact-form-card h2    { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
-.contact-form-card .form-desc { color: var(--muted); font-size: 14px; margin-bottom: 35px; }
-.contact-form            { display: flex; flex-direction: column; gap: 18px; }
-.form-row                { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.form-group              { display: flex; flex-direction: column; gap: 8px; }
+.contact-form-card h2    { font-size: clamp(20px, 2.5vw, 26px); font-weight: 700; margin-bottom: 8px; }
+.contact-form-card .form-desc { color: var(--muted); font-size: clamp(13px, 1.5vw, 14px); margin-bottom: clamp(20px, 3vw, 35px); line-height: 1.6; }
+.contact-form  { display: flex; flex-direction: column; gap: clamp(14px, 2vw, 18px); }
+.form-row      { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(12px, 2vw, 18px); }
+.form-group    { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
 
 .form-group label {
-    font-size: 12px;
+    font-size: clamp(10px, 1.2vw, 12px);
     font-weight: 700;
     color: var(--card-muted);
     text-transform: uppercase;
@@ -1232,15 +1238,18 @@ body.light-mode .contact-title, body.light-mode .registration-title {
 .form-group input,
 .form-group select,
 .form-group textarea {
-    padding: 14px 18px;
+    padding: clamp(11px, 1.5vw, 14px) clamp(14px, 1.8vw, 18px);
     border-radius: 12px;
     border: 1px solid var(--border);
     background: var(--bg);
     color: var(--text);
-    font-size: 15px;
+    font-size: 16px; /* 16px prevents iOS zoom */
     font-family: 'Poppins', sans-serif;
     outline: none;
+    width: 100%;
     transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .form-group input:focus,
@@ -1251,15 +1260,23 @@ body.light-mode .contact-title, body.light-mode .registration-title {
     transform: translateY(-2px);
 }
 
-.form-group textarea   { resize: none; min-height: 130px; }
+.form-group textarea   { resize: vertical; min-height: clamp(100px, 14vw, 130px); }
 .form-group select option { background: var(--surface); }
+
+/* Custom select arrow */
+.form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+}
 
 .submit-btn {
     background: linear-gradient(135deg, var(--teal), var(--teal-dark));
     color: #0f172a;
     border: none;
-    padding: 16px 40px;
-    font-size: 16px;
+    padding: clamp(13px, 1.8vw, 16px) clamp(24px, 3vw, 40px);
+    font-size: clamp(14px, 1.6vw, 16px);
     font-weight: 800;
     font-family: 'Poppins', sans-serif;
     border-radius: 50px;
@@ -1290,14 +1307,51 @@ body.light-mode .contact-title, body.light-mode .registration-title {
 .success-msg {
     display: none;
     text-align: center;
-    padding: 16px;
+    padding: clamp(12px, 2vw, 16px);
     background: rgba(79,209,197,0.08);
     border: 1px solid var(--teal);
     border-radius: 12px;
     color: var(--teal);
-    font-size: 15px;
+    font-size: clamp(13px, 1.5vw, 15px);
     font-weight: 600;
     animation: fadeInUp 0.4s ease both;
+}
+
+/* ===== CONTACT RESPONSIVE BREAKPOINTS ===== */
+
+@media (max-width: 860px) {
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    .contact-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+    .social-card {
+        grid-column: 1 / -1;
+    }
+    .social-links {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .contact-info-card:hover { transform: translateY(-4px) translateX(0); }
+}
+
+@media (max-width: 600px) {
+    .contact-info {
+        grid-template-columns: 1fr;
+    }
+    .social-links {
+        grid-template-columns: 1fr 1fr;
+    }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-form-card { padding: 24px 18px; }
+}
+
+@media (max-width: 400px) {
+    .social-links { grid-template-columns: 1fr; }
+    .contact-section { padding: 95px 14px 60px; }
 }
 
 /* ===================== REGISTRATION PAGE ===================== */
@@ -1813,21 +1867,6 @@ body.light-mode .social-btn:hover {
 
     .form-grid { grid-template-columns: 1fr; }
 
-    .contact-wrapper {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-    .contact-form-card { padding: 28px 20px; }
-    .form-row { grid-template-columns: 1fr; }
-    .contact-section { padding: 110px 5% 70px 5%; }
-    .contact-title { font-size: 34px; }
-    .contact-subtitle { font-size: 14px; margin-bottom: 40px; }
-    .contact-info-card { padding: 20px; gap: 14px; }
-    .contact-info-icon { width: 46px; height: 46px; font-size: 22px; }
-    .social-links { gap: 8px; }
-    .social-btn { padding: 8px 14px; font-size: 13px; }
-    .submit-btn { padding: 14px 24px; font-size: 15px; }
-
     .stat-box h2 { font-size: 48px; }
 }
 
@@ -1835,18 +1874,6 @@ body.light-mode .social-btn:hover {
     header { padding: 16px 5%; }
     .hero h1 { font-size: 26px; }
     .btn { padding: 12px 24px; font-size: 14px; }
-    .contact-section { padding: 100px 4% 60px 4%; }
-    .contact-title { font-size: 28px; }
-    .contact-form-card { padding: 22px 16px; }
-    .contact-form-card h2 { font-size: 20px; }
-    /* font-size 16px prevents iOS auto-zoom on focus */
-    .form-group input,
-    .form-group select,
-    .form-group textarea { font-size: 16px; }
-    .social-links { flex-wrap: wrap; }
-    .social-btn { flex: 1 1 calc(50% - 8px); justify-content: center; }
-    .contact-info-card { padding: 18px 16px; }
-    .contact-info-icon { width: 42px; height: 42px; font-size: 20px; border-radius: 10px; }
 }
 
 /* ===================== FOOTER ===================== */
