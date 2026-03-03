@@ -1478,6 +1478,21 @@ textarea:focus,
 .package-select {
     margin-top: 10px;
     cursor: pointer;
+    color-scheme: dark;
+}
+
+.package-select option {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.form-grid select {
+    color-scheme: dark;
+}
+
+.form-grid select option {
+    background: var(--bg);
+    color: var(--text);
 }
 
 .brief-request-section {
@@ -1726,6 +1741,17 @@ body.light-mode .package-select {
     background: #f8fafc !important;
     color: #111827 !important;
     border: 1.5px solid #cbd5e1 !important;
+    color-scheme: light;
+}
+
+body.light-mode .form-grid select {
+    color-scheme: light;
+}
+
+body.light-mode .package-select option,
+body.light-mode .form-grid select option {
+    background: #ffffff;
+    color: #111827;
 }
 
 body.light-mode .form-grid input:focus,
@@ -2250,4 +2276,145 @@ a.logo {
 a.logo:hover {
     transform: scale(1.08);
     filter: brightness(1.2);
+}
+
+/* ===== BRIEF 2-COLUMN GRID ===== */
+.brief-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+/* ===== BRIEF FORM VISIBILITY ===== */
+.brief-detail-form-hidden { display: none; }
+.brief-detail-form-visible {
+    display: block;
+    margin-top: 44px;
+    animation: fadeInUp 0.5s ease both;
+}
+
+/* ===== BRIEF FORM HEADER ===== */
+.brief-form-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+.brief-form-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--teal), #38bdf8);
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 8px 28px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+    letter-spacing: 0.4px;
+}
+.brief-form-subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+/* ===== BRIEF SECTION BLOCKS ===== */
+.brief-section-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 22px;
+    margin-bottom: 18px;
+    transition: border-color 0.3s;
+}
+.brief-section-block:hover { border-color: rgba(79,209,197,0.35); }
+
+.brief-section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 20px;
+}
+.brief-section-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    background: linear-gradient(135deg, var(--teal), #38bdf8);
+    color: #0f172a;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* ===== BRIEF FIELD GRID ===== */
+.brief-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+.brief-field-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+.brief-field-box:focus-within {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(79,209,197,0.12);
+}
+.brief-field-full { grid-column: 1 / -1; }
+
+.brief-field-box label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: 8px;
+}
+.brief-field-box input,
+.brief-field-box textarea,
+.brief-field-box select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    padding: 0;
+    resize: vertical;
+}
+.brief-field-box select { cursor: pointer; -webkit-appearance: none; color-scheme: dark; }
+.brief-field-box select option { background: #1e293b; color: var(--text); }
+.brief-field-box input::placeholder,
+.brief-field-box textarea::placeholder { color: var(--muted); opacity: 0.65; }
+
+/* ===== LIGHT MODE ===== */
+body.light-mode .brief-section-block { background: #ffffff; border: 1.5px solid #cbd5e1; }
+body.light-mode .brief-field-box { background: #f8fafc; border: 1.5px solid #cbd5e1; }
+body.light-mode .brief-field-box input,
+body.light-mode .brief-field-box textarea,
+body.light-mode .brief-field-box select { color: #1e293b; color-scheme: light; }
+body.light-mode .brief-field-box select option { background: #ffffff; color: #1e293b; }
+
+/* ===== RTL ===== */
+body[dir="rtl"] .brief-section-label { flex-direction: row-reverse; }
+body[dir="rtl"] .brief-section-block { text-align: right; }
+body[dir="rtl"] .brief-form-header   { text-align: right; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+    .brief-grid-2 { grid-template-columns: 1fr; }
+    .brief-fields-grid { grid-template-columns: 1fr; }
+    .brief-field-full { grid-column: 1; }
+    .brief-section-block { padding: 18px 14px; }
 }

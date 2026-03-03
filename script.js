@@ -67,6 +67,8 @@ if (localStorage.getItem('theme') === 'light') {
     document.body.classList.add('light-mode');
     if (themeToggle) themeToggle.textContent = '🌙';
 } else {
+    document.body.classList.remove('light-mode');
+    if (!localStorage.getItem('theme')) localStorage.setItem('theme', 'dark');
     if (themeToggle) themeToggle.textContent = '☀️';
 }
 
@@ -257,24 +259,46 @@ if (menuBtn) {
     });
 })();
 
-/* ===================== SERVICES GRID IN START YOUR JOURNEY ===================== */
-// Note: .services-grid inside forms uses checkbox labels, not .service-card
-// Brief selection
-let selectedBrief = '';
+/* ===================== BRIEF SELECTION ===================== */
+var selectedBrief = '';
 
-document.querySelectorAll('.select-brief-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.brief-card').forEach(card => {
-            card.style.borderColor = '';
-        });
-        const card = btn.closest('.brief-card');
-        if (card) {
-            card.style.borderColor = '#4fd1c5';
-            card.style.boxShadow = '0 0 30px rgba(79,209,197,0.35)';
-            selectedBrief = card.getAttribute('data-brief');
-        }
+function selectBrief(briefType) {
+    selectedBrief = briefType;
+
+    // Reset all cards
+    document.querySelectorAll('.brief-card').forEach(function(card) {
+        card.style.borderColor = '';
+        card.style.boxShadow = '';
     });
-});
+
+    // Highlight selected card
+    var selectedCard = document.querySelector('.brief-card[data-brief="' + briefType + '"]');
+    if (selectedCard) {
+        selectedCard.style.borderColor = '#4fd1c5';
+        selectedCard.style.boxShadow = '0 0 30px rgba(79,209,197,0.35)';
+    }
+
+    // Update badge label based on current language
+    var badge = document.getElementById('briefFormBadge');
+    if (badge) {
+        var lang = localStorage.getItem('lang') || 'en';
+        var briefLabels = {
+            'Ads Brief':      { en: 'Ads Brief',      ar: 'موجز الإعلانات' },
+            'Business Brief': { en: 'Business Brief', ar: 'الموجز التجاري' }
+        };
+        badge.textContent = (briefLabels[briefType] && briefLabels[briefType][lang]) || briefType;
+    }
+
+    // Show the detail form
+    var form = document.getElementById('briefDetailForm');
+    if (form) {
+        form.classList.remove('brief-detail-form-hidden');
+        form.classList.add('brief-detail-form-visible');
+        setTimeout(function() {
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+    }
+}
 
 /* ===================== SEND TO WHATSAPP (Registration) ===================== */
 function sendToWhatsApp() {
@@ -294,6 +318,48 @@ function sendToWhatsApp() {
 
     const packageVal = document.getElementById('packageSelect')?.value || 'Not selected';
     const briefText  = selectedBrief || 'No brief selected';
+
+    function g(id) { return (document.getElementById(id)?.value || '').trim() || '—'; }
+
+    let briefFormSection = '';
+    if (selectedBrief) {
+        briefFormSection =
+`
+========================
+   ${briefText} — Details
+========================
+
+1. BUSINESS INFORMATION
+   Brand / Company Name    : ${g('bf-brandName')}
+   Industry / Type         : ${g('bf-industry')}
+   Core Specialty          : ${g('bf-specialty')}
+   Physical Address        : ${g('bf-address')}
+   Additional Details      : ${g('bf-bizDetails')}
+
+2. CONTACT & OPERATIONS
+   Contact Phone           : ${g('bf-phone')}
+   WhatsApp                : ${g('bf-whatsapp')}
+   Working Hours           : ${g('bf-hours')}
+   Holidays / Days Off     : ${g('bf-holidays')}
+   Delivery System         : ${g('bf-delivery')}
+
+3. BRANDING & CURRENT STATUS
+   Logo Style              : ${g('bf-logoStyle')}
+   Brand Colors            : ${g('bf-colors')}
+   Social Media Presence   : ${g('bf-socialPresence')}
+   Previous Agency         : ${g('bf-prevAgency')}
+
+4. MARKETING STRATEGY
+   Objectives              : ${g('bf-objectives')}
+   Competitors             : ${g('bf-competitors')}
+   Preferred Channels      : ${g('bf-channels')}
+   Target Audience         : ${g('bf-audience')}
+
+5. CONTRACT & BILLING
+   Package                 : ${g('bf-package')}
+   Payment Method & Terms  : ${g('bf-payment')}
+   Contract Duration       : ${g('bf-duration')}`;
+    }
 
     const message =
 `========================
@@ -316,8 +382,7 @@ ${services.length ? services.map(s => '- ' + s).join('\n') : '- None selected'}
 Brief Request Registration
 ========================
 
-Brief Request:
-${briefText}
+Brief Selected : ${briefText}${briefFormSection}
 
 Additional Details:
 ${otherDetails || 'None'}
@@ -483,14 +548,61 @@ window.addEventListener('load', () => {
             'package-sel':      'Package Selection',
             'other-req':        'Other Requirements',
             'brief-section-title': 'Select Your Brief',
-            'brief-subtitle':   'Choose the type of brief you need',
-            'brief1-title':     'Branding Design Brief',
-            'brief1-text':      'Complete brand identity and design requirements',
-            'brief2-title':     'Social Media Management Brief',
-            'brief2-text':      'Social media strategy and content planning',
-            'brief3-title':     'Paid Advertising Brief',
-            'brief3-text':      'Advertising campaigns and targeting requirements',
+            'brief-subtitle':   'Choose the type of brief you need — a form will appear for you to fill',
+            'brief-ads-title':  'Ads Brief',
+            'brief-ads-text':   'Performance marketing & paid advertising campaigns',
+            'brief-biz-title':  'Business Brief',
+            'brief-biz-text':   'Full business overview & marketing strategy details',
             'select-brief-btn': 'Select Brief',
+            /* Brief form sections */
+            'brief-form-subtitle':   'Please fill in all sections below — this will be included in your submission',
+            'brief-sec1':       'Business Information',
+            'brief-f-brand':    'Brand / Company Name',
+            'brief-f-industry': 'Business Industry / Type',
+            'brief-f-specialty':'Core Specialty',
+            'brief-f-address':  'Physical Address / Location',
+            'brief-f-bizdet':   'Additional Business Details',
+            'brief-sec2':       'Contact & Operations',
+            'brief-f-phone':    'Contact Phone Numbers',
+            'brief-f-wa':       'WhatsApp Number',
+            'brief-f-hours':    'Official Working Hours',
+            'brief-f-holidays': 'Holidays / Days Off',
+            'brief-f-delivery': 'Delivery System & Policies',
+            'brief-sec3':       'Branding & Current Status',
+            'brief-f-logo':     'Preferred Logo Style',
+            'brief-f-colors':   'Brand Colors / Visual Identity',
+            'brief-f-social':   'Current Social Media Presence',
+            'brief-f-agency':   'Previous Marketing Agency Experience',
+            'brief-sec4':       'Marketing Strategy',
+            'brief-f-obj':      'Primary Marketing Objectives',
+            'brief-f-comp':     'Main Competitors',
+            'brief-f-channels': 'Preferred Marketing Channels',
+            'brief-f-audience': 'Target Audience / Buyer Persona',
+            'brief-sec5':       'Contract & Billing',
+            'brief-f-package':  'Selected Service Package',
+            'brief-f-payment':  'Payment Method & Terms',
+            'brief-f-duration': 'Contract Duration',
+            /* placeholders */
+            'brief-ph-brand':    'e.g. UFUQ Agency',
+            'brief-ph-industry': 'e.g. Fashion, F&B, Tech...',
+            'brief-ph-specialty':'What do you specialize in?',
+            'brief-ph-address':  'City, Country or full address',
+            'brief-ph-bizdet':   'Any other relevant business info...',
+            'brief-ph-phone':    '+20 1XX XXX XXXX',
+            'brief-ph-wa':       '+20 1XX XXX XXXX',
+            'brief-ph-hours':    'e.g. Sat–Thu, 9am–6pm',
+            'brief-ph-holidays': 'e.g. Fridays, Public holidays',
+            'brief-ph-delivery': 'Describe your delivery system or policies...',
+            'brief-ph-logo':     'e.g. Minimalist, Bold, Vintage...',
+            'brief-ph-colors':   'e.g. Navy blue & gold, or no preference',
+            'brief-ph-social':   'Links or starting from scratch',
+            'brief-ph-agency':   'Agency names or none',
+            'brief-ph-obj':      'e.g. Increase brand awareness, generate leads...',
+            'brief-ph-comp':     'List your top competitors',
+            'brief-ph-channels': 'e.g. Instagram, Google Ads, TikTok...',
+            'brief-ph-audience': 'Age, gender, interests, location, behavior...',
+            'brief-ph-payment':  'e.g. Monthly, Bank transfer, Cash...',
+            'brief-ph-duration': 'e.g. 3 months, 6 months, Ongoing...',
             'submit-reg-btn':   'Submit Registration',
             'fn-ph':            'Full Name',
             'cn-ph':            'Contact Number',
@@ -630,14 +742,61 @@ window.addEventListener('load', () => {
             'package-sel':      'اختيار الباقة',
             'other-req':        'متطلبات أخرى',
             'brief-section-title': 'اختر موجزك',
-            'brief-subtitle':   'اختر نوع الموجز الذي تحتاجه',
-            'brief1-title':     'موجز تصميم العلامة التجارية',
-            'brief1-text':      'متطلبات الهوية التجارية والتصميم الكامل',
-            'brief2-title':     'موجز إدارة التواصل الاجتماعي',
-            'brief2-text':      'استراتيجية التواصل الاجتماعي وتخطيط المحتوى',
-            'brief3-title':     'موجز الإعلانات المدفوعة',
-            'brief3-text':      'حملات الإعلانات ومتطلبات الاستهداف',
+            'brief-subtitle':   'اختر نوع الموجز الذي تحتاجه — ستظهر لك استمارة لتعبئتها',
+            'brief-ads-title':  'موجز الإعلانات',
+            'brief-ads-text':   'حملات الإعلانات المدفوعة والتسويق بالأداء',
+            'brief-biz-title':  'الموجز التجاري',
+            'brief-biz-text':   'نظرة شاملة على الأعمال وتفاصيل استراتيجية التسويق',
             'select-brief-btn': 'اختر الموجز',
+            /* Brief form sections */
+            'brief-form-subtitle':   'يرجى تعبئة جميع الأقسام أدناه — ستُضمَّن في طلبك',
+            'brief-sec1':       'معلومات الأعمال',
+            'brief-f-brand':    'اسم العلامة / الشركة',
+            'brief-f-industry': 'قطاع / نوع الأعمال',
+            'brief-f-specialty':'التخصص الأساسي',
+            'brief-f-address':  'العنوان / الموقع الجغرافي',
+            'brief-f-bizdet':   'تفاصيل إضافية عن الأعمال',
+            'brief-sec2':       'التواصل والعمليات',
+            'brief-f-phone':    'أرقام الهاتف',
+            'brief-f-wa':       'رقم واتساب',
+            'brief-f-hours':    'ساعات العمل الرسمية',
+            'brief-f-holidays': 'أيام الإجازة / العطل',
+            'brief-f-delivery': 'نظام التوصيل والسياسات',
+            'brief-sec3':       'الهوية البصرية والوضع الحالي',
+            'brief-f-logo':     'أسلوب الشعار المفضل',
+            'brief-f-colors':   'ألوان العلامة / الهوية البصرية',
+            'brief-f-social':   'الحضور الحالي على التواصل الاجتماعي',
+            'brief-f-agency':   'تجربة مع وكالات تسويق سابقة',
+            'brief-sec4':       'استراتيجية التسويق',
+            'brief-f-obj':      'الأهداف التسويقية الرئيسية',
+            'brief-f-comp':     'المنافسون الرئيسيون',
+            'brief-f-channels': 'قنوات التسويق المفضلة',
+            'brief-f-audience': 'الجمهور المستهدف / الشخصية الشرائية',
+            'brief-sec5':       'العقد والفوترة',
+            'brief-f-package':  'الباقة المختارة',
+            'brief-f-payment':  'طريقة وشروط الدفع',
+            'brief-f-duration': 'مدة العقد',
+            /* placeholders */
+            'brief-ph-brand':    'مثال: وكالة أُفق',
+            'brief-ph-industry': 'مثال: أزياء، مطاعم، تقنية...',
+            'brief-ph-specialty':'ما الذي تتخصص فيه؟',
+            'brief-ph-address':  'المدينة، الدولة أو العنوان الكامل',
+            'brief-ph-bizdet':   'أي معلومات أخرى ذات صلة...',
+            'brief-ph-phone':    'أدخل رقم الهاتف',
+            'brief-ph-wa':       'أدخل رقم واتساب',
+            'brief-ph-hours':    'مثال: السبت–الخميس، 9ص–6م',
+            'brief-ph-holidays': 'مثال: الجمعة، الأعياد الرسمية',
+            'brief-ph-delivery': 'صف نظام التوصيل أو السياسات إن وُجدت...',
+            'brief-ph-logo':     'مثال: بسيط، جريء، كلاسيكي...',
+            'brief-ph-colors':   'مثال: أزرق داكن وذهبي، أو لا تفضيل',
+            'brief-ph-social':   'روابط الحسابات أو (نبدأ من الصفر)',
+            'brief-ph-agency':   'أسماء الوكالات أو (لا يوجد)',
+            'brief-ph-obj':      'مثال: زيادة الوعي، توليد عملاء...',
+            'brief-ph-comp':     'اذكر أبرز منافسيك',
+            'brief-ph-channels': 'مثال: إنستغرام، إعلانات جوجل...',
+            'brief-ph-audience': 'العمر، الجنس، الاهتمامات، الموقع...',
+            'brief-ph-payment':  'مثال: شهري، تحويل بنكي، نقدي...',
+            'brief-ph-duration': 'مثال: 3 أشهر، 6 أشهر، مفتوح...',
             'submit-reg-btn':   'إرسال التسجيل',
             'fn-ph':            'الاسم الكامل',
             'cn-ph':            'رقم الاتصال',
@@ -703,6 +862,28 @@ window.addEventListener('load', () => {
             const key = el.getAttribute('data-i18n-opt');
             if (dict[key] !== undefined) el.options[0].text = dict[key];
         });
+
+        // brief form labels
+        document.querySelectorAll('[data-i18n-label]').forEach(el => {
+            const key = el.getAttribute('data-i18n-label');
+            if (dict[key] !== undefined) el.textContent = dict[key];
+        });
+
+        // brief form input placeholders (data-i18n-bph)
+        document.querySelectorAll('[data-i18n-bph]').forEach(el => {
+            const key = el.getAttribute('data-i18n-bph');
+            if (dict[key] !== undefined) el.placeholder = dict[key];
+        });
+
+        // update brief badge if a brief is already selected
+        const badge = document.getElementById('briefFormBadge');
+        if (badge && selectedBrief) {
+            const briefLabels = {
+                'Ads Brief':      { en: 'Ads Brief',      ar: 'موجز الإعلانات' },
+                'Business Brief': { en: 'Business Brief', ar: 'الموجز التجاري' }
+            };
+            badge.textContent = (briefLabels[selectedBrief] && briefLabels[selectedBrief][lang]) || selectedBrief;
+        }
 
         const btn = document.getElementById('langToggle');
         if (btn) btn.textContent = lang === 'ar' ? 'EN' : 'ع';

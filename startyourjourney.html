@@ -29,28 +29,28 @@
 <h1 class="registration-title" data-i18n="reg-title">Client Registration</h1>
 
 <div class="form-card">
-<h2 data-i18n="personal-info">Personal Information</h2>
-<div class="form-grid">
-<input type="text" id="fullName" data-i18n-ph="fn-ph" placeholder="Full Name">
-<input type="text" id="contactNumber" data-i18n-ph="cn-ph" placeholder="Contact Number">
-<input type="text" id="whatsappNumber" data-i18n-ph="wn-ph" placeholder="WhatsApp Number">
-</div>
+    <h2 data-i18n="personal-info">Personal Information</h2>
+    <div class="form-grid">
+        <input type="text" id="fullName" data-i18n-ph="fn-ph" placeholder="Full Name">
+        <input type="text" id="contactNumber" data-i18n-ph="cn-ph" placeholder="Contact Number">
+        <input type="text" id="whatsappNumber" data-i18n-ph="wn-ph" placeholder="WhatsApp Number">
+    </div>
 </div>
 
 <div class="form-card">
-<h2 data-i18n="business-info">Business Information</h2>
-<div class="form-grid">
-<input type="text" id="businessName" data-i18n-ph="bn-ph" placeholder="Brand/Business Name">
-<input type="text" id="industryType" data-i18n-ph="it-ph" placeholder="Industry Type">
-<input type="text" id="socialLink" data-i18n-ph="sl-ph" placeholder="Social Media Page Link">
-<select id="platform">
-<option>Select Platform</option>
-<option>Instagram</option>
-<option>Facebook</option>
-<option>TikTok</option>
-<option>LinkedIn</option>
-</select>
-</div>
+    <h2 data-i18n="business-info">Business Information</h2>
+    <div class="form-grid">
+        <input type="text" id="businessName" data-i18n-ph="bn-ph" placeholder="Brand/Business Name">
+        <input type="text" id="industryType" data-i18n-ph="it-ph" placeholder="Industry Type">
+        <input type="text" id="socialLink" data-i18n-ph="sl-ph" placeholder="Social Media Page Link">
+        <select id="platform">
+            <option>Select Platform</option>
+            <option>Instagram</option>
+            <option>Facebook</option>
+            <option>TikTok</option>
+            <option>LinkedIn</option>
+        </select>
+    </div>
 </div>
 
 <div class="form-card">
@@ -80,37 +80,182 @@
 </div>
 
 <div class="form-card">
-<h2 data-i18n="other-req">Other Requirements</h2>
-<textarea id="otherDetails" data-i18n-ph="od-ph" placeholder="Additional details..." rows="4"></textarea>
+    <h2 data-i18n="other-req">Other Requirements</h2>
+    <textarea id="otherDetails" data-i18n-ph="od-ph" placeholder="Additional details..." rows="4"></textarea>
 </div>
 
+<!-- ===== BRIEF SELECTION ===== -->
 <div class="brief-request-section">
     <h2 data-i18n="brief-section-title">Select Your Brief</h2>
-    <p class="brief-subtitle" data-i18n="brief-subtitle">Choose the type of brief you need</p>
-    <div class="brief-grid">
-        <div class="brief-card" data-brief="Branding Design Brief:">
-            <div class="brief-icon">🎨</div>
-            <h3 data-i18n="brief1-title">Branding Design Brief</h3>
-            <p data-i18n="brief1-text">Complete brand identity and design requirements</p>
-            <button type="button" class="select-brief-btn" data-i18n="select-brief-btn">Select Brief</button>
-        </div>
-        <div class="brief-card" data-brief="Social Media Management Brief">
-            <div class="brief-icon">🔗</div>
-            <h3 data-i18n="brief2-title">Social Media Management Brief</h3>
-            <p data-i18n="brief2-text">Social media strategy and content planning</p>
-            <button type="button" class="select-brief-btn" data-i18n="select-brief-btn">Select Brief</button>
-        </div>
-        <div class="brief-card" data-brief="Paid Advertising Brief:">
+    <p class="brief-subtitle" data-i18n="brief-subtitle">Choose the type of brief you need — a form will appear for you to fill</p>
+
+    <div class="brief-grid brief-grid-2">
+        <div class="brief-card" data-brief="Ads Brief">
             <div class="brief-icon">🎯</div>
-            <h3 data-i18n="brief3-title">Paid Advertising Brief</h3>
-            <p data-i18n="brief3-text">Advertising campaigns and targeting requirements</p>
-            <button type="button" class="select-brief-btn" data-i18n="select-brief-btn">Select Brief</button>
+            <h3 data-i18n="brief-ads-title">Ads Brief</h3>
+            <p data-i18n="brief-ads-text">Performance marketing &amp; paid advertising campaigns</p>
+            <button type="button" class="select-brief-btn" onclick="selectBrief('Ads Brief')" data-i18n="select-brief-btn">Select Brief</button>
+        </div>
+        <div class="brief-card" data-brief="Business Brief">
+            <div class="brief-icon">🏢</div>
+            <h3 data-i18n="brief-biz-title">Business Brief</h3>
+            <p data-i18n="brief-biz-text">Full business overview &amp; marketing strategy details</p>
+            <button type="button" class="select-brief-btn" onclick="selectBrief('Business Brief')" data-i18n="select-brief-btn">Select Brief</button>
         </div>
     </div>
-</div>
+
+    <!-- ===== BRIEF DETAIL FORM ===== -->
+    <div id="briefDetailForm" class="brief-detail-form-hidden">
+        <div class="brief-form-header">
+            <span id="briefFormBadge" class="brief-form-badge">Brief Selected</span>
+            <p class="brief-form-subtitle" data-i18n="brief-form-subtitle">Please fill in all sections below — this will be included in your submission</p>
+        </div>
+
+        <!-- Section 1: Business Information -->
+        <div class="brief-section-block">
+            <div class="brief-section-label">
+                <span class="brief-section-num">1</span>
+                <span data-i18n="brief-sec1">Business Information</span>
+            </div>
+            <div class="brief-fields-grid">
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-brand">Brand / Company Name</label>
+                    <input type="text" id="bf-brandName" data-i18n-bph="brief-ph-brand" placeholder="e.g. UFUQ Agency">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-industry">Business Industry / Type</label>
+                    <input type="text" id="bf-industry" data-i18n-bph="brief-ph-industry" placeholder="e.g. Fashion, F&B, Tech...">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-specialty">Core Specialty</label>
+                    <input type="text" id="bf-specialty" data-i18n-bph="brief-ph-specialty" placeholder="What do you specialize in?">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-address">Physical Address / Location</label>
+                    <input type="text" id="bf-address" data-i18n-bph="brief-ph-address" placeholder="City, Country or full address">
+                </div>
+                <div class="brief-field-box brief-field-full">
+                    <label data-i18n-label="brief-f-bizdet">Additional Business Details</label>
+                    <textarea id="bf-bizDetails" rows="3" data-i18n-bph="brief-ph-bizdet" placeholder="Any other relevant business info..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Contact & Operations -->
+        <div class="brief-section-block">
+            <div class="brief-section-label">
+                <span class="brief-section-num">2</span>
+                <span data-i18n="brief-sec2">Contact &amp; Operations</span>
+            </div>
+            <div class="brief-fields-grid">
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-phone">Contact Phone Numbers</label>
+                    <input type="text" id="bf-phone" data-i18n-bph="brief-ph-phone" placeholder="+20 1XX XXX XXXX">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-wa">WhatsApp Number</label>
+                    <input type="text" id="bf-whatsapp" data-i18n-bph="brief-ph-wa" placeholder="+20 1XX XXX XXXX">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-hours">Official Working Hours</label>
+                    <input type="text" id="bf-hours" data-i18n-bph="brief-ph-hours" placeholder="e.g. Sat–Thu, 9am–6pm">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-holidays">Holidays / Days Off</label>
+                    <input type="text" id="bf-holidays" data-i18n-bph="brief-ph-holidays" placeholder="e.g. Fridays, Public holidays">
+                </div>
+                <div class="brief-field-box brief-field-full">
+                    <label data-i18n-label="brief-f-delivery">Delivery System &amp; Policies <span style="opacity:0.5;font-size:12px;">(If applicable)</span></label>
+                    <textarea id="bf-delivery" rows="2" data-i18n-bph="brief-ph-delivery" placeholder="Describe your delivery system or policies..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Branding & Current Status -->
+        <div class="brief-section-block">
+            <div class="brief-section-label">
+                <span class="brief-section-num">3</span>
+                <span data-i18n="brief-sec3">Branding &amp; Current Status</span>
+            </div>
+            <div class="brief-fields-grid">
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-logo">Preferred Logo Style</label>
+                    <input type="text" id="bf-logoStyle" data-i18n-bph="brief-ph-logo" placeholder="e.g. Minimalist, Bold, Vintage...">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-colors">Brand Colors / Visual Identity</label>
+                    <input type="text" id="bf-colors" data-i18n-bph="brief-ph-colors" placeholder="e.g. Navy blue & gold, or no preference">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-social">Current Social Media Presence</label>
+                    <input type="text" id="bf-socialPresence" data-i18n-bph="brief-ph-social" placeholder="Links or starting from scratch">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-agency">Previous Marketing Agency Experience</label>
+                    <input type="text" id="bf-prevAgency" data-i18n-bph="brief-ph-agency" placeholder="Agency names or none">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Marketing Strategy -->
+        <div class="brief-section-block">
+            <div class="brief-section-label">
+                <span class="brief-section-num">4</span>
+                <span data-i18n="brief-sec4">Marketing Strategy</span>
+            </div>
+            <div class="brief-fields-grid">
+                <div class="brief-field-box brief-field-full">
+                    <label data-i18n-label="brief-f-obj">Primary Marketing Objectives</label>
+                    <textarea id="bf-objectives" rows="2" data-i18n-bph="brief-ph-obj" placeholder="e.g. Increase brand awareness, generate leads..."></textarea>
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-comp">Main Competitors</label>
+                    <input type="text" id="bf-competitors" data-i18n-bph="brief-ph-comp" placeholder="List your top competitors">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-channels">Preferred Marketing Channels</label>
+                    <input type="text" id="bf-channels" data-i18n-bph="brief-ph-channels" placeholder="e.g. Instagram, Google Ads, TikTok...">
+                </div>
+                <div class="brief-field-box brief-field-full">
+                    <label data-i18n-label="brief-f-audience">Target Audience / Buyer Persona</label>
+                    <textarea id="bf-audience" rows="2" data-i18n-bph="brief-ph-audience" placeholder="Age, gender, interests, location, behavior..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Contract & Billing -->
+        <div class="brief-section-block">
+            <div class="brief-section-label">
+                <span class="brief-section-num">5</span>
+                <span data-i18n="brief-sec5">Contract &amp; Billing</span>
+            </div>
+            <div class="brief-fields-grid">
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-package">Selected Service Package</label>
+                    <select id="bf-package">
+                        <option value="">Select Package</option>
+                        <option>Basic</option>
+                        <option>Standard</option>
+                        <option>Premium</option>
+                        <option>Custom</option>
+                    </select>
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-payment">Payment Method &amp; Terms</label>
+                    <input type="text" id="bf-payment" data-i18n-bph="brief-ph-payment" placeholder="e.g. Monthly, Bank transfer, Cash...">
+                </div>
+                <div class="brief-field-box">
+                    <label data-i18n-label="brief-f-duration">Contract Duration</label>
+                    <input type="text" id="bf-duration" data-i18n-bph="brief-ph-duration" placeholder="e.g. 3 months, 6 months, Ongoing...">
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end briefDetailForm -->
+</div><!-- end brief-request-section -->
 
 <div class="submit-area">
-<button onclick="sendToWhatsApp()" class="btn" data-i18n="submit-reg-btn">Submit Registration</button>
+    <button onclick="sendToWhatsApp()" class="btn" data-i18n="submit-reg-btn">Submit Registration</button>
 </div>
 
 </div>
@@ -167,6 +312,7 @@
         </div>
     </div>
 </footer>
+
 <script src="script.js"></script>
 </body>
 </html>
