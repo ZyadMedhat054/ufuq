@@ -911,3 +911,71 @@ window.addEventListener('load', () => {
         applyLanguage(currentLang);
     });
 })();
+
+/* ===================== SERVICE IMAGE LIGHTBOX ===================== */
+(function () {
+    var lbScale = 1;
+
+    function openLightbox(imgEl) {
+        lbScale = 1;
+        var lb    = document.getElementById('lightbox');
+        var lbImg = document.getElementById('lightbox-img');
+        if (!lb || !lbImg) return;
+        lbImg.src = imgEl.src;
+        lbImg.style.transform = 'scale(1)';
+        document.getElementById('zoom-label').textContent = '100%';
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        var lb = document.getElementById('lightbox');
+        if (lb) lb.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function closeLightboxOnBg(e) {
+        if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    function zoomIn() {
+        if (lbScale >= 3) return;
+        lbScale = Math.min(3, parseFloat((lbScale + 0.25).toFixed(2)));
+        applyZoom();
+    }
+
+    function zoomOut() {
+        if (lbScale <= 0.5) return;
+        lbScale = Math.max(0.5, parseFloat((lbScale - 0.25).toFixed(2)));
+        applyZoom();
+    }
+
+    function applyZoom() {
+        var lbImg = document.getElementById('lightbox-img');
+        if (lbImg) lbImg.style.transform = 'scale(' + lbScale + ')';
+        var label = document.getElementById('zoom-label');
+        if (label) label.textContent = Math.round(lbScale * 100) + '%';
+    }
+
+    // Expose to global scope so onclick attributes work
+    window.openLightbox       = openLightbox;
+    window.closeLightbox      = closeLightbox;
+    window.closeLightboxOnBg  = closeLightboxOnBg;
+    window.zoomIn             = zoomIn;
+    window.zoomOut            = zoomOut;
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function (e) {
+        var lb = document.getElementById('lightbox');
+        if (!lb || !lb.classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === '+' || e.key === '=') zoomIn();
+        if (e.key === '-') zoomOut();
+    });
+
+    // Attach bg-click handler once DOM is ready
+    document.addEventListener('DOMContentLoaded', function () {
+        var lb = document.getElementById('lightbox');
+        if (lb) lb.addEventListener('click', closeLightboxOnBg);
+    });
+})();

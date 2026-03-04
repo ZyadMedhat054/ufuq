@@ -28,21 +28,21 @@
     <h1 class="portfolio-title" data-i18n="portfolio-title">Our Portfolio</h1>
     <div class="portfolio-grid">
         <div class="portfolio-card">
-            <img src="test.jpeg" alt="Project 1">
+            <img src="test.jpeg" alt="Project 1" onclick="openLightbox(this)">
             <div class="portfolio-content">
                 <h3 data-i18n="port1-title">Social Media Campaign</h3>
                 <p data-i18n="port1-text">Complete social media strategy that increased engagement by 120%.</p>
             </div>
         </div>
         <div class="portfolio-card">
-            <img src="test.jpeg" alt="Project 2">
+            <img src="test.jpeg" alt="Project 2" onclick="openLightbox(this)">
             <div class="portfolio-content">
                 <h3 data-i18n="port2-title">Brand Identity Design</h3>
                 <p data-i18n="port2-text">Full brand identity including logo, colors, and marketing assets.</p>
             </div>
         </div>
         <div class="portfolio-card">
-            <img src="test.jpeg" alt="Project 3">
+            <img src="test.jpeg" alt="Project 3" onclick="openLightbox(this)">
             <div class="portfolio-content">
                 <h3 data-i18n="port3-title">Ad Campaign Strategy</h3>
                 <p data-i18n="port3-text">High-converting paid ads campaign with strong ROI results.</p>
@@ -51,6 +51,21 @@
     </div>
 </section>
 
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+    <div id="lightbox-inner">
+        <button id="lightbox-close" onclick="closeLightbox()" title="Close (Esc)">&#x2715;</button>
+        <div id="lightbox-zoom-controls">
+            <button onclick="zoomOut()" title="Zoom out">&#x2212;</button>
+            <span id="zoom-label">100%</span>
+            <button onclick="zoomIn()" title="Zoom in">&#x2B;</button>
+        </div>
+        <div id="lightbox-img-wrap">
+            <img id="lightbox-img" src="" alt="Zoomed view">
+        </div>
+    </div>
+</div>
 <footer>
     <div class="footer-grid">
         <div class="footer-brand">
@@ -98,7 +113,7 @@
         <div class="footer-bottom-links">
             <a href="#" data-i18n="footer-privacy">Privacy Policy</a>
             <a href="#" data-i18n="footer-terms">Terms of Service</a>
-            <a href="contact.html" data-i18n="footer-touch">Get In Touch</a>
+                        <a href="contact.html" data-i18n="footer-touch">Get In Touch</a>
         </div>
     </div>
 </footer>
