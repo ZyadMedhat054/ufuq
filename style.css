@@ -473,6 +473,22 @@ body.light-mode .overlay {
     max-width: 900px;
 }
 
+.hero-logo-brand {
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: 10px;
+    color: var(--teal);
+    text-shadow: 0 0 18px rgba(79,209,197,0.55), 0 0 40px rgba(79,209,197,0.3);
+    animation: logoPulse 4s ease-in-out infinite, heroTextIn 1s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+    margin-bottom: 14px;
+    display: block;
+}
+
+body.light-mode .hero-logo-brand {
+    color: var(--teal-dark);
+    text-shadow: 0 0 14px rgba(56,178,172,0.4);
+}
+
 .hero h1 {
     font-size: 52px;
     font-weight: 800;

@@ -303,6 +303,7 @@ function selectBrief(briefType) {
 /* ===================== SEND TO WHATSAPP (Registration) ===================== */
 function sendToWhatsApp() {
     const fullName      = (document.getElementById('fullName')?.value      || '').trim();
+    const nationalId    = (document.getElementById('nationalId')?.value     || '').trim();
     const contactNumber = (document.getElementById('contactNumber')?.value  || '').trim();
     const whatsappNumber= (document.getElementById('whatsappNumber')?.value || '').trim();
     const businessName  = (document.getElementById('businessName')?.value   || '').trim();
@@ -367,6 +368,7 @@ function sendToWhatsApp() {
 ========================
 
 Name           : ${fullName}
+National ID    : ${nationalId}
 Contact        : ${contactNumber}
 WhatsApp       : ${whatsappNumber}
 
@@ -605,6 +607,7 @@ window.addEventListener('load', () => {
             'brief-ph-duration': 'e.g. 3 months, 6 months, Ongoing...',
             'submit-reg-btn':   'Submit Registration',
             'fn-ph':            'Full Name',
+            'ni-ph':            'National ID',
             'cn-ph':            'Contact Number',
             'wn-ph':            'WhatsApp Number',
             'bn-ph':            'Brand/Business Name',
@@ -799,6 +802,7 @@ window.addEventListener('load', () => {
             'brief-ph-duration': 'مثال: 3 أشهر، 6 أشهر، مفتوح...',
             'submit-reg-btn':   'إرسال التسجيل',
             'fn-ph':            'الاسم الكامل',
+            'ni-ph':            'الرقم القومي',
             'cn-ph':            'رقم الاتصال',
             'wn-ph':            'رقم واتساب',
             'bn-ph':            'اسم العلامة / الأعمال',
