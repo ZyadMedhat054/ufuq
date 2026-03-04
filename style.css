@@ -2232,6 +2232,7 @@ body[dir="rtl"] .package-section {
     body[dir="rtl"] nav {
         left: -110%;
         right: auto;
+        flex-direction: column;
         border-left: none;
         border-right: 1px solid var(--border);
         border-radius: 0 0 20px 0;
@@ -2393,7 +2394,7 @@ a.logo:hover {
     padding: 0;
     resize: vertical;
 }
-.brief-field-box select { cursor: pointer; -webkit-appearance: none; color-scheme: dark; }
+.brief-field-box select { cursor: pointer; appearance: none; -webkit-appearance: none; color-scheme: dark; }
 .brief-field-box select option { background: #1e293b; color: var(--text); }
 .brief-field-box input::placeholder,
 .brief-field-box textarea::placeholder { color: var(--muted); opacity: 0.65; }
