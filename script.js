@@ -254,13 +254,11 @@ var selectedBrief = '';
 function selectBrief(briefType) {
     selectedBrief = briefType;
 
-    // Reset all card highlights
     document.querySelectorAll('.brief-card').forEach(function(card) {
         card.style.borderColor = '';
         card.style.boxShadow = '';
     });
 
-    // Highlight selected card
     var selectedCard = document.querySelector('.brief-card[data-brief="' + briefType + '"]');
     if (selectedCard) {
         selectedCard.style.borderColor = '#4fd1c5';
@@ -274,7 +272,6 @@ function selectBrief(briefType) {
     };
     var label = (briefLabels[briefType] && briefLabels[briefType][lang]) || briefType;
 
-    // Hide both forms first
     var adsForm = document.getElementById('adsBriefForm');
     var bizForm = document.getElementById('businessBriefForm');
 
@@ -287,7 +284,6 @@ function selectBrief(briefType) {
         bizForm.classList.remove('brief-detail-form-visible');
     }
 
-    // Show the correct form and update its badge
     var targetForm = (briefType === 'Ads Brief') ? adsForm : bizForm;
     var badgeId    = (briefType === 'Ads Brief') ? 'adsBriefFormBadge' : 'bizBriefFormBadge';
 
@@ -301,6 +297,125 @@ function selectBrief(briefType) {
             targetForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 150);
     }
+}
+
+/* ===================== COLOR PALETTE PICKER ===================== */
+
+// Holds all currently selected hex codes
+var selectedPaletteColors = [];
+
+/**
+ * Toggle a preset swatch on/off
+ */
+function togglePaletteColor(swatchEl) {
+    var hex = swatchEl.getAttribute('data-hex').toUpperCase();
+
+    if (swatchEl.classList.contains('selected')) {
+        // Deselect
+        swatchEl.classList.remove('selected');
+        selectedPaletteColors = selectedPaletteColors.filter(function(c) { return c !== hex; });
+    } else {
+        // Select
+        swatchEl.classList.add('selected');
+        if (selectedPaletteColors.indexOf(hex) === -1) {
+            selectedPaletteColors.push(hex);
+        }
+    }
+
+    syncPaletteHiddenInput();
+    renderSelectedChips();
+}
+
+/**
+ * Add a custom color from the color input
+ */
+function addCustomPaletteColor() {
+    var input = document.getElementById('customColorInput');
+    if (!input) return;
+    var hex = input.value.toUpperCase();
+
+    if (selectedPaletteColors.indexOf(hex) === -1) {
+        selectedPaletteColors.push(hex);
+
+        // Check if a preset swatch with same color exists — if so, mark it selected
+        var existingSwatch = document.querySelector('.palette-swatch[data-hex="' + hex.toLowerCase() + '"], .palette-swatch[data-hex="' + hex + '"]');
+        if (existingSwatch) {
+            existingSwatch.classList.add('selected');
+        }
+    }
+
+    syncPaletteHiddenInput();
+    renderSelectedChips();
+}
+
+/**
+ * Remove a color from selected list (called from chip × button)
+ */
+function removePaletteColor(hex) {
+    hex = hex.toUpperCase();
+    selectedPaletteColors = selectedPaletteColors.filter(function(c) { return c !== hex; });
+
+    // Un-highlight preset swatch if it exists
+    var swatch = document.querySelector('.palette-swatch[data-hex="' + hex.toLowerCase() + '"], .palette-swatch[data-hex="' + hex + '"]');
+    if (swatch) swatch.classList.remove('selected');
+
+    syncPaletteHiddenInput();
+    renderSelectedChips();
+}
+
+/**
+ * Write comma-separated hex list to the hidden input #bf-colors
+ */
+function syncPaletteHiddenInput() {
+    var hiddenInput = document.getElementById('bf-colors');
+    if (hiddenInput) {
+        hiddenInput.value = selectedPaletteColors.join(', ');
+    }
+}
+
+/**
+ * Render the selected color chips below the palette
+ */
+function renderSelectedChips() {
+    var container = document.getElementById('paletteSelectedChips');
+    var noneMsg   = document.getElementById('paletteNoneMsg');
+    if (!container) return;
+
+    // Clear existing chips (keep noneMsg)
+    Array.from(container.children).forEach(function(child) {
+        if (child.id !== 'paletteNoneMsg') child.remove();
+    });
+
+    if (selectedPaletteColors.length === 0) {
+        if (noneMsg) noneMsg.style.display = 'inline';
+        return;
+    }
+
+    if (noneMsg) noneMsg.style.display = 'none';
+
+    selectedPaletteColors.forEach(function(hex) {
+        var chip = document.createElement('div');
+        chip.className = 'palette-chip';
+        chip.innerHTML =
+            '<span class="palette-chip-dot" style="background:' + hex + ';' +
+                (isLightColor(hex) ? 'border:1px solid #ccc;' : '') +
+            '"></span>' +
+            '<span class="palette-chip-code">' + hex + '</span>' +
+            '<button type="button" class="palette-chip-remove" onclick="removePaletteColor(\'' + hex + '\')" title="Remove">✕</button>';
+        container.appendChild(chip);
+    });
+}
+
+/**
+ * Detect if a hex color is light (for border on white-ish swatches)
+ */
+function isLightColor(hex) {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(function(c){ return c+c; }).join('');
+    var r = parseInt(hex.substr(0,2),16);
+    var g = parseInt(hex.substr(2,2),16);
+    var b = parseInt(hex.substr(4,2),16);
+    return (r * 0.299 + g * 0.587 + b * 0.114) > 186;
 }
 
 /* ===================== SEND TO WHATSAPP (Registration) ===================== */
@@ -324,6 +439,15 @@ function sendToWhatsApp() {
     const briefText  = selectedBrief || 'No brief selected';
 
     function g(id) { return (document.getElementById(id)?.value || '').trim() || '—'; }
+
+    // Collect selected colors from palette
+    var colorsValue = document.getElementById('bf-colors')?.value || '';
+    var colorsDisplay = '—';
+    if (selectedPaletteColors.length > 0) {
+        colorsDisplay = selectedPaletteColors.join(', ');
+    } else if (colorsValue) {
+        colorsDisplay = colorsValue;
+    }
 
     let briefFormSection = '';
 
@@ -373,9 +497,10 @@ ${g('ads-history')}`;
 
 3. BRANDING & CURRENT STATUS
    Logo Style              : ${g('bf-logoStyle')}
-   Brand Colors            : ${g('bf-colors')}
+   Brand Colors (HEX)      : ${colorsDisplay}
    Social Media Presence   : ${g('bf-socialPresence')}
    Previous Agency         : ${g('bf-prevAgency')}
+   Branding Notes          : ${g('bf-brandingNotes')}
 
 4. MARKETING STRATEGY
    Objectives              : ${g('bf-objectives')}
@@ -500,23 +625,23 @@ window.addEventListener('load', () => {
 
             /* SERVICES */
             'services-title':  'Our Services',
-            'svc1-title':      'Social Media & Community Management',
+            'svc1-title':      'Social Media Management',
             'svc1-text':       'Full-suite social media management, focusing on proactive community building, prompt messaging, and strategic comment moderation to convert followers into loyal customers.',
             'svc2-title':      'Brand Visual Identity',
             'svc2-text':       'Crafting memorable brand identities, from innovative logo design to cohesive social media covers, ensuring a striking and consistent digital presence.',
-            'svc3-title':      'Creative Graphic Design',
+            'svc3-title':      'Graphic Design',
             'svc3-text':       'Scroll-stopping, high-converting graphic designs tailored specifically to capture your target audience\'s attention and maximize engagement.',
-            'svc4-title':      'Videography & Post-Production (Montage)',
+            'svc4-title':      'Videography, Video Editing & Montage',
             'svc4-text':       'End-to-end video production, from professional videography to dynamic editing (Montage), creating compelling visual stories that drive conversions.',
-            'svc5-title':      'Content Strategy & Creation',
+            'svc5-title':      'Marketing Strategy & Planning',
             'svc5-text':       'A comprehensive content architecture encompassing strategic planning, creative storytelling, tailored content creation, and data-driven scheduling.',
-            'svc6-title':      'Personal Branding',
+            'svc6-title':      'Content Strategy & Creation',
             'svc6-text':       'Professional personal branding solutions for entrepreneurs and leaders.',
-            'svc7-title':      'Performance Marketing & Media Buying (Ads)',
+            'svc7-title':      'Media Buying & Paid Ads',
             'svc7-text':       'Precision-targeted paid advertising campaigns designed to optimize ad spend, acquire high-quality leads, and maximize your Return on Investment (ROI).',
-            'svc8-title':      'Data Analytics & Reporting',
+            'svc8-title':      'Performance Analytics & Monthly Reports',
             'svc8-text':       'Deep-dive performance analytics and transparent monthly reporting to track KPIs, extract actionable insights, and scale what works.',
-            'svc9-title':      'Personal Branding',
+            'svc9-title':      'Competitors Analysis',
             'svc9-text':       'Professional personal branding solutions for entrepreneurs and leaders.',
 
             /* PORTFOLIO */
@@ -583,14 +708,13 @@ window.addEventListener('load', () => {
             'select-brief-btn': 'Select Brief',
             'brief-form-subtitle': 'Please fill in all sections below — this will be included in your submission',
 
-            /* ADS BRIEF — sections */
+            /* ADS BRIEF */
             'ads-sec1':         'Campaign Objective',
             'ads-sec2':         'Offer & Product Details',
             'ads-sec3':         'Target Audience',
             'ads-sec4':         'Budget & Timeline',
             'ads-sec5':         'Ad Assets & Access',
             'ads-sec6':         'Historical Campaign Data',
-            /* ADS BRIEF — placeholders */
             'ads-ph-objective': 'What is the goal of this campaign? e.g. generate leads, increase sales, grow awareness...',
             'ads-ph-offer':     'What product or service are you advertising? Include pricing, offers, or any promotions...',
             'ads-ph-audience':  'Describe your ideal customer — age, gender, location, interests, behaviors...',
@@ -598,7 +722,7 @@ window.addEventListener('load', () => {
             'ads-ph-assets':    'Do you have images, videos, or copy ready? Do you have an existing ad account? Share any links or access details...',
             'ads-ph-history':   'Have you run ads before? What platforms, budget, and results? What worked and what didn\'t?',
 
-            /* BUSINESS BRIEF — sections */
+            /* BUSINESS BRIEF */
             'brief-sec1':       'Business Information',
             'brief-f-brand':    'Brand / Company Name',
             'brief-f-industry': 'Business Industry / Type',
@@ -616,6 +740,7 @@ window.addEventListener('load', () => {
             'brief-f-colors':   'Brand Colors / Visual Identity',
             'brief-f-social':   'Current Social Media Presence',
             'brief-f-agency':   'Previous Marketing Agency Experience',
+            'brief-f-branding-notes': '📝 Additional Branding Notes',
             'brief-sec4':       'Marketing Strategy',
             'brief-f-obj':      'Primary Marketing Objectives',
             'brief-f-comp':     'Main Competitors',
@@ -625,7 +750,6 @@ window.addEventListener('load', () => {
             'brief-f-package':  'Selected Service Package',
             'brief-f-payment':  'Payment Method & Terms',
             'brief-f-duration': 'Contract Duration',
-            /* BUSINESS BRIEF — placeholders */
             'brief-ph-brand':    'e.g. UFUQ Agency',
             'brief-ph-industry': 'e.g. Fashion, F&B, Tech...',
             'brief-ph-specialty':'What do you specialize in?',
@@ -637,15 +761,21 @@ window.addEventListener('load', () => {
             'brief-ph-holidays': 'e.g. Fridays, Public holidays',
             'brief-ph-delivery': 'Describe your delivery system or policies...',
             'brief-ph-logo':     'e.g. Minimalist, Bold, Vintage...',
-            'brief-ph-colors':   'e.g. Navy blue & gold, or no preference',
             'brief-ph-social':   'Links or starting from scratch',
             'brief-ph-agency':   'Agency names or none',
+            'brief-ph-branding-notes': 'Any extra notes about your brand colors, style preferences, or visual identity details...',
             'brief-ph-obj':      'e.g. Increase brand awareness, generate leads...',
             'brief-ph-comp':     'List your top competitors',
             'brief-ph-channels': 'e.g. Instagram, Google Ads, TikTok...',
             'brief-ph-audience': 'Age, gender, interests, location, behavior...',
             'brief-ph-payment':  'e.g. Monthly, Bank transfer, Cash...',
             'brief-ph-duration': 'e.g. 3 months, 6 months, Ongoing...',
+
+            /* COLOR PALETTE */
+            'palette-custom-label':   'Custom Color:',
+            'palette-add-btn':        '+ Add',
+            'palette-selected-label': 'Selected Colors:',
+            'palette-none-msg':       'None selected',
 
             'submit-reg-btn':   'Submit Registration',
             'fn-ph':            'Full Name',
@@ -716,19 +846,19 @@ window.addEventListener('load', () => {
             'svc1-text':       'إدارة تفاعلية شاملة للحسابات، تشمل بناء مجتمع قوي حول علامتك التجارية، والرد السريع والاحترافي على الرسائل والتعليقات لتحويل المتابعين إلى عملاء.',
             'svc2-title':      'الهوية البصرية',
             'svc2-text':       'تصميم هوية بصرية تعلق في الأذهان، بدءاً من تصميم الشعار (Logo) المبتكر وحتى أغلفة المنصات (Covers) لضمان حضور رقمي متناسق وقوي.',
-            'svc3-title':      'التصميم الجرافيكي',
+            'svc3-title':      'التصاميم الجرافيك',
             'svc3-text':       'تصميمات إبداعية (Scroll-stopping visuals) مصممة خصيصاً لجذب انتباه جمهورك المستهدف وزيادة معدلات التفاعل.',
-            'svc4-title':      'الإنتاج المرئي والمونتاج',
+            'svc4-title':      'تصوير وإنتاج وتحرير الفيديو',
             'svc4-text':       'إنتاج مرئي متكامل، من التصوير الاحترافي وحتى المونتاج الديناميكي، لصناعة فيديوهات تحكي قصة البراند وتزيد من نسبة التحويل (Conversion Rate).',
-            'svc5-title':      'استراتيجية وصناعة المحتوى',
+            'svc5-title':      'التخطيط والاستراتيجية التسويقية',
             'svc5-text':       'منظومة محتوى متكاملة تشمل: بناء الاستراتيجية، تخطيط المحتوى (Content Plan)، كتابة القصص الإعلانية (Storytelling)، والجدولة الذكية للنشر في أوقات الذروة.',
-            'svc6-title':      'التخطيط والاستراتيجية التسويقية',
+            'svc6-title':      'استراتيجية وصناعة المحتوى',
             'svc6-text':       'بناء خطط تسويقية مبنية على تحليل دقيق للسوق والمنافسين، لتحديد المسار الأسرع والأكثر فعالية لتحقيق أهدافك البيعية.',
             'svc7-title':      'الإعلانات الممولة (الميديا باينج)',
             'svc7-text':       'إطلاق وإدارة حملات إعلانية موجهة بدقة (Laser-targeted Ads) لضمان الوصول للجمهور الصح، وتقليل تكلفة العميل، مع تحقيق أعلى عائد على الاستثمار (ROI).',
-            'svc8-title':      'تحليل الأداء والتقارير',
+            'svc8-title':      'تحليل الأداء والتقارير الشهرية',
             'svc8-text':       'تحليل مستمر للأرقام والنتائج (Insights Analysis)، وتقديم تقارير شهرية شفافة توضح الأداء وتحدد الخطوات الاستراتيجية القادمة.',
-            'svc9-title':      'العلامة الشخصية',
+            'svc9-title':      'دراسة وتحليل المنافسين',
             'svc9-text':       'حلول احترافية للعلامة الشخصية لرواد الأعمال والقادة.',
 
             /* PORTFOLIO */
@@ -795,14 +925,13 @@ window.addEventListener('load', () => {
             'select-brief-btn': 'اختر الموجز',
             'brief-form-subtitle': 'يرجى تعبئة جميع الأقسام أدناه — ستُضمَّن في طلبك',
 
-            /* ADS BRIEF — sections */
+            /* ADS BRIEF */
             'ads-sec1':         'هدف الحملة',
             'ads-sec2':         'تفاصيل العرض والمنتج',
             'ads-sec3':         'الجمهور المستهدف',
             'ads-sec4':         'الميزانية والجدول الزمني',
             'ads-sec5':         'أصول الإعلان والوصول',
             'ads-sec6':         'بيانات الحملات السابقة',
-            /* ADS BRIEF — placeholders */
             'ads-ph-objective': 'ما هو هدف الحملة؟ مثال: توليد عملاء محتملين، زيادة المبيعات، رفع الوعي بالعلامة...',
             'ads-ph-offer':     'ما المنتج أو الخدمة التي تعلن عنها؟ اذكر السعر والعروض والخصومات إن وُجدت...',
             'ads-ph-audience':  'صف عميلك المثالي — العمر، الجنس، الموقع، الاهتمامات، السلوكيات...',
@@ -810,7 +939,7 @@ window.addEventListener('load', () => {
             'ads-ph-assets':    'هل لديك صور أو فيديوهات أو نصوص جاهزة؟ هل لديك حساب إعلاني؟ شارك أي روابط أو تفاصيل وصول...',
             'ads-ph-history':   'هل سبق لك تشغيل إعلانات؟ على أي منصات وبأي ميزانية وما النتائج؟ ما الذي نجح وما الذي لم ينجح؟',
 
-            /* BUSINESS BRIEF — sections */
+            /* BUSINESS BRIEF */
             'brief-sec1':       'معلومات الأعمال',
             'brief-f-brand':    'اسم العلامة / الشركة',
             'brief-f-industry': 'قطاع / نوع الأعمال',
@@ -828,6 +957,7 @@ window.addEventListener('load', () => {
             'brief-f-colors':   'ألوان العلامة / الهوية البصرية',
             'brief-f-social':   'الحضور الحالي على التواصل الاجتماعي',
             'brief-f-agency':   'تجربة مع وكالات تسويق سابقة',
+            'brief-f-branding-notes': '📝 ملاحظات إضافية عن الهوية البصرية',
             'brief-sec4':       'استراتيجية التسويق',
             'brief-f-obj':      'الأهداف التسويقية الرئيسية',
             'brief-f-comp':     'المنافسون الرئيسيون',
@@ -837,7 +967,6 @@ window.addEventListener('load', () => {
             'brief-f-package':  'الباقة المختارة',
             'brief-f-payment':  'طريقة وشروط الدفع',
             'brief-f-duration': 'مدة العقد',
-            /* BUSINESS BRIEF — placeholders */
             'brief-ph-brand':    'مثال: وكالة أُفق',
             'brief-ph-industry': 'مثال: أزياء، مطاعم، تقنية...',
             'brief-ph-specialty':'ما الذي تتخصص فيه؟',
@@ -849,15 +978,21 @@ window.addEventListener('load', () => {
             'brief-ph-holidays': 'مثال: الجمعة، الأعياد الرسمية',
             'brief-ph-delivery': 'صف نظام التوصيل أو السياسات إن وُجدت...',
             'brief-ph-logo':     'مثال: بسيط، جريء، كلاسيكي...',
-            'brief-ph-colors':   'مثال: أزرق داكن وذهبي، أو لا تفضيل',
             'brief-ph-social':   'روابط الحسابات أو (نبدأ من الصفر)',
             'brief-ph-agency':   'أسماء الوكالات أو (لا يوجد)',
+            'brief-ph-branding-notes': 'أي ملاحظات إضافية عن ألوان علامتك أو تفضيلاتك البصرية أو تفاصيل الهوية...',
             'brief-ph-obj':      'مثال: زيادة الوعي، توليد عملاء...',
             'brief-ph-comp':     'اذكر أبرز منافسيك',
             'brief-ph-channels': 'مثال: إنستغرام، إعلانات جوجل...',
             'brief-ph-audience': 'العمر، الجنس، الاهتمامات، الموقع...',
             'brief-ph-payment':  'مثال: شهري، تحويل بنكي، نقدي...',
             'brief-ph-duration': 'مثال: 3 أشهر، 6 أشهر، مفتوح...',
+
+            /* COLOR PALETTE */
+            'palette-custom-label':   'لون مخصص:',
+            'palette-add-btn':        '+ إضافة',
+            'palette-selected-label': 'الألوان المختارة:',
+            'palette-none-msg':       'لم يتم الاختيار بعد',
 
             'submit-reg-btn':   'إرسال التسجيل',
             'fn-ph':            'الاسم الكامل',
@@ -932,7 +1067,6 @@ window.addEventListener('load', () => {
             if (dict[key] !== undefined) el.placeholder = dict[key];
         });
 
-        // update brief badges if already selected
         if (selectedBrief) {
             const briefLabels = {
                 'Ads Brief':      { en: 'Ads Brief',      ar: 'موجز الإعلانات' },
