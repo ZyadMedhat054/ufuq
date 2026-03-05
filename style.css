@@ -432,7 +432,6 @@ body.light-mode .overlay {
     );
 }
 
-/* Animated scanline */
 .hero::before {
     content: '';
     position: absolute;
@@ -448,7 +447,6 @@ body.light-mode .overlay {
     pointer-events: none;
 }
 
-/* Floating particles */
 .hero-particles {
     position: absolute;
     inset: 0;
@@ -522,7 +520,6 @@ body.light-mode .hero-logo-brand {
     animation: heroTextIn 1s cubic-bezier(0.16,1,0.3,1) 0.85s both;
 }
 
-/* Scroll indicator */
 .scroll-indicator {
     position: absolute;
     bottom: 35px;
@@ -1259,7 +1256,7 @@ body.light-mode .contact-title, body.light-mode .registration-title {
     border: 1px solid var(--border);
     background: var(--bg);
     color: var(--text);
-    font-size: 16px; /* 16px prevents iOS zoom */
+    font-size: 16px;
     font-family: 'Poppins', sans-serif;
     outline: none;
     width: 100%;
@@ -1279,7 +1276,6 @@ body.light-mode .contact-title, body.light-mode .registration-title {
 .form-group textarea   { resize: vertical; min-height: clamp(100px, 14vw, 130px); }
 .form-group select option { background: var(--surface); }
 
-/* Custom select arrow */
 .form-group select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -1332,8 +1328,6 @@ body.light-mode .contact-title, body.light-mode .registration-title {
     font-weight: 600;
     animation: fadeInUp 0.4s ease both;
 }
-
-/* ===== CONTACT RESPONSIVE BREAKPOINTS ===== */
 
 @media (max-width: 860px) {
     .contact-wrapper {
@@ -1643,8 +1637,6 @@ textarea {
 }
 
 /* ===================== LIGHT MODE OVERRIDES ===================== */
-
-/* ===== LIGHT MODE BORDERS ===== */
 
 body.light-mode header {
     background: var(--header-bg);
@@ -2095,7 +2087,6 @@ body.light-mode footer {
 
 .footer-bottom-links a:hover { color: var(--teal); }
 
-/* Footer reveal */
 footer .footer-grid > * {
     opacity: 0;
     transform: translateY(30px);
@@ -2336,7 +2327,7 @@ a.logo:hover {
 
 /* ===== BRIEF SECTION BLOCKS ===== */
 .brief-section-block {
-    background: var(--bg);
+    background: #162032;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 28px 28px 22px;
@@ -2376,10 +2367,10 @@ a.logo:hover {
     gap: 14px;
 }
 .brief-field-box {
-    background: var(--surface);
+    background: #0b1628;
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 16px;
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
     transition: border-color 0.25s, box-shadow 0.25s;
 }
 .brief-field-box:focus-within {
@@ -2389,13 +2380,13 @@ a.logo:hover {
 .brief-field-full { grid-column: 1 / -1; }
 
 .brief-field-box label {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 700;
     color: var(--teal);
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 .brief-field-box input,
 .brief-field-box textarea,
@@ -2406,27 +2397,58 @@ a.logo:hover {
     outline: none;
     color: var(--text);
     font-family: 'Poppins', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 1.7;
     padding: 0;
     resize: vertical;
+}
+.brief-field-box textarea {
+    min-height: 90px;
 }
 .brief-field-box select { cursor: pointer; appearance: none; -webkit-appearance: none; color-scheme: dark; }
 .brief-field-box select option { background: #1e293b; color: var(--text); }
 .brief-field-box input::placeholder,
-.brief-field-box textarea::placeholder { color: var(--muted); opacity: 0.65; }
+.brief-field-box textarea::placeholder {
+    color: var(--muted);
+    opacity: 0.75;
+    font-size: 13px;
+}
 
 /* ===== LIGHT MODE ===== */
 body.light-mode .brief-section-block { background: #ffffff; border: 1.5px solid #cbd5e1; }
-body.light-mode .brief-field-box { background: #f8fafc; border: 1.5px solid #cbd5e1; }
+body.light-mode .brief-field-box { background: #f1f5f9; border: 1.5px solid #cbd5e1; }
 body.light-mode .brief-field-box input,
 body.light-mode .brief-field-box textarea,
 body.light-mode .brief-field-box select { color: #1e293b; color-scheme: light; }
 body.light-mode .brief-field-box select option { background: #ffffff; color: #1e293b; }
+body.light-mode .brief-field-box input::placeholder,
+body.light-mode .brief-field-box textarea::placeholder { color: #6b7280; opacity: 0.85; }
 
 /* ===== RTL ===== */
 body[dir="rtl"] .brief-section-label { flex-direction: row-reverse; }
 body[dir="rtl"] .brief-section-block { text-align: right; }
 body[dir="rtl"] .brief-form-header   { text-align: right; }
+body[dir="rtl"] .brief-field-box label {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+}
+body[dir="rtl"] .brief-field-box input,
+body[dir="rtl"] .brief-field-box textarea {
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    line-height: 2;
+    text-align: right;
+    direction: rtl;
+}
+body[dir="rtl"] .brief-field-box input::placeholder,
+body[dir="rtl"] .brief-field-box textarea::placeholder {
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    text-align: right;
+    opacity: 0.9;
+}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
@@ -2435,6 +2457,7 @@ body[dir="rtl"] .brief-form-header   { text-align: right; }
     .brief-field-full { grid-column: 1; }
     .brief-section-block { padding: 18px 14px; }
 }
+
 /* ===== SERVICES PAGE - IMAGE CARDS ===== */
 .service-icon {
     margin: -28px -28px 22px -28px;
@@ -2545,7 +2568,6 @@ body[dir="rtl"] .brief-form-header   { text-align: right; }
 
 /* ===== HERO BACKGROUND - RESPONSIVE ===== */
 
-/* Tablet (max 1024px) */
 @media (max-width: 1024px) {
     .hero {
         background-size: cover;
@@ -2556,25 +2578,19 @@ body[dir="rtl"] .brief-form-header   { text-align: right; }
     }
 }
 
-/* Mobile landscape + small tablet (max 768px) */
 @media (max-width: 768px) {
     .hero {
         background-size: cover;
         background-position: center center;
-        background-attachment: scroll; /* fixed breaks on iOS */
-        height: 100svh; /* safe viewport height for mobile browsers */
+        background-attachment: scroll;
+        height: 100svh;
         min-height: 520px;
         padding: 0 16px;
     }
-    .hero h1 {
-        font-size: clamp(1.6rem, 6vw, 2.4rem);
-    }
-    .hero p {
-        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-    }
+    .hero h1 { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+    .hero p  { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
 }
 
-/* Small mobile (max 480px) */
 @media (max-width: 480px) {
     .hero {
         background-size: cover;
@@ -2583,23 +2599,97 @@ body[dir="rtl"] .brief-form-header   { text-align: right; }
         min-height: 480px;
         padding: 0 12px;
     }
-    .hero h1 {
-        font-size: clamp(1.4rem, 7vw, 1.9rem);
-    }
-    .hero p {
-        font-size: clamp(0.85rem, 4vw, 1rem);
-    }
-    .hero .buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-    }
+    .hero h1 { font-size: clamp(1.4rem, 7vw, 1.9rem); }
+    .hero p  { font-size: clamp(0.85rem, 4vw, 1rem); }
+    .hero .buttons { flex-direction: column; align-items: center; gap: 12px; }
 }
 
-/* Very small screens (max 360px) */
 @media (max-width: 360px) {
     .hero {
         background-position: 60% center;
         min-height: 440px;
     }
+}
+
+/* =====================================================================
+   ADS BRIEF — Text, Placeholder & Label Size Fix
+   ===================================================================== */
+
+#adsBriefForm .brief-field-box {
+    padding: 20px 22px;
+}
+
+#adsBriefForm .brief-fields-grid {
+    gap: 20px;
+}
+
+#adsBriefForm .brief-field-box label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--teal);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+#adsBriefForm .brief-field-box textarea {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text);
+    min-height: 100px;
+}
+
+#adsBriefForm .brief-field-box textarea::placeholder {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+    opacity: 0.8;
+}
+
+/* Arabic / RTL — bigger and clearer */
+body[dir="rtl"] #adsBriefForm .brief-field-box {
+    direction: rtl;
+    text-align: right;
+}
+
+body[dir="rtl"] #adsBriefForm .brief-field-box label {
+    font-family: 'Cairo', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    flex-direction: row;
+    direction: rtl;
+    justify-content: flex-start;
+    text-align: right;
+    gap: 12px;
+}
+
+body[dir="rtl"] #adsBriefForm .brief-field-box label .brief-section-num {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+body[dir="rtl"] #adsBriefForm .brief-field-box textarea {
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    line-height: 2;
+    text-align: right;
+    direction: rtl;
+}
+
+body[dir="rtl"] #adsBriefForm .brief-field-box textarea::placeholder {
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    line-height: 2;
+    text-align: right;
+    opacity: 0.9;
+}
+
+/* Light mode overrides for Ads Brief */
+body.light-mode #adsBriefForm .brief-field-box textarea {
+    color: #1e293b;
+}
+body.light-mode #adsBriefForm .brief-field-box textarea::placeholder {
+    color: #6b7280;
+    opacity: 0.85;
 }

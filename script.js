@@ -4,7 +4,6 @@
 
 /* ===================== PAGE LOADER ===================== */
 (function () {
-    // Inject loader HTML
     const loader = document.createElement('div');
     loader.id = 'page-loader';
     loader.innerHTML = `
@@ -13,19 +12,16 @@
     `;
     document.body.prepend(loader);
 
-    // Inject scroll progress bar
     const progress = document.createElement('div');
     progress.id = 'scroll-progress';
     document.body.prepend(progress);
 
-    // Inject background orbs
     ['orb-1','orb-2','orb-3'].forEach(cls => {
         const orb = document.createElement('div');
         orb.className = `orb ${cls}`;
         document.body.appendChild(orb);
     });
 
-    // Animate loader bar
     const bar = loader.querySelector('.loader-bar');
     let width = 0;
     const grow = setInterval(() => {
@@ -79,7 +75,7 @@ if (themeToggle) {
         localStorage.setItem('theme', isLight ? 'light' : 'dark');
         themeToggle.textContent = isLight ? '🌙' : '☀️';
         themeToggle.style.animation = 'none';
-        themeToggle.offsetHeight; // reflow
+        themeToggle.offsetHeight;
         themeToggle.style.animation = '';
     };
 }
@@ -90,7 +86,6 @@ if (menuBtn) {
         nav.classList.toggle('active');
         menuBtn.textContent = nav.classList.contains('active') ? '✕' : '☰';
     };
-    // Close menu on link click
     document.querySelectorAll('#nav a').forEach(a => {
         a.addEventListener('click', () => {
             nav.classList.remove('active');
@@ -104,12 +99,10 @@ if (menuBtn) {
     const hero = document.querySelector('.hero');
     if (!hero) return;
 
-    // Inject particle container
     const particleContainer = document.createElement('div');
     particleContainer.className = 'hero-particles';
     hero.appendChild(particleContainer);
 
-    // Inject scroll indicator
     const scrollIndicator = document.createElement('div');
     scrollIndicator.className = 'scroll-indicator';
     scrollIndicator.innerHTML = `
@@ -118,14 +111,12 @@ if (menuBtn) {
     `;
     hero.appendChild(scrollIndicator);
 
-    // Wrap highlight text
     const h1 = hero.querySelector('h1');
     if (h1) {
         h1.innerHTML = h1.innerHTML
             .replace('Smart Digital Marketing', '<span class="highlight">Smart Digital Marketing</span>');
     }
 
-    // Create particles
     for (let i = 0; i < 25; i++) {
         const p = document.createElement('div');
         p.className = 'hero-particle';
@@ -143,7 +134,6 @@ if (menuBtn) {
 
 /* ===================== SCROLL REVEAL ===================== */
 (function () {
-    // Add reveal classes to elements
     const revealMap = [
         { selector: '.about-card',        cls: 'reveal',       delay: [0, 100, 200, 300] },
         { selector: '.service-card',      cls: 'reveal',       delay: [0, 100, 200, 300, 400, 500] },
@@ -168,7 +158,6 @@ if (menuBtn) {
         });
     });
 
-    // Observe
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -265,7 +254,7 @@ var selectedBrief = '';
 function selectBrief(briefType) {
     selectedBrief = briefType;
 
-    // Reset all cards
+    // Reset all card highlights
     document.querySelectorAll('.brief-card').forEach(function(card) {
         card.style.borderColor = '';
         card.style.boxShadow = '';
@@ -278,39 +267,53 @@ function selectBrief(briefType) {
         selectedCard.style.boxShadow = '0 0 30px rgba(79,209,197,0.35)';
     }
 
-    // Update badge label based on current language
-    var badge = document.getElementById('briefFormBadge');
-    if (badge) {
-        var lang = localStorage.getItem('lang') || 'en';
-        var briefLabels = {
-            'Ads Brief':      { en: 'Ads Brief',      ar: 'موجز الإعلانات' },
-            'Business Brief': { en: 'Business Brief', ar: 'الموجز التجاري' }
-        };
-        badge.textContent = (briefLabels[briefType] && briefLabels[briefType][lang]) || briefType;
+    var lang = localStorage.getItem('lang') || 'en';
+    var briefLabels = {
+        'Ads Brief':      { en: 'Ads Brief',      ar: 'موجز الإعلانات' },
+        'Business Brief': { en: 'Business Brief', ar: 'الموجز التجاري' }
+    };
+    var label = (briefLabels[briefType] && briefLabels[briefType][lang]) || briefType;
+
+    // Hide both forms first
+    var adsForm = document.getElementById('adsBriefForm');
+    var bizForm = document.getElementById('businessBriefForm');
+
+    if (adsForm) {
+        adsForm.classList.add('brief-detail-form-hidden');
+        adsForm.classList.remove('brief-detail-form-visible');
+    }
+    if (bizForm) {
+        bizForm.classList.add('brief-detail-form-hidden');
+        bizForm.classList.remove('brief-detail-form-visible');
     }
 
-    // Show the detail form
-    var form = document.getElementById('briefDetailForm');
-    if (form) {
-        form.classList.remove('brief-detail-form-hidden');
-        form.classList.add('brief-detail-form-visible');
+    // Show the correct form and update its badge
+    var targetForm = (briefType === 'Ads Brief') ? adsForm : bizForm;
+    var badgeId    = (briefType === 'Ads Brief') ? 'adsBriefFormBadge' : 'bizBriefFormBadge';
+
+    var badge = document.getElementById(badgeId);
+    if (badge) badge.textContent = label;
+
+    if (targetForm) {
+        targetForm.classList.remove('brief-detail-form-hidden');
+        targetForm.classList.add('brief-detail-form-visible');
         setTimeout(function() {
-            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            targetForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 150);
     }
 }
 
 /* ===================== SEND TO WHATSAPP (Registration) ===================== */
 function sendToWhatsApp() {
-    const fullName      = (document.getElementById('fullName')?.value      || '').trim();
-    const nationalId    = (document.getElementById('nationalId')?.value     || '').trim();
-    const contactNumber = (document.getElementById('contactNumber')?.value  || '').trim();
-    const whatsappNumber= (document.getElementById('whatsappNumber')?.value || '').trim();
-    const businessName  = (document.getElementById('businessName')?.value   || '').trim();
-    const industryType  = (document.getElementById('industryType')?.value   || '').trim();
-    const socialLink    = (document.getElementById('socialLink')?.value     || '').trim();
-    const platform      = (document.getElementById('platform')?.value       || '');
-    const otherDetails  = (document.getElementById('otherDetails')?.value   || '').trim();
+    const fullName       = (document.getElementById('fullName')?.value       || '').trim();
+    const nationalId     = (document.getElementById('nationalId')?.value      || '').trim();
+    const contactNumber  = (document.getElementById('contactNumber')?.value   || '').trim();
+    const whatsappNumber = (document.getElementById('whatsappNumber')?.value  || '').trim();
+    const businessName   = (document.getElementById('businessName')?.value    || '').trim();
+    const industryType   = (document.getElementById('industryType')?.value    || '').trim();
+    const socialLink     = (document.getElementById('socialLink')?.value      || '').trim();
+    const platform       = (document.getElementById('platform')?.value        || '');
+    const otherDetails   = (document.getElementById('otherDetails')?.value    || '').trim();
 
     const services = [];
     document.querySelectorAll('.services-column input:checked').forEach(el => {
@@ -323,11 +326,35 @@ function sendToWhatsApp() {
     function g(id) { return (document.getElementById(id)?.value || '').trim() || '—'; }
 
     let briefFormSection = '';
-    if (selectedBrief) {
+
+    if (selectedBrief === 'Ads Brief') {
+        briefFormSection =
+`
+   Ads Brief — Details
+
+1. CAMPAIGN OBJECTIVE
+${g('ads-objective')}
+
+2. OFFER & PRODUCT DETAILS
+${g('ads-offer')}
+
+3. TARGET AUDIENCE
+${g('ads-audience')}
+
+4. BUDGET & TIMELINE
+${g('ads-budget')}
+
+5. AD ASSETS & ACCESS
+${g('ads-assets')}
+
+6. HISTORICAL CAMPAIGN DATA
+${g('ads-history')}`;
+
+    } else if (selectedBrief === 'Business Brief') {
         briefFormSection =
 `
 ========================
-   ${briefText} — Details
+   Business Brief — Details
 ========================
 
 1. BUSINESS INFORMATION
@@ -420,9 +447,7 @@ function sendContactToWhatsApp() {
 }
 
 /* ===================== STAGGER ANIMATION INIT ===================== */
-// Ensure cards visible in viewport on load
 window.addEventListener('load', () => {
-    // Trigger visible state for already-visible elements
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.95) {
@@ -462,7 +487,7 @@ window.addEventListener('load', () => {
             /* ABOUT */
             'about-page-title':   'About UFUQ',
             'about-card1-title':  'Who We Are',
-            'about-card1-text':   'UFUQ is more than just a digital marketing service – it’s a vision. Founded by a team of experts who believe in the power of strategy and the art of storytelling.',
+            'about-card1-text':   'UFUQ is more than just a digital marketing service – it\'s a vision. Founded by a team of experts who believe in the power of strategy and the art of storytelling.',
             'about-card2-title':  'What We Do',
             'about-card2-text':   'We craft bold, effective digital marketing campaigns for businesses ready to grow — not just in numbers, but in real connection.',
             'about-card3-title':  'Why We Exist',
@@ -541,7 +566,7 @@ window.addEventListener('load', () => {
             'form-message-ph':      'Tell us about your project, goals, or any questions you have...',
             'contact-submit-btn':   'Send via WhatsApp',
 
-            /* START YOUR JOURNEY */
+            /* REGISTRATION */
             'reg-title':        'Client Registration',
             'personal-info':    'Personal Information',
             'business-info':    'Business Information',
@@ -556,8 +581,24 @@ window.addEventListener('load', () => {
             'brief-biz-title':  'Business Brief',
             'brief-biz-text':   'Full business overview & marketing strategy details',
             'select-brief-btn': 'Select Brief',
-            /* Brief form sections */
-            'brief-form-subtitle':   'Please fill in all sections below — this will be included in your submission',
+            'brief-form-subtitle': 'Please fill in all sections below — this will be included in your submission',
+
+            /* ADS BRIEF — sections */
+            'ads-sec1':         'Campaign Objective',
+            'ads-sec2':         'Offer & Product Details',
+            'ads-sec3':         'Target Audience',
+            'ads-sec4':         'Budget & Timeline',
+            'ads-sec5':         'Ad Assets & Access',
+            'ads-sec6':         'Historical Campaign Data',
+            /* ADS BRIEF — placeholders */
+            'ads-ph-objective': 'What is the goal of this campaign? e.g. generate leads, increase sales, grow awareness...',
+            'ads-ph-offer':     'What product or service are you advertising? Include pricing, offers, or any promotions...',
+            'ads-ph-audience':  'Describe your ideal customer — age, gender, location, interests, behaviors...',
+            'ads-ph-budget':    'What is your total or monthly budget? When should the campaign start and how long should it run?',
+            'ads-ph-assets':    'Do you have images, videos, or copy ready? Do you have an existing ad account? Share any links or access details...',
+            'ads-ph-history':   'Have you run ads before? What platforms, budget, and results? What worked and what didn\'t?',
+
+            /* BUSINESS BRIEF — sections */
             'brief-sec1':       'Business Information',
             'brief-f-brand':    'Brand / Company Name',
             'brief-f-industry': 'Business Industry / Type',
@@ -584,7 +625,7 @@ window.addEventListener('load', () => {
             'brief-f-package':  'Selected Service Package',
             'brief-f-payment':  'Payment Method & Terms',
             'brief-f-duration': 'Contract Duration',
-            /* placeholders */
+            /* BUSINESS BRIEF — placeholders */
             'brief-ph-brand':    'e.g. UFUQ Agency',
             'brief-ph-industry': 'e.g. Fashion, F&B, Tech...',
             'brief-ph-specialty':'What do you specialize in?',
@@ -605,6 +646,7 @@ window.addEventListener('load', () => {
             'brief-ph-audience': 'Age, gender, interests, location, behavior...',
             'brief-ph-payment':  'e.g. Monthly, Bank transfer, Cash...',
             'brief-ph-duration': 'e.g. 3 months, 6 months, Ongoing...',
+
             'submit-reg-btn':   'Submit Registration',
             'fn-ph':            'Full Name',
             'ni-ph':            'National ID',
@@ -681,11 +723,11 @@ window.addEventListener('load', () => {
             'svc5-title':      'استراتيجية وصناعة المحتوى',
             'svc5-text':       'منظومة محتوى متكاملة تشمل: بناء الاستراتيجية، تخطيط المحتوى (Content Plan)، كتابة القصص الإعلانية (Storytelling)، والجدولة الذكية للنشر في أوقات الذروة.',
             'svc6-title':      'التخطيط والاستراتيجية التسويقية',
-            'svc6-text':       'بناء خطط تسويقية مبنية على تحليل دقيق للسوق والمنافسين، لتحديد المسار الأسرع والأكثر فعالية لتحقيق أهدافك البيعية..',
+            'svc6-text':       'بناء خطط تسويقية مبنية على تحليل دقيق للسوق والمنافسين، لتحديد المسار الأسرع والأكثر فعالية لتحقيق أهدافك البيعية.',
             'svc7-title':      'الإعلانات الممولة (الميديا باينج)',
-            'svc7-text':       'إطلاق وإدارة حملات إعلانية موجهة بدقة (Laser-targeted Ads) لضمان الوصول للجمهور الصح، وتقليل تكلفة العميل، مع تحقيق أعلى عائد على الاستثمار (ROI)..',
+            'svc7-text':       'إطلاق وإدارة حملات إعلانية موجهة بدقة (Laser-targeted Ads) لضمان الوصول للجمهور الصح، وتقليل تكلفة العميل، مع تحقيق أعلى عائد على الاستثمار (ROI).',
             'svc8-title':      'تحليل الأداء والتقارير',
-            'svc8-text':       'تحليل مستمر للأرقام والنتائج (Insights Analysis)، وتقديم تقارير شهرية شفافة توضح الأداء وتحدد الخطوات الاستراتيجية القادمة..',
+            'svc8-text':       'تحليل مستمر للأرقام والنتائج (Insights Analysis)، وتقديم تقارير شهرية شفافة توضح الأداء وتحدد الخطوات الاستراتيجية القادمة.',
             'svc9-title':      'العلامة الشخصية',
             'svc9-text':       'حلول احترافية للعلامة الشخصية لرواد الأعمال والقادة.',
 
@@ -736,7 +778,7 @@ window.addEventListener('load', () => {
             'form-message-ph':      'أخبرنا عن مشروعك وأهدافك أو أي أسئلة لديك...',
             'contact-submit-btn':   'أرسل عبر واتساب',
 
-            /* START YOUR JOURNEY */
+            /* REGISTRATION */
             'reg-title':        'تسجيل العميل',
             'personal-info':    'المعلومات الشخصية',
             'business-info':    'معلومات الأعمال',
@@ -751,8 +793,24 @@ window.addEventListener('load', () => {
             'brief-biz-title':  'الموجز التجاري',
             'brief-biz-text':   'نظرة شاملة على الأعمال وتفاصيل استراتيجية التسويق',
             'select-brief-btn': 'اختر الموجز',
-            /* Brief form sections */
-            'brief-form-subtitle':   'يرجى تعبئة جميع الأقسام أدناه — ستُضمَّن في طلبك',
+            'brief-form-subtitle': 'يرجى تعبئة جميع الأقسام أدناه — ستُضمَّن في طلبك',
+
+            /* ADS BRIEF — sections */
+            'ads-sec1':         'هدف الحملة',
+            'ads-sec2':         'تفاصيل العرض والمنتج',
+            'ads-sec3':         'الجمهور المستهدف',
+            'ads-sec4':         'الميزانية والجدول الزمني',
+            'ads-sec5':         'أصول الإعلان والوصول',
+            'ads-sec6':         'بيانات الحملات السابقة',
+            /* ADS BRIEF — placeholders */
+            'ads-ph-objective': 'ما هو هدف الحملة؟ مثال: توليد عملاء محتملين، زيادة المبيعات، رفع الوعي بالعلامة...',
+            'ads-ph-offer':     'ما المنتج أو الخدمة التي تعلن عنها؟ اذكر السعر والعروض والخصومات إن وُجدت...',
+            'ads-ph-audience':  'صف عميلك المثالي — العمر، الجنس، الموقع، الاهتمامات، السلوكيات...',
+            'ads-ph-budget':    'ما هي ميزانيتك الإجمالية أو الشهرية؟ متى تريد بدء الحملة وكم تستمر؟',
+            'ads-ph-assets':    'هل لديك صور أو فيديوهات أو نصوص جاهزة؟ هل لديك حساب إعلاني؟ شارك أي روابط أو تفاصيل وصول...',
+            'ads-ph-history':   'هل سبق لك تشغيل إعلانات؟ على أي منصات وبأي ميزانية وما النتائج؟ ما الذي نجح وما الذي لم ينجح؟',
+
+            /* BUSINESS BRIEF — sections */
             'brief-sec1':       'معلومات الأعمال',
             'brief-f-brand':    'اسم العلامة / الشركة',
             'brief-f-industry': 'قطاع / نوع الأعمال',
@@ -779,7 +837,7 @@ window.addEventListener('load', () => {
             'brief-f-package':  'الباقة المختارة',
             'brief-f-payment':  'طريقة وشروط الدفع',
             'brief-f-duration': 'مدة العقد',
-            /* placeholders */
+            /* BUSINESS BRIEF — placeholders */
             'brief-ph-brand':    'مثال: وكالة أُفق',
             'brief-ph-industry': 'مثال: أزياء، مطاعم، تقنية...',
             'brief-ph-specialty':'ما الذي تتخصص فيه؟',
@@ -800,6 +858,7 @@ window.addEventListener('load', () => {
             'brief-ph-audience': 'العمر، الجنس، الاهتمامات، الموقع...',
             'brief-ph-payment':  'مثال: شهري، تحويل بنكي، نقدي...',
             'brief-ph-duration': 'مثال: 3 أشهر، 6 أشهر، مفتوح...',
+
             'submit-reg-btn':   'إرسال التسجيل',
             'fn-ph':            'الاسم الكامل',
             'ni-ph':            'الرقم القومي',
@@ -843,50 +902,45 @@ window.addEventListener('load', () => {
         document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
         document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
 
-        // text content
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (dict[key] !== undefined) el.textContent = dict[key];
         });
 
-        // innerHTML (for elements with <br> or <span>)
         document.querySelectorAll('[data-i18n-html]').forEach(el => {
             const key = el.getAttribute('data-i18n-html');
             if (dict[key] !== undefined) el.innerHTML = dict[key];
         });
 
-        // placeholders
         document.querySelectorAll('[data-i18n-ph]').forEach(el => {
             const key = el.getAttribute('data-i18n-ph');
             if (dict[key] !== undefined) el.placeholder = dict[key];
         });
 
-        // select first option text
         document.querySelectorAll('[data-i18n-opt]').forEach(el => {
             const key = el.getAttribute('data-i18n-opt');
             if (dict[key] !== undefined) el.options[0].text = dict[key];
         });
 
-        // brief form labels
         document.querySelectorAll('[data-i18n-label]').forEach(el => {
             const key = el.getAttribute('data-i18n-label');
             if (dict[key] !== undefined) el.textContent = dict[key];
         });
 
-        // brief form input placeholders (data-i18n-bph)
         document.querySelectorAll('[data-i18n-bph]').forEach(el => {
             const key = el.getAttribute('data-i18n-bph');
             if (dict[key] !== undefined) el.placeholder = dict[key];
         });
 
-        // update brief badge if a brief is already selected
-        const badge = document.getElementById('briefFormBadge');
-        if (badge && selectedBrief) {
+        // update brief badges if already selected
+        if (selectedBrief) {
             const briefLabels = {
                 'Ads Brief':      { en: 'Ads Brief',      ar: 'موجز الإعلانات' },
                 'Business Brief': { en: 'Business Brief', ar: 'الموجز التجاري' }
             };
-            badge.textContent = (briefLabels[selectedBrief] && briefLabels[selectedBrief][lang]) || selectedBrief;
+            const badgeId = (selectedBrief === 'Ads Brief') ? 'adsBriefFormBadge' : 'bizBriefFormBadge';
+            const badge = document.getElementById(badgeId);
+            if (badge) badge.textContent = (briefLabels[selectedBrief] && briefLabels[selectedBrief][lang]) || selectedBrief;
         }
 
         const btn = document.getElementById('langToggle');
@@ -896,7 +950,6 @@ window.addEventListener('load', () => {
         localStorage.setItem('lang', lang);
     }
 
-    // Inject button into nav-icons
     window.addEventListener('DOMContentLoaded', () => {
         const navIcons = document.querySelector('.nav-icons');
         if (navIcons) {
@@ -904,14 +957,12 @@ window.addEventListener('load', () => {
             langBtn.id = 'langToggle';
             langBtn.textContent = currentLang === 'ar' ? 'EN' : 'ع';
             langBtn.setAttribute('title', 'Toggle Language');
-            // Insert before themeToggle
             navIcons.insertBefore(langBtn, navIcons.firstChild);
             langBtn.addEventListener('click', () => {
                 applyLanguage(currentLang === 'ar' ? 'en' : 'ar');
             });
         }
 
-        // Apply saved language on load
         applyLanguage(currentLang);
     });
 })();
@@ -961,14 +1012,12 @@ window.addEventListener('load', () => {
         if (label) label.textContent = Math.round(lbScale * 100) + '%';
     }
 
-    // Expose to global scope so onclick attributes work
     window.openLightbox       = openLightbox;
     window.closeLightbox      = closeLightbox;
     window.closeLightboxOnBg  = closeLightboxOnBg;
     window.zoomIn             = zoomIn;
     window.zoomOut            = zoomOut;
 
-    // Keyboard shortcuts
     document.addEventListener('keydown', function (e) {
         var lb = document.getElementById('lightbox');
         if (!lb || !lb.classList.contains('open')) return;
@@ -977,7 +1026,6 @@ window.addEventListener('load', () => {
         if (e.key === '-') zoomOut();
     });
 
-    // Attach bg-click handler once DOM is ready
     document.addEventListener('DOMContentLoaded', function () {
         var lb = document.getElementById('lightbox');
         if (lb) lb.addEventListener('click', closeLightboxOnBg);

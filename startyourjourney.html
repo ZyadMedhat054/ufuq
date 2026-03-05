@@ -105,10 +105,59 @@
         </div>
     </div>
 
-    <!-- ===== BRIEF DETAIL FORM ===== -->
-    <div id="briefDetailForm" class="brief-detail-form-hidden">
+    <!-- ===== ADS BRIEF FORM ===== -->
+    <div id="adsBriefForm" class="brief-detail-form-hidden">
         <div class="brief-form-header">
-            <span id="briefFormBadge" class="brief-form-badge">Brief Selected</span>
+            <span id="adsBriefFormBadge" class="brief-form-badge">Ads Brief</span>
+            <p class="brief-form-subtitle" data-i18n="brief-form-subtitle">Please fill in all sections below — this will be included in your submission</p>
+        </div>
+
+        <div class="brief-fields-grid" style="gap:18px;">
+
+            <!-- 1 -->
+            <div class="brief-field-box brief-field-full">
+                <label><span class="brief-section-num">1</span><span data-i18n="ads-sec1">Campaign Objective</span></label>
+                <textarea id="ads-objective" rows="3" data-i18n-bph="ads-ph-objective" placeholder="What is the goal of this campaign? e.g. generate leads, increase sales, grow awareness..."></textarea>
+            </div>
+
+            <!-- 2 -->
+            <div class="brief-field-box brief-field-full">
+                <label><span class="brief-section-num">2</span><span data-i18n="ads-sec2">Offer &amp; Product Details</span></label>
+                <textarea id="ads-offer" rows="3" data-i18n-bph="ads-ph-offer" placeholder="What product or service are you advertising? Include pricing, offers, or any promotions..."></textarea>
+            </div>
+
+            <!-- 3 -->
+            <div class="brief-field-box brief-field-full">
+                <label><span class="brief-section-num">3</span><span data-i18n="ads-sec3">Target Audience</span></label>
+                <textarea id="ads-audience" rows="3" data-i18n-bph="ads-ph-audience" placeholder="Describe your ideal customer — age, gender, location, interests, behaviors..."></textarea>
+            </div>
+
+            <!-- 4 -->
+            <div class="brief-field-box brief-field-full">
+                <label><span class="brief-section-num">4</span><span data-i18n="ads-sec4">Budget &amp; Timeline</span></label>
+                <textarea id="ads-budget" rows="3" data-i18n-bph="ads-ph-budget" placeholder="What is your total or monthly budget? When do you want the campaign to start and how long should it run?"></textarea>
+            </div>
+
+            <!-- 5 -->
+            <div class="brief-field-box brief-field-full">
+                <label><span class="brief-section-num">5</span><span data-i18n="ads-sec5">Ad Assets &amp; Access</span></label>
+                <textarea id="ads-assets" rows="3" data-i18n-bph="ads-ph-assets" placeholder="Do you have images, videos, or copy ready? Do you have an existing ad account? Share any relevant links or access details..."></textarea>
+            </div>
+
+            <!-- 6 -->
+            <div class="brief-field-box brief-field-full">
+                <label><span class="brief-section-num">6</span><span data-i18n="ads-sec6">Historical Campaign Data</span></label>
+                <textarea id="ads-history" rows="3" data-i18n-bph="ads-ph-history" placeholder="Have you run ads before? What platforms, budget, and results did you get? What worked and what didn't?"></textarea>
+            </div>
+
+        </div>
+    </div><!-- end adsBriefForm -->
+
+
+    <!-- ===== BUSINESS BRIEF FORM ===== -->
+    <div id="businessBriefForm" class="brief-detail-form-hidden">
+        <div class="brief-form-header">
+            <span id="bizBriefFormBadge" class="brief-form-badge">Business Brief</span>
             <p class="brief-form-subtitle" data-i18n="brief-form-subtitle">Please fill in all sections below — this will be included in your submission</p>
         </div>
 
@@ -252,7 +301,8 @@
             </div>
         </div>
 
-    </div><!-- end briefDetailForm -->
+    </div><!-- end businessBriefForm -->
+
 </div><!-- end brief-request-section -->
 
 <div class="submit-area">
@@ -299,7 +349,7 @@
         <div class="footer-col">
             <h4 data-i18n="footer-ct-title">Contact</h4>
             <div class="footer-contact-item"><span>📱</span><a href="https://wa.me/201016273403">+20 101 627 3403</a></div>
-            <div class="footer-contact-item"><span>📧</span><a href="mailto:hello@ufuq.co">hello@ufuq.co</a></div>
+            <div class="footer-contact-item"><span>📧</span><a href="/cdn-cgi/l/email-protection#fc9499909093bc899a898dd29f93"><span class="__cf_email__" data-cfemail="b2dad7dededdf2c7d4c7c39cd1dd">[email&#160;protected]</span></a></div>
             <div class="footer-contact-item"><span>🕒</span><span data-i18n="footer-response">Response within 24 hours</span></div>
             <div class="footer-contact-item"><span>🌍</span><span data-i18n="footer-worldwide">Available Worldwide</span></div>
         </div>
