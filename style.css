@@ -20,6 +20,9 @@
     --radius-lg:  18px;
     --radius-xl:  22px;
     --shadow-teal: 0 0 30px rgba(79,209,197,0.3);
+    --error:      #ef4444;
+    --error-soft: rgba(239,68,68,0.12);
+    --error-glow: rgba(239,68,68,0.35);
 }
 
 /* ===================== KEYFRAMES ===================== */
@@ -165,6 +168,29 @@
 @keyframes navLinkIn {
     from { opacity: 0; transform: translateY(-15px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== VALIDATION SHAKE KEYFRAME ===== */
+@keyframes shakeField {
+    0%   { transform: translateX(0); }
+    15%  { transform: translateX(-8px); }
+    30%  { transform: translateX(8px); }
+    45%  { transform: translateX(-6px); }
+    60%  { transform: translateX(6px); }
+    75%  { transform: translateX(-3px); }
+    90%  { transform: translateX(3px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes errorFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SCROLL-ZOOM HINT KEYFRAME ===== */
+@keyframes hintFadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 /* ===================== BASE ===================== */
@@ -415,7 +441,7 @@ nav a:nth-child(6) { animation: navLinkIn 0.6s ease 0.6s both; }
     position: absolute;
     inset: 0;
     background: linear-gradient(
-        135deg,
+        500deg,
         rgba(15,23,42,0.92) 0%,
         rgba(15,23,42,0.75) 50%,
         rgba(15,23,42,0.85) 100%
@@ -1420,6 +1446,14 @@ body.light-mode .contact-title, body.light-mode .registration-title {
     color: var(--teal);
 }
 
+/* ===== FIELD WRAP ===== */
+.field-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+}
+
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1450,6 +1484,68 @@ textarea:focus,
     box-shadow: 0 0 0 4px rgba(79,209,197,0.12);
     transform: translateY(-2px);
 }
+
+/* ===== VALIDATION ERROR STATE ===== */
+.form-grid input.input-error,
+.form-grid select.input-error,
+textarea.input-error,
+.package-select.input-error {
+    border-color: var(--error) !important;
+    box-shadow: 0 0 0 4px var(--error-soft) !important;
+    background: rgba(239, 68, 68, 0.04) !important;
+    animation: shakeField 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.field-error {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--error);
+    margin-top: 6px;
+    margin-left: 4px;
+    min-height: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    line-height: 1.4;
+}
+
+.field-error.show {
+    max-height: 40px;
+    opacity: 1;
+    animation: errorFadeIn 0.3s ease both;
+}
+
+.field-error.show::before {
+    content: '⚠ ';
+    font-size: 11px;
+}
+
+.form-grid input:focus.input-error,
+.form-grid select:focus.input-error {
+    border-color: var(--teal) !important;
+    box-shadow: 0 0 0 4px rgba(79,209,197,0.12) !important;
+    background: var(--bg) !important;
+}
+
+body[dir="rtl"] .field-error {
+    margin-left: 0;
+    margin-right: 4px;
+    text-align: right;
+}
+
+body[dir="rtl"] .field-error.show::before {
+    content: ' ⚠';
+    margin-left: 4px;
+}
+
+body.light-mode .form-grid input.input-error,
+body.light-mode .form-grid select.input-error {
+    background: rgba(239,68,68,0.03) !important;
+}
+
+/* ======================== */
 
 .services-subtitle {
     font-size: 15px;
@@ -2481,16 +2577,22 @@ body[dir="rtl"] .brief-field-box textarea::placeholder {
     transform: scale(1.03);
 }
 
-/* Lightbox overlay */
+/* =====================================================================
+   LIGHTBOX — Scroll-to-Zoom Mode
+   ===================================================================== */
+
+/* Main lightbox overlay */
 #lightbox {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.9);
-    backdrop-filter: blur(12px);
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(14px);
     z-index: 9999;
     justify-content: center;
     align-items: center;
+    /* Prevent browser default scroll when wheel is used inside */
+    overscroll-behavior: none;
 }
 #lightbox.open { display: flex; animation: lbFadeIn 0.25s ease; }
 @keyframes lbFadeIn { from{opacity:0} to{opacity:1} }
@@ -2502,6 +2604,8 @@ body[dir="rtl"] .brief-field-box textarea::placeholder {
     align-items: center;
     gap: 16px;
 }
+
+/* Close button */
 #lightbox-close {
     position: absolute;
     top: -54px;
@@ -2515,40 +2619,73 @@ body[dir="rtl"] .brief-field-box textarea::placeholder {
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     transition: background 0.2s, transform 0.2s;
+    z-index: 2;
 }
-#lightbox-close:hover { background: rgba(79,209,197,0.35); transform: scale(1.12); }
+#lightbox-close:hover {
+    background: rgba(79,209,197,0.35);
+    transform: scale(1.12);
+}
 
+/* Hide the old zoom button controls */
 #lightbox-zoom-controls {
-    display: flex; align-items: center; gap: 14px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 40px; padding: 7px 22px;
+    display: none;
 }
-#lightbox-zoom-controls button {
-    background: none; border: none; color: #4fd1c5;
-    font-size: 24px; font-weight: 700; cursor: pointer;
-    width: 32px; height: 32px; border-radius: 50%;
-    transition: background 0.2s;
-    display: flex; align-items: center; justify-content: center;
-}
-#lightbox-zoom-controls button:hover { background: rgba(79,209,197,0.2); }
-#zoom-label {
-    color:#fff; font-size:14px; min-width:48px;
-    text-align:center; font-family:'Poppins',sans-serif;
-}
+
+/* Lightbox image wrapper — overflow visible so zoomed image isn't clipped */
 #lightbox-img-wrap {
-    overflow: auto;
-    max-width: 90vw; max-height: 78vh;
+    overflow: visible;
+    max-width: 90vw;
+    max-height: 82vh;
     border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-}
-#lightbox-img {
-    border-radius: 12px; display: block;
-    max-width: 85vw; max-height: 72vh;
-    object-fit: contain;
-    transform-origin: center center;
-    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Prevent text selection while dragging */
     user-select: none;
+}
+
+/* The actual image — transform is applied by JS for zoom + pan */
+#lightbox-img {
+    border-radius: 12px;
+    display: block;
+    max-width: 85vw;
+    max-height: 76vh;
+    object-fit: contain;
+    user-select: none;
+    cursor: default;
+    /* transform-origin stays center; JS handles offset math */
+    transform-origin: center center;
+    /* Smooth feeling when wheel is turned quickly */
+    will-change: transform;
+    transition: transform 0.05s ease-out;
+}
+
+/* =====================================================================
+   SCROLL-ZOOM HINT LABEL
+   Appears when lightbox opens, fades on first zoom.
+   ===================================================================== */
+
+#lb-scroll-hint {
+    display: none;
+    position: fixed;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15,23,42,0.88);
+    border: 1px solid rgba(79,209,197,0.4);
+    color: var(--teal);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 24px;
+    border-radius: 50px;
+    pointer-events: none;
+    z-index: 99998;
+    backdrop-filter: blur(10px);
+    transition: opacity 0.5s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.45);
+    animation: hintFadeIn 0.4s ease both;
 }
 
 /* ===== PORTFOLIO PAGE - IMAGE CARDS ===== */
@@ -2647,7 +2784,6 @@ body[dir="rtl"] .brief-field-box textarea::placeholder {
     opacity: 0.8;
 }
 
-/* Arabic / RTL — bigger and clearer */
 body[dir="rtl"] #adsBriefForm .brief-field-box {
     direction: rtl;
     text-align: right;
@@ -2685,7 +2821,6 @@ body[dir="rtl"] #adsBriefForm .brief-field-box textarea::placeholder {
     opacity: 0.9;
 }
 
-/* Light mode overrides for Ads Brief */
 body.light-mode #adsBriefForm .brief-field-box textarea {
     color: #1e293b;
 }
@@ -2693,12 +2828,11 @@ body.light-mode #adsBriefForm .brief-field-box textarea::placeholder {
     color: #6b7280;
     opacity: 0.85;
 }
+
 /* =====================================================================
-   COLOR PALETTE PICKER + BRANDING NOTES
-   Append these styles to the END of style.css
+   COLOR PALETTE PICKER
    ===================================================================== */
 
-/* ===== PALETTE WRAPPER ===== */
 .color-palette-wrapper {
     margin-top: 8px;
     display: flex;
@@ -2706,7 +2840,6 @@ body.light-mode #adsBriefForm .brief-field-box textarea::placeholder {
     gap: 16px;
 }
 
-/* ===== PRESET SWATCHES GRID ===== */
 .palette-presets {
     display: flex;
     flex-wrap: wrap;
@@ -2765,7 +2898,6 @@ body.light-mode .palette-presets {
     border-radius: 50%;
 }
 
-/* ===== CUSTOM COLOR ROW ===== */
 .palette-custom-row {
     display: flex;
     align-items: center;
@@ -2828,7 +2960,6 @@ body.light-mode .palette-custom-input {
     filter: brightness(1.08);
 }
 
-/* ===== SELECTED COLORS AREA ===== */
 .palette-selected-area {
     display: flex;
     flex-direction: column;
@@ -2867,7 +2998,6 @@ body.light-mode .palette-none-msg {
     color: #6b7280;
 }
 
-/* ===== INDIVIDUAL COLOR CHIP ===== */
 .palette-chip {
     display: inline-flex;
     align-items: center;
@@ -2934,7 +3064,6 @@ body.light-mode .palette-chip-code {
     background: rgba(239, 68, 68, 0.1);
 }
 
-/* ===== RTL SUPPORT ===== */
 body[dir="rtl"] .palette-custom-row {
     flex-direction: row-reverse;
     justify-content: flex-end;
@@ -2964,7 +3093,6 @@ body[dir="rtl"] #colorPickerBox label {
     font-size: 16px;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
     .palette-swatch {
         width: 30px;
@@ -2981,21 +3109,12 @@ body[dir="rtl"] #colorPickerBox label {
 
 /* =====================================================================
    BRANDING NOTES BOX
-   -----------------------------------------------------------------
-   المشكلة القديمة: كانت الكلاس دي بتـ override الـ background والـ
-   border بألوان مختلفة (rgba teal).
-   الحل: مش بنعمل أي override للـ background أو الـ border —
-   بنسيب العنصر يورث نفس ألوان .brief-field-box الأصلية:
-     dark  → background: #0b1628  |  border: #334155
-     light → background: #f1f5f9  |  border: #cbd5e1
    ===================================================================== */
 
 .branding-notes-box {
     position: relative;
-    /* intentionally NO background or border-color override */
 }
 
-/* Subtle horizontal separator line above the notes — decorative only */
 .branding-notes-box::before {
     content: '';
     position: absolute;
@@ -3007,13 +3126,11 @@ body[dir="rtl"] #colorPickerBox label {
     pointer-events: none;
 }
 
-/* Focus state — identical to the base .brief-field-box:focus-within rule */
 .branding-notes-box:focus-within {
     border-color: #4fd1c5;
     box-shadow: 0 0 0 3px rgba(79, 209, 197, 0.12);
 }
 
-/* RTL */
 body[dir="rtl"] .branding-notes-box label {
     font-family: 'Cairo', sans-serif;
     font-size: 16px;
@@ -3032,4 +3149,51 @@ body[dir="rtl"] .branding-notes-box textarea::placeholder {
     font-size: 14px;
     text-align: right;
     opacity: 0.9;
+}
+
+/* ===== BRIEF FIELD VALIDATION ===== */
+.brief-field-box input.input-error,
+.brief-field-box textarea.input-error,
+.brief-field-box select.input-error {
+    border-color: var(--error) !important;
+    box-shadow: 0 0 0 4px var(--error-soft) !important;
+    background: rgba(239, 68, 68, 0.04) !important;
+    animation: shakeField 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.brief-field-error {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--error);
+    margin-top: 6px;
+    margin-left: 4px;
+    min-height: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    line-height: 1.4;
+}
+
+.brief-field-error.show {
+    max-height: 40px;
+    opacity: 1;
+    animation: errorFadeIn 0.3s ease both;
+}
+
+.brief-field-error.show::before {
+    content: '⚠ ';
+    font-size: 11px;
+}
+
+body[dir="rtl"] .brief-field-error {
+    margin-left: 0;
+    margin-right: 4px;
+    text-align: right;
+}
+
+body[dir="rtl"] .brief-field-error.show::before {
+    content: ' ⚠';
+    margin-left: 4px;
 }

@@ -28,32 +28,68 @@
 <div class="registration-container">
 <h1 class="registration-title" data-i18n="reg-title">Client Registration</h1>
 
+<!-- ===== PERSONAL INFORMATION ===== -->
 <div class="form-card">
     <h2 data-i18n="personal-info">Personal Information</h2>
     <div class="form-grid">
-        <input type="text" id="fullName" data-i18n-ph="fn-ph" placeholder="Full Name">
-        <input type="text" id="nationalId" data-i18n-ph="ni-ph" placeholder="National ID">
-        <input type="text" id="contactNumber" data-i18n-ph="cn-ph" placeholder="Contact Number">
-        <input type="text" id="whatsappNumber" data-i18n-ph="wn-ph" placeholder="WhatsApp Number">
+
+        <div class="field-wrap">
+            <input type="text" id="fullName" data-i18n-ph="fn-ph" placeholder="Full Name">
+            <span class="field-error" id="err-fullName"></span>
+        </div>
+
+        <div class="field-wrap">
+            <input type="text" id="nationalId" data-i18n-ph="ni-ph" placeholder="National ID" maxlength="14" inputmode="numeric">
+            <span class="field-error" id="err-nationalId"></span>
+        </div>
+
+        <div class="field-wrap">
+            <input type="text" id="contactNumber" data-i18n-ph="cn-ph" placeholder="Contact Number" maxlength="11" inputmode="numeric">
+            <span class="field-error" id="err-contactNumber"></span>
+        </div>
+
+        <div class="field-wrap">
+            <input type="text" id="whatsappNumber" data-i18n-ph="wn-ph" placeholder="WhatsApp Number" maxlength="11" inputmode="numeric">
+            <span class="field-error" id="err-whatsappNumber"></span>
+        </div>
+
     </div>
 </div>
 
+<!-- ===== BUSINESS INFORMATION ===== -->
 <div class="form-card">
     <h2 data-i18n="business-info">Business Information</h2>
     <div class="form-grid">
-        <input type="text" id="businessName" data-i18n-ph="bn-ph" placeholder="Brand/Business Name">
-        <input type="text" id="industryType" data-i18n-ph="it-ph" placeholder="Industry Type">
-        <input type="text" id="socialLink" data-i18n-ph="sl-ph" placeholder="Social Media Page Link">
-        <select id="platform">
-            <option>Select Platform</option>
-            <option>Instagram</option>
-            <option>Facebook</option>
-            <option>TikTok</option>
-            <option>LinkedIn</option>
-        </select>
+
+        <div class="field-wrap">
+            <input type="text" id="businessName" data-i18n-ph="bn-ph" placeholder="Brand/Business Name">
+            <span class="field-error" id="err-businessName"></span>
+        </div>
+
+        <div class="field-wrap">
+            <input type="text" id="industryType" data-i18n-ph="it-ph" placeholder="Industry Type">
+            <span class="field-error" id="err-industryType"></span>
+        </div>
+
+        <div class="field-wrap">
+            <input type="text" id="socialLink" data-i18n-ph="sl-ph" placeholder="Social Media Page Link">
+            <span class="field-error" id="err-socialLink"></span>
+        </div>
+
+        <div class="field-wrap">
+            <select id="platform">
+                <option>Select Platform</option>
+                <option>Instagram</option>
+                <option>Facebook</option>
+                <option>TikTok</option>
+                <option>LinkedIn</option>
+            </select>
+        </div>
+
     </div>
 </div>
 
+<!-- ===== SERVICE SELECTION ===== -->
 <div class="form-card">
     <h2 data-i18n="service-sel">Service Selection</h2>
     <p class="services-subtitle" data-i18n="services-subtitle">Services Needed</p>
@@ -80,6 +116,7 @@
     </div>
 </div>
 
+<!-- ===== OTHER REQUIREMENTS ===== -->
 <div class="form-card">
     <h2 data-i18n="other-req">Other Requirements</h2>
     <textarea id="otherDetails" data-i18n-ph="od-ph" placeholder="Additional details..." rows="4"></textarea>
@@ -116,26 +153,32 @@
             <div class="brief-field-box brief-field-full">
                 <label><span class="brief-section-num">1</span><span data-i18n="ads-sec1">Campaign Objective</span></label>
                 <textarea id="ads-objective" rows="3" data-i18n-bph="ads-ph-objective" placeholder="What is the goal of this campaign? e.g. generate leads, increase sales, grow awareness..."></textarea>
+            <span class="brief-field-error" id="berr-ads-objective"></span>
             </div>
             <div class="brief-field-box brief-field-full">
                 <label><span class="brief-section-num">2</span><span data-i18n="ads-sec2">Offer &amp; Product Details</span></label>
                 <textarea id="ads-offer" rows="3" data-i18n-bph="ads-ph-offer" placeholder="What product or service are you advertising? Include pricing, offers, or any promotions..."></textarea>
+            <span class="brief-field-error" id="berr-ads-offer"></span>
             </div>
             <div class="brief-field-box brief-field-full">
                 <label><span class="brief-section-num">3</span><span data-i18n="ads-sec3">Target Audience</span></label>
                 <textarea id="ads-audience" rows="3" data-i18n-bph="ads-ph-audience" placeholder="Describe your ideal customer — age, gender, location, interests, behaviors..."></textarea>
+            <span class="brief-field-error" id="berr-ads-audience"></span>
             </div>
             <div class="brief-field-box brief-field-full">
                 <label><span class="brief-section-num">4</span><span data-i18n="ads-sec4">Budget &amp; Timeline</span></label>
                 <textarea id="ads-budget" rows="3" data-i18n-bph="ads-ph-budget" placeholder="What is your total or monthly budget? When do you want the campaign to start and how long should it run?"></textarea>
+            <span class="brief-field-error" id="berr-ads-budget"></span>
             </div>
             <div class="brief-field-box brief-field-full">
                 <label><span class="brief-section-num">5</span><span data-i18n="ads-sec5">Ad Assets &amp; Access</span></label>
                 <textarea id="ads-assets" rows="3" data-i18n-bph="ads-ph-assets" placeholder="Do you have images, videos, or copy ready? Do you have an existing ad account? Share any relevant links or access details..."></textarea>
+            <span class="brief-field-error" id="berr-ads-assets"></span>
             </div>
             <div class="brief-field-box brief-field-full">
                 <label><span class="brief-section-num">6</span><span data-i18n="ads-sec6">Historical Campaign Data</span></label>
                 <textarea id="ads-history" rows="3" data-i18n-bph="ads-ph-history" placeholder="Have you run ads before? What platforms, budget, and results did you get? What worked and what didn't?"></textarea>
+            <span class="brief-field-error" id="berr-ads-history"></span>
             </div>
         </div>
     </div><!-- end adsBriefForm -->
@@ -156,20 +199,14 @@
             </div>
             <div class="brief-fields-grid">
                 <div class="brief-field-box">
-                    <label data-i18n-label="brief-f-brand">Brand / Company Name</label>
-                    <input type="text" id="bf-brandName" data-i18n-bph="brief-ph-brand" placeholder="e.g. UFUQ Agency">
-                </div>
-                <div class="brief-field-box">
-                    <label data-i18n-label="brief-f-industry">Business Industry / Type</label>
-                    <input type="text" id="bf-industry" data-i18n-bph="brief-ph-industry" placeholder="e.g. Fashion, F&B, Tech...">
-                </div>
-                <div class="brief-field-box">
                     <label data-i18n-label="brief-f-specialty">Core Specialty</label>
                     <input type="text" id="bf-specialty" data-i18n-bph="brief-ph-specialty" placeholder="What do you specialize in?">
+                    <span class="brief-field-error" id="berr-bf-specialty"></span>
                 </div>
                 <div class="brief-field-box">
                     <label data-i18n-label="brief-f-address">Physical Address / Location</label>
                     <input type="text" id="bf-address" data-i18n-bph="brief-ph-address" placeholder="City, Country or full address">
+                    <span class="brief-field-error" id="berr-bf-address"></span>
                 </div>
                 <div class="brief-field-box brief-field-full">
                     <label data-i18n-label="brief-f-bizdet">Additional Business Details</label>
@@ -186,24 +223,19 @@
             </div>
             <div class="brief-fields-grid">
                 <div class="brief-field-box">
-                    <label data-i18n-label="brief-f-phone">Contact Phone Numbers</label>
-                    <input type="text" id="bf-phone" data-i18n-bph="brief-ph-phone" placeholder="+20 1XX XXX XXXX">
-                </div>
-                <div class="brief-field-box">
-                    <label data-i18n-label="brief-f-wa">WhatsApp Number</label>
-                    <input type="text" id="bf-whatsapp" data-i18n-bph="brief-ph-wa" placeholder="+20 1XX XXX XXXX">
-                </div>
-                <div class="brief-field-box">
                     <label data-i18n-label="brief-f-hours">Official Working Hours</label>
                     <input type="text" id="bf-hours" data-i18n-bph="brief-ph-hours" placeholder="e.g. Sat–Thu, 9am–6pm">
+                    <span class="brief-field-error" id="berr-bf-hours"></span>
                 </div>
                 <div class="brief-field-box">
                     <label data-i18n-label="brief-f-holidays">Holidays / Days Off</label>
                     <input type="text" id="bf-holidays" data-i18n-bph="brief-ph-holidays" placeholder="e.g. Fridays, Public holidays">
+                    <span class="brief-field-error" id="berr-bf-holidays"></span>
                 </div>
                 <div class="brief-field-box brief-field-full">
                     <label data-i18n-label="brief-f-delivery">Delivery System &amp; Policies <span style="opacity:0.5;font-size:12px;">(If applicable)</span></label>
                     <textarea id="bf-delivery" rows="2" data-i18n-bph="brief-ph-delivery" placeholder="Describe your delivery system or policies..."></textarea>
+                    <span class="brief-field-error" id="berr-bf-delivery"></span>
                 </div>
             </div>
         </div>
@@ -218,6 +250,7 @@
                 <div class="brief-field-box brief-field-full">
                     <label data-i18n-label="brief-f-logo">Preferred Logo Style</label>
                     <input type="text" id="bf-logoStyle" data-i18n-bph="brief-ph-logo" placeholder="e.g. Minimalist, Bold, Vintage...">
+                    <span class="brief-field-error" id="berr-bf-logoStyle"></span>
                 </div>
 
                 <!-- ===== COLOR PALETTE PICKER ===== -->
@@ -228,7 +261,6 @@
 
                         <!-- Preset swatches -->
                         <div class="palette-presets" id="palettePresets">
-                            <!-- Row: Neutrals -->
                             <div class="palette-swatch" data-hex="#000000" style="background:#000000;" onclick="togglePaletteColor(this)" title="#000000"></div>
                             <div class="palette-swatch" data-hex="#1a1a2e" style="background:#1a1a2e;" onclick="togglePaletteColor(this)" title="#1a1a2e"></div>
                             <div class="palette-swatch" data-hex="#2d3436" style="background:#2d3436;" onclick="togglePaletteColor(this)" title="#2d3436"></div>
@@ -236,35 +268,29 @@
                             <div class="palette-swatch" data-hex="#b2bec3" style="background:#b2bec3;" onclick="togglePaletteColor(this)" title="#b2bec3"></div>
                             <div class="palette-swatch" data-hex="#dfe6e9" style="background:#dfe6e9;" onclick="togglePaletteColor(this)" title="#dfe6e9"></div>
                             <div class="palette-swatch palette-swatch-white" data-hex="#ffffff" style="background:#ffffff;" onclick="togglePaletteColor(this)" title="#ffffff"></div>
-                            <!-- Row: Reds & Pinks -->
                             <div class="palette-swatch" data-hex="#c0392b" style="background:#c0392b;" onclick="togglePaletteColor(this)" title="#c0392b"></div>
                             <div class="palette-swatch" data-hex="#e74c3c" style="background:#e74c3c;" onclick="togglePaletteColor(this)" title="#e74c3c"></div>
                             <div class="palette-swatch" data-hex="#e91e63" style="background:#e91e63;" onclick="togglePaletteColor(this)" title="#e91e63"></div>
                             <div class="palette-swatch" data-hex="#ff69b4" style="background:#ff69b4;" onclick="togglePaletteColor(this)" title="#ff69b4"></div>
                             <div class="palette-swatch" data-hex="#fd79a8" style="background:#fd79a8;" onclick="togglePaletteColor(this)" title="#fd79a8"></div>
-                            <!-- Row: Oranges & Yellows -->
                             <div class="palette-swatch" data-hex="#e67e22" style="background:#e67e22;" onclick="togglePaletteColor(this)" title="#e67e22"></div>
                             <div class="palette-swatch" data-hex="#f39c12" style="background:#f39c12;" onclick="togglePaletteColor(this)" title="#f39c12"></div>
                             <div class="palette-swatch" data-hex="#f1c40f" style="background:#f1c40f;" onclick="togglePaletteColor(this)" title="#f1c40f"></div>
                             <div class="palette-swatch" data-hex="#fdcb6e" style="background:#fdcb6e;" onclick="togglePaletteColor(this)" title="#fdcb6e"></div>
-                            <!-- Row: Greens -->
                             <div class="palette-swatch" data-hex="#27ae60" style="background:#27ae60;" onclick="togglePaletteColor(this)" title="#27ae60"></div>
                             <div class="palette-swatch" data-hex="#2ecc71" style="background:#2ecc71;" onclick="togglePaletteColor(this)" title="#2ecc71"></div>
                             <div class="palette-swatch" data-hex="#00b894" style="background:#00b894;" onclick="togglePaletteColor(this)" title="#00b894"></div>
                             <div class="palette-swatch" data-hex="#55efc4" style="background:#55efc4;" onclick="togglePaletteColor(this)" title="#55efc4"></div>
-                            <!-- Row: Blues & Teals -->
                             <div class="palette-swatch" data-hex="#2980b9" style="background:#2980b9;" onclick="togglePaletteColor(this)" title="#2980b9"></div>
                             <div class="palette-swatch" data-hex="#3498db" style="background:#3498db;" onclick="togglePaletteColor(this)" title="#3498db"></div>
                             <div class="palette-swatch" data-hex="#0984e3" style="background:#0984e3;" onclick="togglePaletteColor(this)" title="#0984e3"></div>
                             <div class="palette-swatch" data-hex="#4fd1c5" style="background:#4fd1c5;" onclick="togglePaletteColor(this)" title="#4fd1c5"></div>
                             <div class="palette-swatch" data-hex="#00cec9" style="background:#00cec9;" onclick="togglePaletteColor(this)" title="#00cec9"></div>
                             <div class="palette-swatch" data-hex="#74b9ff" style="background:#74b9ff;" onclick="togglePaletteColor(this)" title="#74b9ff"></div>
-                            <!-- Row: Purples -->
                             <div class="palette-swatch" data-hex="#8e44ad" style="background:#8e44ad;" onclick="togglePaletteColor(this)" title="#8e44ad"></div>
                             <div class="palette-swatch" data-hex="#9b59b6" style="background:#9b59b6;" onclick="togglePaletteColor(this)" title="#9b59b6"></div>
                             <div class="palette-swatch" data-hex="#6c5ce7" style="background:#6c5ce7;" onclick="togglePaletteColor(this)" title="#6c5ce7"></div>
                             <div class="palette-swatch" data-hex="#a29bfe" style="background:#a29bfe;" onclick="togglePaletteColor(this)" title="#a29bfe"></div>
-                            <!-- Row: Browns & Golds -->
                             <div class="palette-swatch" data-hex="#6d4c41" style="background:#6d4c41;" onclick="togglePaletteColor(this)" title="#6d4c41"></div>
                             <div class="palette-swatch" data-hex="#8d6e63" style="background:#8d6e63;" onclick="togglePaletteColor(this)" title="#8d6e63"></div>
                             <div class="palette-swatch" data-hex="#d4a017" style="background:#d4a017;" onclick="togglePaletteColor(this)" title="#d4a017"></div>
@@ -295,10 +321,12 @@
                 <div class="brief-field-box">
                     <label data-i18n-label="brief-f-social">Current Social Media Presence</label>
                     <input type="text" id="bf-socialPresence" data-i18n-bph="brief-ph-social" placeholder="Links or starting from scratch">
+                    <span class="brief-field-error" id="berr-bf-socialPresence"></span>
                 </div>
                 <div class="brief-field-box">
                     <label data-i18n-label="brief-f-agency">Previous Marketing Agency Experience</label>
                     <input type="text" id="bf-prevAgency" data-i18n-bph="brief-ph-agency" placeholder="Agency names or none">
+                    <span class="brief-field-error" id="berr-bf-prevAgency"></span>
                 </div>
                 <div class="brief-field-box brief-field-full branding-notes-box">
                     <label data-i18n-label="brief-f-branding-notes">Additional Branding Notes</label>
@@ -317,18 +345,22 @@
                 <div class="brief-field-box brief-field-full">
                     <label data-i18n-label="brief-f-obj">Primary Marketing Objectives</label>
                     <textarea id="bf-objectives" rows="2" data-i18n-bph="brief-ph-obj" placeholder="e.g. Increase brand awareness, generate leads..."></textarea>
+                    <span class="brief-field-error" id="berr-bf-objectives"></span>
                 </div>
                 <div class="brief-field-box">
                     <label data-i18n-label="brief-f-comp">Main Competitors</label>
                     <input type="text" id="bf-competitors" data-i18n-bph="brief-ph-comp" placeholder="List your top competitors">
+                    <span class="brief-field-error" id="berr-bf-competitors"></span>
                 </div>
                 <div class="brief-field-box">
                     <label data-i18n-label="brief-f-channels">Preferred Marketing Channels</label>
                     <input type="text" id="bf-channels" data-i18n-bph="brief-ph-channels" placeholder="e.g. Instagram, Google Ads, TikTok...">
+                    <span class="brief-field-error" id="berr-bf-channels"></span>
                 </div>
                 <div class="brief-field-box brief-field-full">
                     <label data-i18n-label="brief-f-audience">Target Audience / Buyer Persona</label>
                     <textarea id="bf-audience" rows="2" data-i18n-bph="brief-ph-audience" placeholder="Age, gender, interests, location, behavior..."></textarea>
+                    <span class="brief-field-error" id="berr-bf-audience"></span>
                 </div>
             </div>
         </div>
@@ -349,14 +381,17 @@
                         <option>Premium</option>
                         <option>Custom</option>
                     </select>
+                    <span class="brief-field-error" id="berr-bf-package"></span>
                 </div>
                 <div class="brief-field-box">
                     <label data-i18n-label="brief-f-payment">Payment Method &amp; Terms</label>
                     <input type="text" id="bf-payment" data-i18n-bph="brief-ph-payment" placeholder="e.g. Monthly, Bank transfer, Cash...">
+                    <span class="brief-field-error" id="berr-bf-payment"></span>
                 </div>
                 <div class="brief-field-box">
                     <label data-i18n-label="brief-f-duration">Contract Duration</label>
                     <input type="text" id="bf-duration" data-i18n-bph="brief-ph-duration" placeholder="e.g. 3 months, 6 months, Ongoing...">
+                    <span class="brief-field-error" id="berr-bf-duration"></span>
                 </div>
             </div>
         </div>

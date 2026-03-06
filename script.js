@@ -70,13 +70,9 @@ if (localStorage.getItem('theme') === 'light') {
 
 if (themeToggle) {
     themeToggle.onclick = () => {
-        document.body.classList.toggle('light-mode');
         const isLight = document.body.classList.contains('light-mode');
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
-        themeToggle.textContent = isLight ? '🌙' : '☀️';
-        themeToggle.style.animation = 'none';
-        themeToggle.offsetHeight;
-        themeToggle.style.animation = '';
+        localStorage.setItem('theme', isLight ? 'dark' : 'light');
+        location.reload();
     };
 }
 
@@ -301,21 +297,15 @@ function selectBrief(briefType) {
 
 /* ===================== COLOR PALETTE PICKER ===================== */
 
-// Holds all currently selected hex codes
 var selectedPaletteColors = [];
 
-/**
- * Toggle a preset swatch on/off
- */
 function togglePaletteColor(swatchEl) {
     var hex = swatchEl.getAttribute('data-hex').toUpperCase();
 
     if (swatchEl.classList.contains('selected')) {
-        // Deselect
         swatchEl.classList.remove('selected');
         selectedPaletteColors = selectedPaletteColors.filter(function(c) { return c !== hex; });
     } else {
-        // Select
         swatchEl.classList.add('selected');
         if (selectedPaletteColors.indexOf(hex) === -1) {
             selectedPaletteColors.push(hex);
@@ -326,9 +316,6 @@ function togglePaletteColor(swatchEl) {
     renderSelectedChips();
 }
 
-/**
- * Add a custom color from the color input
- */
 function addCustomPaletteColor() {
     var input = document.getElementById('customColorInput');
     if (!input) return;
@@ -337,7 +324,6 @@ function addCustomPaletteColor() {
     if (selectedPaletteColors.indexOf(hex) === -1) {
         selectedPaletteColors.push(hex);
 
-        // Check if a preset swatch with same color exists — if so, mark it selected
         var existingSwatch = document.querySelector('.palette-swatch[data-hex="' + hex.toLowerCase() + '"], .palette-swatch[data-hex="' + hex + '"]');
         if (existingSwatch) {
             existingSwatch.classList.add('selected');
@@ -348,14 +334,10 @@ function addCustomPaletteColor() {
     renderSelectedChips();
 }
 
-/**
- * Remove a color from selected list (called from chip × button)
- */
 function removePaletteColor(hex) {
     hex = hex.toUpperCase();
     selectedPaletteColors = selectedPaletteColors.filter(function(c) { return c !== hex; });
 
-    // Un-highlight preset swatch if it exists
     var swatch = document.querySelector('.palette-swatch[data-hex="' + hex.toLowerCase() + '"], .palette-swatch[data-hex="' + hex + '"]');
     if (swatch) swatch.classList.remove('selected');
 
@@ -363,9 +345,6 @@ function removePaletteColor(hex) {
     renderSelectedChips();
 }
 
-/**
- * Write comma-separated hex list to the hidden input #bf-colors
- */
 function syncPaletteHiddenInput() {
     var hiddenInput = document.getElementById('bf-colors');
     if (hiddenInput) {
@@ -373,15 +352,11 @@ function syncPaletteHiddenInput() {
     }
 }
 
-/**
- * Render the selected color chips below the palette
- */
 function renderSelectedChips() {
     var container = document.getElementById('paletteSelectedChips');
     var noneMsg   = document.getElementById('paletteNoneMsg');
     if (!container) return;
 
-    // Clear existing chips (keep noneMsg)
     Array.from(container.children).forEach(function(child) {
         if (child.id !== 'paletteNoneMsg') child.remove();
     });
@@ -406,9 +381,6 @@ function renderSelectedChips() {
     });
 }
 
-/**
- * Detect if a hex color is light (for border on white-ish swatches)
- */
 function isLightColor(hex) {
     hex = hex.replace('#', '');
     if (hex.length === 3) hex = hex.split('').map(function(c){ return c+c; }).join('');
@@ -418,8 +390,270 @@ function isLightColor(hex) {
     return (r * 0.299 + g * 0.587 + b * 0.114) > 186;
 }
 
+/* =====================================================================
+   FORM VALIDATION
+   ===================================================================== */
+
+function getFieldError(fieldId, value) {
+    var isAr = (document.body.getAttribute('dir') === 'rtl' || localStorage.getItem('lang') === 'ar');
+
+    var msgs = {
+        fullName: {
+            empty: isAr ? 'الاسم الكامل مطلوب' : 'Full name is required'
+        },
+        nationalId: {
+            empty:   isAr ? 'الرقم القومي مطلوب' : 'National ID is required',
+            digits:  isAr ? 'الرقم القومي يجب أن يكون 14 رقماً بالضبط' : 'National ID must be exactly 14 digits',
+            letters: isAr ? 'الرقم القومي يجب أن يحتوي على أرقام فقط' : 'National ID must contain numbers only'
+        },
+        contactNumber: {
+            empty:   isAr ? 'رقم الاتصال مطلوب' : 'Contact number is required',
+            digits:  isAr ? 'رقم الاتصال يجب أن يكون 11 رقماً بالضبط' : 'Contact number must be exactly 11 digits',
+            letters: isAr ? 'رقم الاتصال يجب أن يحتوي على أرقام فقط' : 'Contact number must contain numbers only'
+        },
+        whatsappNumber: {
+            empty:   isAr ? 'رقم واتساب مطلوب' : 'WhatsApp number is required',
+            digits:  isAr ? 'رقم واتساب يجب أن يكون 11 رقماً بالضبط' : 'WhatsApp number must be exactly 11 digits',
+            letters: isAr ? 'رقم واتساب يجب أن يحتوي على أرقام فقط' : 'WhatsApp number must contain numbers only'
+        },
+        businessName: {
+            empty: isAr ? 'اسم العلامة / الأعمال مطلوب' : 'Brand/Business name is required'
+        },
+        industryType: {
+            empty: isAr ? 'نوع الصناعة مطلوب' : 'Industry type is required'
+        },
+        socialLink: {
+            empty: isAr ? 'رابط صفحة التواصل مطلوب' : 'Social media link is required'
+        }
+    };
+
+    var m = msgs[fieldId];
+    if (!m) return null;
+
+    if (!value) return m.empty;
+
+    if (fieldId === 'nationalId' || fieldId === 'contactNumber' || fieldId === 'whatsappNumber') {
+        var digitsOnly = value.replace(/\s/g, '');
+        if (!/^\d+$/.test(digitsOnly)) return m.letters;
+        var requiredLen = (fieldId === 'nationalId') ? 14 : 11;
+        if (digitsOnly.length !== requiredLen) return m.digits;
+    }
+
+    return null;
+}
+
+function showFieldError(fieldId, message) {
+    var input = document.getElementById(fieldId);
+    var errEl = document.getElementById('err-' + fieldId);
+
+    if (input) {
+        input.classList.add('input-error');
+        input.style.animation = 'none';
+        input.offsetHeight;
+        input.style.animation = '';
+
+        var clearFn = function() {
+            clearFieldError(fieldId);
+            input.removeEventListener('input', clearFn);
+        };
+        input.addEventListener('input', clearFn);
+    }
+
+    if (errEl) {
+        errEl.textContent = message;
+        errEl.classList.add('show');
+    }
+}
+
+function clearFieldError(fieldId) {
+    var input = document.getElementById(fieldId);
+    var errEl = document.getElementById('err-' + fieldId);
+
+    if (input) input.classList.remove('input-error');
+    if (errEl) {
+        errEl.textContent = '';
+        errEl.classList.remove('show');
+    }
+}
+
+function validateRegistrationForm() {
+    var fields = ['fullName', 'nationalId', 'contactNumber', 'whatsappNumber', 'businessName', 'industryType', 'socialLink'];
+
+    var firstErrorEl = null;
+    var hasError = false;
+
+    fields.forEach(function(fieldId) {
+        clearFieldError(fieldId);
+    });
+
+    fields.forEach(function(fieldId) {
+        var input = document.getElementById(fieldId);
+        if (!input) return;
+
+        var value = input.value.trim();
+        var errorMsg = getFieldError(fieldId, value);
+
+        if (errorMsg) {
+            showFieldError(fieldId, errorMsg);
+            hasError = true;
+            if (!firstErrorEl) {
+                firstErrorEl = input;
+            }
+        }
+    });
+
+    if (firstErrorEl) {
+        setTimeout(function() {
+            var offset = 100;
+            var top = firstErrorEl.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+            setTimeout(function() { firstErrorEl.focus(); }, 400);
+        }, 50);
+    }
+
+    return !hasError;
+}
+
+/* ===================== BRIEF FIELD VALIDATION ===================== */
+
+var ADS_BRIEF_FIELDS = ['ads-objective','ads-offer','ads-audience','ads-budget','ads-assets','ads-history'];
+
+var BIZ_BRIEF_FIELDS = [
+    'bf-specialty','bf-address',
+    'bf-hours','bf-holidays','bf-delivery',
+    'bf-logoStyle','bf-socialPresence','bf-prevAgency',
+    'bf-objectives','bf-competitors','bf-channels','bf-audience',
+    'bf-package','bf-payment','bf-duration'
+];
+
+function showBriefError(fieldId, message) {
+    var el = document.getElementById(fieldId);
+    var errSpan = document.getElementById('berr-' + fieldId);
+    if (!el || !errSpan) return;
+    el.classList.add('input-error');
+    errSpan.textContent = message;
+    errSpan.classList.add('show');
+    var clearFn = function() {
+        el.classList.remove('input-error');
+        errSpan.textContent = '';
+        errSpan.classList.remove('show');
+        el.removeEventListener('input', clearFn);
+        el.removeEventListener('change', clearFn);
+    };
+    el.addEventListener('input', clearFn);
+    el.addEventListener('change', clearFn);
+}
+
+function clearBriefError(fieldId) {
+    var el = document.getElementById(fieldId);
+    var errSpan = document.getElementById('berr-' + fieldId);
+    if (el) el.classList.remove('input-error');
+    if (errSpan) { errSpan.textContent = ''; errSpan.classList.remove('show'); }
+}
+
+function getBriefFieldLabel(fieldId) {
+    var isAr = (document.body.getAttribute('dir') === 'rtl' || localStorage.getItem('lang') === 'ar');
+    var lang = isAr ? 'ar' : 'en';
+    var labels = {
+        en: {
+            'ads-objective': 'Campaign Objective',
+            'ads-offer':     'Offer & Product Details',
+            'ads-audience':  'Target Audience',
+            'ads-budget':    'Budget & Timeline',
+            'ads-assets':    'Ad Assets & Access',
+            'ads-history':   'Historical Campaign Data',
+            'bf-specialty':  'Core Specialty',
+            'bf-address':    'Physical Address / Location',
+            'bf-hours':      'Official Working Hours',
+            'bf-holidays':   'Holidays / Days Off',
+            'bf-delivery':   'Delivery System & Policies',
+            'bf-logoStyle':  'Preferred Logo Style',
+            'bf-socialPresence': 'Current Social Media Presence',
+            'bf-prevAgency': 'Previous Marketing Agency Experience',
+            'bf-objectives': 'Primary Marketing Objectives',
+            'bf-competitors':'Main Competitors',
+            'bf-channels':   'Preferred Marketing Channels',
+            'bf-audience':   'Target Audience / Buyer Persona',
+            'bf-package':    'Selected Service Package',
+            'bf-payment':    'Payment Method & Terms',
+            'bf-duration':   'Contract Duration'
+        },
+        ar: {
+            'ads-objective': 'هدف الحملة',
+            'ads-offer':     'تفاصيل العرض والمنتج',
+            'ads-audience':  'الجمهور المستهدف',
+            'ads-budget':    'الميزانية والجدول الزمني',
+            'ads-assets':    'مواد الإعلان والوصول',
+            'ads-history':   'بيانات الحملات السابقة',
+            'bf-specialty':  'التخصص الأساسي',
+            'bf-address':    'العنوان / الموقع',
+            'bf-hours':      'ساعات العمل الرسمية',
+            'bf-holidays':   'أيام الإجازات',
+            'bf-delivery':   'نظام التوصيل والسياسات',
+            'bf-logoStyle':  'أسلوب الشعار المفضل',
+            'bf-socialPresence': 'التواجد الحالي على وسائل التواصل',
+            'bf-prevAgency': 'تجربة وكالة التسويق السابقة',
+            'bf-objectives': 'الأهداف التسويقية الرئيسية',
+            'bf-competitors':'المنافسون الرئيسيون',
+            'bf-channels':   'قنوات التسويق المفضلة',
+            'bf-audience':   'الجمهور المستهدف',
+            'bf-package':    'الباقة المختارة',
+            'bf-payment':    'طريقة الدفع والشروط',
+            'bf-duration':   'مدة العقد'
+        }
+    };
+    var map = labels[lang] || labels['en'];
+    return map[fieldId] || fieldId;
+}
+
+function validateBriefForm() {
+    if (!selectedBrief) return true;
+    var isAr = (document.body.getAttribute('dir') === 'rtl' || localStorage.getItem('lang') === 'ar');
+    var lang = isAr ? 'ar' : 'en';
+    var fields = (selectedBrief === 'Ads Brief') ? ADS_BRIEF_FIELDS : BIZ_BRIEF_FIELDS;
+
+    fields.forEach(function(id) { clearBriefError(id); });
+
+    var firstErrorEl = null;
+    var hasError = false;
+
+    fields.forEach(function(fieldId) {
+        var el = document.getElementById(fieldId);
+        if (!el) return;
+        var val = el.value.trim();
+        if (!val) {
+            var label = getBriefFieldLabel(fieldId);
+            var msg = (lang === 'ar')
+                ? (label + ' مطلوب')
+                : (label + ' is required');
+            showBriefError(fieldId, msg);
+            hasError = true;
+            if (!firstErrorEl) firstErrorEl = el;
+        }
+    });
+
+    if (firstErrorEl) {
+        setTimeout(function() {
+            var top = firstErrorEl.getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+            setTimeout(function() { firstErrorEl.focus(); }, 400);
+        }, 50);
+    }
+
+    return !hasError;
+}
+
 /* ===================== SEND TO WHATSAPP (Registration) ===================== */
 function sendToWhatsApp() {
+
+    if (!validateRegistrationForm()) {
+        return;
+    }
+
+    if (!validateBriefForm()) {
+        return;
+    }
+
     const fullName       = (document.getElementById('fullName')?.value       || '').trim();
     const nationalId     = (document.getElementById('nationalId')?.value      || '').trim();
     const contactNumber  = (document.getElementById('contactNumber')?.value   || '').trim();
@@ -440,7 +674,6 @@ function sendToWhatsApp() {
 
     function g(id) { return (document.getElementById(id)?.value || '').trim() || '—'; }
 
-    // Collect selected colors from palette
     var colorsValue = document.getElementById('bf-colors')?.value || '';
     var colorsDisplay = '—';
     if (selectedPaletteColors.length > 0) {
@@ -482,15 +715,11 @@ ${g('ads-history')}`;
 ========================
 
 1. BUSINESS INFORMATION
-   Brand / Company Name    : ${g('bf-brandName')}
-   Industry / Type         : ${g('bf-industry')}
    Core Specialty          : ${g('bf-specialty')}
    Physical Address        : ${g('bf-address')}
    Additional Details      : ${g('bf-bizDetails')}
 
 2. CONTACT & OPERATIONS
-   Contact Phone           : ${g('bf-phone')}
-   WhatsApp                : ${g('bf-whatsapp')}
    Working Hours           : ${g('bf-hours')}
    Holidays / Days Off     : ${g('bf-holidays')}
    Delivery System         : ${g('bf-delivery')}
@@ -1093,7 +1322,9 @@ window.addEventListener('load', () => {
             langBtn.setAttribute('title', 'Toggle Language');
             navIcons.insertBefore(langBtn, navIcons.firstChild);
             langBtn.addEventListener('click', () => {
-                applyLanguage(currentLang === 'ar' ? 'en' : 'ar');
+                const newLang = currentLang === 'ar' ? 'en' : 'ar';
+                localStorage.setItem('lang', newLang);
+                location.reload();
             });
         }
 
@@ -1101,67 +1332,213 @@ window.addEventListener('load', () => {
     });
 })();
 
-/* ===================== SERVICE IMAGE LIGHTBOX ===================== */
+/* =====================================================================
+   LIGHTBOX — Scroll-to-Zoom (centered on cursor)
+   Mouse wheel zooms in/out at the exact cursor position.
+   Drag to pan when zoomed in. Double-click resets zoom.
+   ===================================================================== */
 (function () {
-    var lbScale = 1;
 
-    function openLightbox(imgEl) {
-        lbScale = 1;
-        var lb    = document.getElementById('lightbox');
-        var lbImg = document.getElementById('lightbox-img');
-        if (!lb || !lbImg) return;
-        lbImg.src = imgEl.src;
-        lbImg.style.transform = 'scale(1)';
-        document.getElementById('zoom-label').textContent = '100%';
-        lb.classList.add('open');
-        document.body.style.overflow = 'hidden';
+    /* ── Settings ── */
+    var ZOOM_STEP    = 0.12;   // zoom amount per wheel tick (fraction)
+    var ZOOM_MIN     = 1.0;    // minimum scale (never smaller than natural size)
+    var ZOOM_MAX     = 6.0;    // maximum scale
+
+    /* ── State ── */
+    var scale        = 1;
+    var originX      = 0;      // current CSS transform translateX
+    var originY      = 0;      // current CSS transform translateY
+    var isDragging   = false;
+    var dragStartX   = 0;
+    var dragStartY   = 0;
+    var dragOriginX  = 0;
+    var dragOriginY  = 0;
+    var isOpen       = false;
+
+    var lbImgEl      = null;
+    var lbOverlay    = null;
+
+    /* ── Hint element ── */
+    var hint = document.createElement('div');
+    hint.id  = 'lb-scroll-hint';
+    hint.innerHTML = '🖱 Scroll to zoom · Drag to pan · Double-click to reset';
+    document.body.appendChild(hint);
+
+    /* ── Apply current transform to the image ── */
+    function applyTransform() {
+        if (!lbImgEl) return;
+        lbImgEl.style.transform = 'translate(' + originX + 'px, ' + originY + 'px) scale(' + scale + ')';
+        /* Update cursor to show grab state */
+        lbImgEl.style.cursor = scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default';
     }
 
+    /* ── Reset zoom & pan ── */
+    function resetZoom() {
+        scale   = 1;
+        originX = 0;
+        originY = 0;
+        applyTransform();
+        if (hint) hint.style.opacity = '1';
+    }
+
+    /* ── Clamp pan so image can't be dragged completely off-screen ── */
+    function clampPan() {
+        if (!lbImgEl) return;
+        var rect     = lbImgEl.getBoundingClientRect();
+        var vw       = window.innerWidth;
+        var vh       = window.innerHeight;
+        var imgW     = rect.width;
+        var imgH     = rect.height;
+
+        /* Maximum allowed offset in each direction */
+        var maxX = Math.max(0, (imgW - vw) / 2 + 40);
+        var maxY = Math.max(0, (imgH - vh) / 2 + 40);
+
+        originX = Math.max(-maxX, Math.min(maxX, originX));
+        originY = Math.max(-maxY, Math.min(maxY, originY));
+    }
+
+    /* ── Wheel: zoom centered on cursor ── */
+    function onWheel(e) {
+        if (!isOpen || !lbImgEl) return;
+        e.preventDefault();
+        e.stopPropagation();
+
+        /* Cursor position relative to viewport center (where the image is anchored) */
+        var cursorX = e.clientX - window.innerWidth  / 2;
+        var cursorY = e.clientY - window.innerHeight / 2;
+
+        /* Direction: negative deltaY = zoom in */
+        var direction = e.deltaY < 0 ? 1 : -1;
+        var oldScale  = scale;
+        var newScale  = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, scale + direction * ZOOM_STEP * scale));
+
+        /* Adjust pan so the point under the cursor stays fixed */
+        var ratio = newScale / oldScale;
+        originX   = cursorX + (originX - cursorX) * ratio;
+        originY   = cursorY + (originY - cursorY) * ratio;
+
+        scale = newScale;
+
+        /* Reset pan when fully zoomed out */
+        if (scale <= ZOOM_MIN) { originX = 0; originY = 0; }
+
+        clampPan();
+        applyTransform();
+
+        /* Fade out hint after first zoom */
+        if (hint) hint.style.opacity = '0';
+    }
+
+    /* ── Drag: pan when zoomed in ── */
+    function onMouseDown(e) {
+        if (!isOpen || scale <= 1) return;
+        if (e.button !== 0) return;
+        isDragging  = true;
+        dragStartX  = e.clientX;
+        dragStartY  = e.clientY;
+        dragOriginX = originX;
+        dragOriginY = originY;
+        applyTransform();
+        e.preventDefault();
+    }
+
+    function onMouseMove(e) {
+        if (!isDragging || !isOpen) return;
+        originX = dragOriginX + (e.clientX - dragStartX);
+        originY = dragOriginY + (e.clientY - dragStartY);
+        clampPan();
+        applyTransform();
+    }
+
+    function onMouseUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        applyTransform();
+    }
+
+    /* ── Double-click: reset zoom ── */
+    function onDblClick(e) {
+        if (!isOpen) return;
+        e.preventDefault();
+        resetZoom();
+    }
+
+    /* ── Open ── */
+    function openLightbox(imgEl) {
+        var lb   = document.getElementById('lightbox');
+        lbImgEl  = document.getElementById('lightbox-img');
+        lbOverlay = lb;
+        if (!lb || !lbImgEl) return;
+
+        lbImgEl.src = imgEl.src;
+        isOpen      = true;
+        resetZoom();
+
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+
+        /* Show hint */
+        if (hint) { hint.style.display = 'block'; hint.style.opacity = '1'; }
+
+        /* Attach events to the lightbox overlay (catches wheel anywhere inside) */
+        lb.addEventListener('wheel',      onWheel,      { passive: false });
+        lb.addEventListener('mousedown',  onMouseDown);
+        lbImgEl.addEventListener('dblclick', onDblClick);
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup',   onMouseUp);
+    }
+
+    /* ── Close ── */
     function closeLightbox() {
         var lb = document.getElementById('lightbox');
-        if (lb) lb.classList.remove('open');
+        if (!lb) return;
+        lb.classList.remove('open');
         document.body.style.overflow = '';
+        isOpen     = false;
+        isDragging = false;
+
+        if (hint) hint.style.display = 'none';
+
+        lb.removeEventListener('wheel',      onWheel);
+        lb.removeEventListener('mousedown',  onMouseDown);
+        if (lbImgEl) lbImgEl.removeEventListener('dblclick', onDblClick);
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('mouseup',   onMouseUp);
+
+        resetZoom();
     }
 
     function closeLightboxOnBg(e) {
-        if (e.target === document.getElementById('lightbox')) closeLightbox();
+        /* Only close when clicking the dark backdrop, not the image or controls */
+        if (e.target === document.getElementById('lightbox') && !isDragging) {
+            closeLightbox();
+        }
     }
 
-    function zoomIn() {
-        if (lbScale >= 3) return;
-        lbScale = Math.min(3, parseFloat((lbScale + 0.25).toFixed(2)));
-        applyZoom();
-    }
+    /* ── no-ops to satisfy existing HTML onclick attrs ── */
+    function zoomIn()  {}
+    function zoomOut() {}
 
-    function zoomOut() {
-        if (lbScale <= 0.5) return;
-        lbScale = Math.max(0.5, parseFloat((lbScale - 0.25).toFixed(2)));
-        applyZoom();
-    }
-
-    function applyZoom() {
-        var lbImg = document.getElementById('lightbox-img');
-        if (lbImg) lbImg.style.transform = 'scale(' + lbScale + ')';
-        var label = document.getElementById('zoom-label');
-        if (label) label.textContent = Math.round(lbScale * 100) + '%';
-    }
-
-    window.openLightbox       = openLightbox;
-    window.closeLightbox      = closeLightbox;
-    window.closeLightboxOnBg  = closeLightboxOnBg;
-    window.zoomIn             = zoomIn;
-    window.zoomOut            = zoomOut;
-
+    /* ── Keyboard shortcuts ── */
     document.addEventListener('keydown', function (e) {
         var lb = document.getElementById('lightbox');
         if (!lb || !lb.classList.contains('open')) return;
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === '+' || e.key === '=') zoomIn();
-        if (e.key === '-') zoomOut();
+        if (e.key === 'Escape')   closeLightbox();
+        if (e.key === '0')        resetZoom();
     });
 
+    /* ── Click-outside-to-close ── */
     document.addEventListener('DOMContentLoaded', function () {
         var lb = document.getElementById('lightbox');
         if (lb) lb.addEventListener('click', closeLightboxOnBg);
     });
+
+    /* ── Expose globals ── */
+    window.openLightbox      = openLightbox;
+    window.closeLightbox     = closeLightbox;
+    window.closeLightboxOnBg = closeLightboxOnBg;
+    window.zoomIn            = zoomIn;
+    window.zoomOut           = zoomOut;
+
 })();
