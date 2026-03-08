@@ -108,11 +108,12 @@
     </div>
     <div class="package-section">
         <p class="services-subtitle" data-i18n="package-sel">Package Selection</p>
-        <select id="packageSelect" class="package-select">
-            <option>Select Package</option>
-            <option>Basic</option>
-            <option>Standard</option>
-            <option>Premium</option>
+        <select id="packageSelect" class="package-select" data-i18n-opt="pkg-select-ph">
+            <option data-i18n="pkg-select-ph">Select Package</option>
+            <option data-i18n="pkg-launch">Launch</option>
+            <option data-i18n="pkg-expansion">Expansion</option>
+            <option data-i18n="pkg-dominance">Dominance</option>
+            <option data-i18n="pkg-loyalty">Loyalty</option>
         </select>
     </div>
 </div>
@@ -376,11 +377,11 @@
                 <div class="brief-field-box">
                     <label data-i18n-label="brief-f-package">Selected Service Package</label>
                     <select id="bf-package">
-                        <option value="">Select Package</option>
-                        <option>Basic</option>
-                        <option>Standard</option>
-                        <option>Premium</option>
-                        <option>Custom</option>
+                        <option value="" data-i18n="pkg-select-ph">Select Package</option>
+                        <option data-i18n="pkg-launch">Launch</option>
+                        <option data-i18n="pkg-expansion">Expansion</option>
+                        <option data-i18n="pkg-dominance">Dominance</option>
+                        <option data-i18n="pkg-loyalty">Loyalty</option>
                     </select>
                     <span class="brief-field-error" id="berr-bf-package"></span>
                 </div>
@@ -452,10 +453,11 @@
     </div>
     <div class="footer-bottom">
         <p><span data-i18n="footer-copyright">© 2025 UFUQ. All rights reserved. Built with ❤️ and strategy.</span></p>
+        <p style="margin-top:8px; font-size:0.88rem; opacity:0.9;">Developed by <a href="https://www.facebook.com/zyd.medhat" target="_blank" style="color:#4fd1c5; text-decoration:none; font-weight:600; letter-spacing:0.3px;">Eng. Zyad Medhat</a> 💻</p>
         <div class="footer-bottom-links">
             <a href="#" data-i18n="footer-privacy">Privacy Policy</a>
             <a href="#" data-i18n="footer-terms">Terms of Service</a>
-            <a href="contact.html" data-i18n="footer-touch">Get In Touch</a>
+            <a href="#" data-i18n="footer-touch">Contact Us</a>
         </div>
     </div>
 </footer>

@@ -1021,6 +1021,11 @@ window.addEventListener('load', () => {
             'svc-chk4':         'Ad Campaign Creation',
             'svc-chk5':         'Brand Identity Design',
             'svc-chk6':         'Personal Branding',
+            'pkg-select-ph':    'Select Package',
+            'pkg-launch':       'Launch',
+            'pkg-expansion':    'Expansion',
+            'pkg-dominance':    'Dominance',
+            'pkg-loyalty':      'Loyalty',
 
             /* FOOTER */
             'footer-brand-text':  'More than a digital marketing service — it\'s a vision. We craft bold, effective campaigns that turn attention into meaningful growth.',
@@ -1238,6 +1243,11 @@ window.addEventListener('load', () => {
             'svc-chk4':         'إنشاء الحملات الإعلانية',
             'svc-chk5':         'تصميم الهوية التجارية',
             'svc-chk6':         'العلامة الشخصية',
+            'pkg-select-ph':    'اختر الباقة',
+            'pkg-launch':       'الانطلاق',
+            'pkg-expansion':    'التوسع',
+            'pkg-dominance':    'الهيمنة',
+            'pkg-loyalty':      'الولاء',
 
             /* FOOTER */
             'footer-brand-text':  'أكثر من مجرد خدمة تسويق رقمي — إنها رؤية. نصنع حملات جريئة وفعّالة تحوّل الانتباه إلى نمو حقيقي.',
