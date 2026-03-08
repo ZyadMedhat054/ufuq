@@ -772,7 +772,7 @@ ${otherDetails || 'None'}
 
 ========================`;
 
-    window.open('https://wa.me/201016273403?text=' + encodeURIComponent(message), '_blank');
+    window.open('https://wa.me/201037175720?text=' + encodeURIComponent(message), '_blank');
 }
 
 /* ===================== SEND CONTACT TO WHATSAPP ===================== */
@@ -796,7 +796,7 @@ function sendContactToWhatsApp() {
     }
 
     setTimeout(() => {
-        window.open('https://wa.me/201016273403?text=' + encodeURIComponent(text), '_blank');
+        window.open('https://wa.me/201037175720?text=' + encodeURIComponent(text), '_blank');
     }, 500);
 }
 
